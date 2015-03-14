@@ -17,6 +17,9 @@
   "devDependencies": {
     "angular": "~1.2.14",
     "angular-route": "~1.2.14"
+  },
+  "dependencies": {
+    "semantic-ui": "~1.11.4",
+    "d3": "~3.5.5"
   }
 }
-
