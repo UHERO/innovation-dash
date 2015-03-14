@@ -13,7 +13,7 @@ module.exports =
     require('./edu').name,
     require('./ent').name,
     require('./rnd').name,
-    require('./econ').name,
+    require('./econ').name
 
     //load extra app modules here, e.g.:
     //require('./frontend').name,

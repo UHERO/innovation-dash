@@ -8,7 +8,7 @@ module.exports =
   .config(function ($stateProvider) {
     $stateProvider
     .state('ent', {
-      url: '',
+      url: '/ent',
       templateUrl: 'app/ent/layout.html',
       controller: 'EntController'
     });
