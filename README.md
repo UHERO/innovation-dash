@@ -1,16 +1,8 @@
-# uHero
-
-INITIAL YEOMAN SETUP 
-
-npm install -g generator-gulp-ng
-
-mkdir myApp && cd myApp && yo gulp-ng
-
-gulp
-
-karma start karma-unit.js
-
-open browser to http://localhost:9000
-
-start hacking
-
+Getting Started with Angulpify
+Install: npm install -g generator-angulpify
+Run: yo angulpify
+Run:
+gulp for building to the build directory
+gulp --release for building to the release directory
+Go to http://localhost:8080
+Enjoy!
