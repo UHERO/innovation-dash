@@ -1,16 +1,18 @@
 'use strict';
 
 module.exports =
-  angular.module('uHero.foo', [
+  angular.module('uHero.ent', [
     //load your foo submodules here, e.g.:
     //require('./bar').name
   ])
   .config(function ($stateProvider) {
     $stateProvider
-    .state('foo', {
+    .state('ent', {
       url: '',
-      templateUrl: 'app/foo/layout.html',
-      controller: 'fooController'
+      templateUrl: 'app/ent/layout.html',
+      controller: 'EntController'
     });
   })
-  .controller('fooController', require('./fooController'));
+
+  .controller('EntController', require('./EntController'));
+
