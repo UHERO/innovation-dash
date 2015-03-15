@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = /*@ngInject*/
-  function matureFirmEmploymenController($scope) {
+  function MatureFirmEmploymentController($scope) {
     $scope.welcome = 'Mature Firm Employment Share';
   };
