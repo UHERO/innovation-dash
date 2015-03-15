@@ -18,4 +18,8 @@ module.exports =
     //load extra app modules here, e.g.:
     //require('./frontend').name,
     //require('./admin').name
-  ]);
+  ])
+
+.config(function($urlRouterProvider) {
+    $urlRouterProvider.otherwise("/edu");
+});

@@ -9,17 +9,17 @@ module.exports =
     $stateProvider
     .state('edu', {
       url: '/edu',
-      templateUrl: 'app/edu/layout.html',
+      templateUrl: 'app/edu/views/layout.html',
       controller: 'EduController'
     })
     .state('edu.sne-grad-student-funding', {
       url: '/edu/sne-grad-student-funding',
-      templateUrl: 'app/edu/sne-grad-student-funding.html',
+      templateUrl: 'app/edu/views/sne-grad-student-funding.html',
       controller: 'SnEGradStudentFundingController'
     })
     .state('edu.sne-grad-student-profile', {
       url: '/edu/sne-grad-student-profile',
-      templateUrl: 'app/edu/sne-grad-student-profile.html',
+      templateUrl: 'app/edu/views/sne-grad-student-profile.html',
       controller: 'SnEGradStudentProfileController'
     });
 

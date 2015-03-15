@@ -8,7 +8,7 @@ module.exports =
   .config(function ($stateProvider) {
     $stateProvider
     .state('econ', {
-      url: '',
+      url: '/econ',
       templateUrl: 'app/econ/layout.html',
       controller: 'EconController'
     });
