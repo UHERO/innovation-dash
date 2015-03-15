@@ -13,57 +13,57 @@ module.exports =
       controller: 'EduController'
     })
     .state('edu.sne-grad-student-profile', {
-      url: '/edu/sne-grad-student-profile',
+      url: '/sne-grad-student-profile',
       templateUrl: 'app/edu/views/sne-grad-student-profile.html',
       controller: 'SnEGradStudentProfileController'
     })
     .state('edu.sne-grad-student-funding', {
-      url: '/edu/sne-grad-student-funding',
+      url: '/sne-grad-student-funding',
       templateUrl: 'app/edu/views/sne-grad-student-funding.html',
       controller: 'SnEGradStudentFundingController'
     })
     .state('edu.stem-majors', {
-      url: '/edu/stem-majors',
+      url: '/stem-majors',
       templateUrl: 'app/edu/views/stem-majors.html',
       controller: 'StemMajorsController'
     })
     .state('edu.education-attainment', {
-      url: '/edu/education-attainment',
+      url: '/education-attainment',
       templateUrl: 'app/edu/views/education-attainment.html',
       controller: 'EducationAttainmentController'
     })
     .state('edu.post-sec-degree', {
-      url: '/edu/post-sec-degree',
+      url: '/post-sec-degree',
       templateUrl: 'app/edu/views/post-sec-degree.html',
       controller: 'PostSecDegreeController'
     })
     .state('edu.sne-grad-students', {
-      url: '/edu/sne-grad-students',
+      url: '/sne-grad-students',
       templateUrl: 'app/edu/views/sne-grad-students.html',
       controller: 'SnEGradStudentsController'
     })
     .state('edu.post-docs', {
-      url: '/edu/post-docs',
+      url: '/post-docs',
       templateUrl: 'app/edu/views/post-docs.html',
       controller: 'PostDocsController'
     })
     .state('edu.fourth-grade-math', {
-      url: '/edu/fourth-grade-math',
+      url: '/fourth-grade-math',
       templateUrl: 'app/edu/views/fourth-grade-math.html',
       controller: 'FourthGradeMathController'
     })
     .state('edu.fourth-grade-reading', {
-      url: '/edu/fourth-grade-reading',
+      url: '/fourth-grade-reading',
       templateUrl: 'app/edu/views/fourth-grade-reading.html',
       controller: 'FourthGradeReadingController'
     })
     .state('edu.eight-grade-math', {
-      url: '/edu/eight-grade-math',
+      url: '/eight-grade-math',
       templateUrl: 'app/edu/views/eight-grade-math.html',
       controller: 'EightGradeMathController'
     })
     .state('edu.eight-grade-reading', {
-      url: '/edu/eight-grade-reading',
+      url: '/eight-grade-reading',
       templateUrl: 'app/edu/views/eight-grade-reading.html',
       controller: 'EightGradeReadingController'
     });
