@@ -10,6 +10,8 @@ global.config = {
       assets: [SRC_FOLDER + '/assets/**/*', '!' + SRC_FOLDER + '/assets/images/**/*'],
       images: SRC_FOLDER + '/assets/images/**/*',
       scripts: SRC_FOLDER + '/modules/**/*.js',
+      sass: SRC_FOLDER + '/sass/app.scss',
+      sassGlob: SRC_FOLDER + '/sass/**/*.scss',
       styles: SRC_FOLDER + '/styles/app.css',
       stylesGlob: SRC_FOLDER + '/styles/**/*.css',
       templates: SRC_FOLDER + '/modules/**/*.html',
@@ -21,6 +23,7 @@ global.config = {
     dest: {
       build: {
         styles: BUILD_FOLDER,
+        sass: BUILD_FOLDER + '/bundle.css', 
         scripts: BUILD_FOLDER,
         images: BUILD_FOLDER + '/assets/images',
         assets: BUILD_FOLDER + '/assets',
@@ -29,6 +32,7 @@ global.config = {
       },
       release: {
         styles: RELEASE_FOLDER,
+        sass: RELEASE_FOLDER,
         scripts: RELEASE_FOLDER,
         images: RELEASE_FOLDER + '/assets/images',
         assets: RELEASE_FOLDER + '/assets',
