@@ -1,21 +1,24 @@
-<div class="Economic">
- 
-  <h1>How does Hawaii compare to the rest of the U.S. in {{welcome}}</h1>
-  
-  <p>Choose an indicator</p>
-  <ul>
-    <li><a ui-sref="econ.gdp-by-state">GDP by State</a></li>
-    <li><a ui-sref="econ.per-capita-personal-income">Per Capita Personal Income</a></li>
-    <li><a ui-sref="econ.average-earnings-per-job">Average Earnings Per Job</a></li>
-    <li><a ui-sref="econ.regional-price-parities">Regional Price Parities</a></li>
-    <li><a ui-sref="econ.non-farm-jobs">Non-Farm Jobs</a></li>
-    <li><a ui-sref="econ.unemployment-rate">Unemployment Rate</a></li>
-    <li><a ui-sref="econ.state-and-local-tax-burden">State and Local Tax Burden</a></li>
-    <li><a ui-sref="econ.lf-part-empl-rate">LF Part Empl Rate</a></li>
-
-  </ul>
-</div>
-<div ui-view>
-  <!-- Add default/"blank" map and bar into here -->
-  <h1>Choose an indicator and a diagram will generate.</h1>
+<div class="economic">
+  <div class="title">
+    <h1>How does Hawaii compare to the rest of the U.S. in {{welcome}}</h1>
+  </div>
+  <aside>
+    <h2><span class="numbers">1</span> Choose an indicator</h2>
+    <ul>
+      <li><a ui-sref="econ.gdp-by-state">GDP by State</a></li>
+      <li><a ui-sref="econ.per-capita-personal-income">Per Capita Personal Income</a></li>
+      <li><a ui-sref="econ.average-earnings-per-job">Average Earnings Per Job</a></li>
+      <li><a ui-sref="econ.regional-price-parities">Regional Price Parities</a></li>
+      <li><a ui-sref="econ.non-farm-jobs">Non-Farm Jobs</a></li>
+      <li><a ui-sref="econ.unemployment-rate">Unemployment Rate</a></li>
+      <li><a ui-sref="econ.state-and-local-tax-burden">State and Local Tax Burden</a></li>
+      <li><a ui-sref="econ.lf-part-empl-rate">LF Part Empl Rate</a></li>
+    </ul>
+  </aside>
+  <div class="graphs">
+    <div ui-view>
+      <!-- Add default/"blank" map and bar into here -->
+      <h1>Choose an indicator and a diagram will generate.</h1>
+    </div>
+  </div>
 </div>

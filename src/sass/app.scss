@@ -6,8 +6,8 @@
 
 body{
   background-color: $dark_grey;
-  font-size: $base;
   font-family: $montserrat;
+  @include uHero_font($base, 1, $body_color, 400);
 }
 
 header{
@@ -18,6 +18,10 @@ h1{
   @include uHero_font(1.4em, 1, $white, 700);
 }
 
+h2{
+  font-size: 0.95em;
+  margin: 8px 0 20px;
+}
 
 /* Layouts */
 .wrapper{
@@ -37,6 +41,8 @@ nav{
   height: 50px;
   position: relative;
   z-index: 1;
+  text-align: right;
+  float: right;
 
   ul{
     list-style-type: none;
@@ -44,12 +50,16 @@ nav{
     padding: 0;
   
     li{
-      display: inline;
+      height: 70px;
+      display: inline-block;
       background-color: blue;
       width: 200px;
       padding: 10px 30px 20px;
       border-radius: 5px;
       margin: 0 2px;
+      box-sizing: border-box;
+      vertical-align: top;
+      text-align: center;
 
       a{
         @include uHero_font( 0.75em, 1, $white, 700);
@@ -60,39 +70,62 @@ nav{
   }
 }
 
+.nav_edu,.nav_ent{
+  padding-top: 20px; 
+}
+
 .container{
-  background-color: salmon;
+  background-color: $white;
   margin: auto;
-  margin-top: -20px;
+  margin-top: 5px;
   position: relative;
   z-index: 2;
-  border-radius: 5px
+  border-radius: 5px;
+}
+
+.content{
+  border-radius: 5px;
 }
 
 .title{
   background-color: $econ_medium;
   height: 43px; 
   text-align: center;
-  padding: 30px 0 0;  
+  padding: 30px 0 0;
+
+  .edu{
+    color: $dark_grey;
+  }  
 }
 
 aside{
-  width: 25%;
+  width: 20%;
   background-color: $light_grey;
   float:left;
   padding: 20px;
 
-  p{
-    margin-bottom: 20px;
-    span{
-      width: 20px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: black;
-      color: $white;
-      padding: 2px 9px;
+  ul{
+    li{
+      background-color: $white;
+      width: 85%;
+      margin: 5px auto;
+      padding: 15px;
+
+      a{
+        @include uHero_font(0.85em, 1, $body_color, 400);
+        text-decoration: none;
+      }
     }
   }
+}
+
+.numbers{
+  width: 20px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: black;
+  color: $white;
+  padding: 2px 9px;
 }
 
 .graphs{
