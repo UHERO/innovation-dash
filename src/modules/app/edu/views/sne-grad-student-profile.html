@@ -1,18 +1,9 @@
-<div class="Education">
-<!-- <div class="Education">
- 
-  <h1>{{welcome}}</h1>
-
-  <a ui-sref="edu">student profile</a>
-</div>
-</div> -->
-<div class="views_container">
-  <span class="numbers"></span>
-  <div class="us_map clearfix">
-    <div class="indicator_info">
-      <h2>In Hawaii...</h2>  
+<section>
+  <div class="info_legend_container clearfix">
+    <div class="map_info">
+      <h2><span class="numbers">2</span>In Hawaii...</h2>  
       <h3>In <span>{{currentyear}}</span>, <span>{{percent}} of full time graduate students</span> were science, engineering and health</h3>
-    </div>
+    </div> <!-- indicator_info -->
     <div class="legend">
       <h2>Legend Data</h2>
         <ul>
@@ -23,22 +14,30 @@
           <li><span></span>{{sampledata}}</li>
         </ul>
     </div> <!-- legend -->
-    <div class="map">US Map Goes Here</div>
-  </div> <!-- us_map -->
+  </div> <!-- info_legend_container -->
+  <div class="map">US Map Goes Here</div>
+</section>
 
-  <div class="line_graph">
-  <span class="numbers"></span>
-    <h2>In Hawaii...</h2>
+<section>
+  <div class="line_graph_info">
+    <h2><span class="numbers">3</span>In Hawaii...</h2>
     <h3>In {{endyear}}, this was an increase of {{percent}} in {{majors}} since {{startyear}}</h3>
-    <div class="legend">
-      <h2>Legend Data</h2>
-    </div>
+  </div>
+  <div class="line_graph_container">
     <div class="graph">Line Graph Goes Here</div>
-  </div>
+    <div class="key">
+      <h2>Legend Data</h2>
+    </div> <!-- legend -->
+  </div> <!-- line_graph_container --> 
+</section>
 
-  <div class="time_span">
-  <span class="numbers"></span>
-    <h2>Time Span<span>Choose a Start and End year to compare.</span></h2>
-    <p>slider goes hear</p>
-  </div>
-</div>
+<section>
+  <div class="time_container clearfix">
+    <div class="timeline_info">
+      <h2><span class="numbers">4</span>Time Span<span>Choose a Start and End year to compare.</span></h2>
+    </div> <!-- timeline_info -->
+    <div class="time_span">
+      <p>slider goes hear</p>
+    </div>
+  </div> <!-- time_container -->
+</section>
