@@ -37,25 +37,25 @@ p{
 
 /* Common Color Schemes */
 .nav_edu,
-.education .title, .education .numbers{
+.education .title, .education .numbers, .education ul li:hover, .education ul li:active{
   background-color: $edu_medium;
 } 
 
 
 .nav_rnd,
-.research .title, .research .numbers{
+.research .title, .research .numbers, .research ul li:hover, .research ul li:active{
   background-color: $rnd_medium;
 }
 
 
 .nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers{
+.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship ul li:hover, .entrepreneurship ul li:active{
   background-color: $ent_medium;
 }
 
 
 .nav_econ,
-.economic .title, .economic .numbers{
+.economic .title, .economic .numbers, .economic ul li:hover, .economic ul li:active{
   background-color: $econ_medium;
 }
 
@@ -111,7 +111,7 @@ nav{
 }
 
 .container{
-  background-color: $white;
+  background-color: $light_grey;
   margin: auto;
   margin-top: 5px;
   position: relative;
@@ -169,8 +169,10 @@ aside{
 
 .graphs{
   float:left;
-  width: 69%;
-  padding: 20px 40px;
+  width: 76.3%;
+  // padding: 20px 40px;
+  background-color: $white;
+  overflow: hidden;
 }
 
 /* Views Container
@@ -181,7 +183,7 @@ section{
   display: block;
   margin-bottom: 20px;
   border-bottom: 2px solid $light_grey; 
-  padding-bottom: 30px;
+  padding: 20px 40px 30px;
 }
 
 section:last-child{
@@ -207,6 +209,7 @@ section:last-child{
 .map{
   display: block;
   background-image: url('../assets/images/united_states.svg');
+  background-repeat: no-repeat;
   height: 530px;
   width: auto;
 }
