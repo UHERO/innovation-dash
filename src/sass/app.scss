@@ -37,7 +37,11 @@ p{
 
 /* Common Color Schemes */
 .nav_edu,
-.education .title, .education .numbers, .education ul li:hover, .education ul li:active{
+.education .title{
+  background-color: $edu_med_dark;
+} 
+
+.education .numbers, .education ul li:hover, .education ul li:active{
   background-color: $edu_medium;
 } 
 
@@ -135,11 +139,7 @@ nav{
   text-align: center;
   padding: 30px 0 10px;
   border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-
-  .edu{
-    color: $dark_grey;
-  }  
+  border-top-right-radius: 5px;  
 }
 
 aside{
