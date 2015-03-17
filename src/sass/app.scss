@@ -2,7 +2,7 @@
 @import "partials/resets";
 @import "partials/mixins";
 
-/*Globals*/
+/* Globals */
 
 body{
   background-color: $dark_grey;
@@ -35,6 +35,31 @@ p{
   @include uHero_font(0.85em, 1, $body_color, 400);
 }
 
+/* Common Color Schemes */
+.nav_edu,
+.education .title, .education .numbers{
+  background-color: $edu_medium;
+} 
+
+
+.nav_rnd,
+.research .title, .research .numbers{
+  background-color: $rnd_medium;
+}
+
+
+.nav_ent,
+.entrepreneurship .title,.entrepreneurship .numbers{
+  background-color: $ent_medium;
+}
+
+
+.nav_econ,
+.economic .title, .economic .numbers{
+  background-color: $econ_medium;
+}
+
+
 /* Layouts */
 .wrapper{
   margin: auto;
@@ -49,8 +74,7 @@ p{
 
 nav{
   width: 77%;
-  display: inline-block;
-  float: right; 
+  display: inline-block; 
   height: 50px;
   position: relative;
   z-index: 1;
@@ -65,7 +89,6 @@ nav{
     li{
       height: 70px;
       display: inline-block;
-      background-color: blue;
       width: 200px;
       padding: 10px 30px 20px;
       border-radius: 5px;
@@ -140,7 +163,6 @@ aside{
   width: 20px;
   height: 10px;
   border-radius: 50%;
-  background-color: black;
   color: $white;
   padding: 3px 9px;
 }
@@ -151,7 +173,8 @@ aside{
   padding: 20px 40px;
 }
 
-/* Views Container - Map and Line graphs */
+/* Views Container
+ Map and Line graphs */
 
 section{
   width: 100%;
@@ -159,6 +182,10 @@ section{
   margin-bottom: 20px;
   border-bottom: 2px solid $light_grey; 
   padding-bottom: 30px;
+}
+
+section:last-child{
+  border: none;
 }
 .info_legend_container{
   display: block;
@@ -215,6 +242,5 @@ section{
   height: 40px;
 
 }
-
 
 
