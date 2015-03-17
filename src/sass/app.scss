@@ -15,7 +15,7 @@ header{
 }
 
 h1{
-  @include uHero_font(1.4em, 1, $white, 700);
+  @include uHero_font(1.4em, 1, $white, 400);
 }
 
 h2{
@@ -59,6 +59,10 @@ p{
   background-color: $econ_medium;
 }
 
+.education ul li:hover a, .education ul li:active a{
+  color: $body_color;
+}
+
 
 /* Layouts */
 .wrapper{
@@ -98,7 +102,8 @@ nav{
       text-align: center;
 
       a{
-        @include uHero_font( 0.75em, 1, $white, 700);
+        @include uHero_font( 0.75em, 1, $white, 400);
+        letter-spacing: 0.15em;
         text-decoration: none;
         text-transform: uppercase;
       }
@@ -110,24 +115,27 @@ nav{
   padding-top: 20px; 
 }
 
+.nav_ent{
+  padding-left: 15px;
+}
+
 .container{
   background-color: $light_grey;
   margin: auto;
   margin-top: 5px;
   position: relative;
   z-index: 2;
-  border-radius: 5px;
-}
-
-.content{
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .title{
   background-color: $econ_medium;
   height: 43px; 
   text-align: center;
-  padding: 30px 0 0;
+  padding: 30px 0 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 
   .edu{
     color: $dark_grey;
@@ -149,11 +157,16 @@ aside{
       width: 85%;
       margin: 5px auto;
       padding: 15px;
-      border-radius: 5px;
-
+      border-radius: 3px;
+  
       a{
-        @include uHero_font(0.85em, 1, $body_color, 400);
+        @include uHero_font(0.82em, 1, $body_color, 400);
         text-decoration: none;
+
+      }
+
+      &:hover a, &:active a{
+        color: $white;
       }
     }
   }

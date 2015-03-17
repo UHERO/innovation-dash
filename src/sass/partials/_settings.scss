@@ -8,14 +8,48 @@ $montserrat: 'Montserrat', sans-serif;
 /* Colors */
 $body_color: #A0A1A4;
 $white: #fff;
-$light_grey: #F0F2F2;
 /* for dark headers */
 $dark_grey: #414042;
 
 /* Default Map Color */
-$light_grey: #E6E7E8; 
-$default_light_grey: #E6E7E8; 
+$light_grey: #EBEDDE; 
 
+
+/* Colors */
+/* Edu */
+// $edu_light: #C2EDF2;
+// $edu_med_light: #69D0E8;
+// $edu_medium: #47ABC6;
+// $edu_med_dark: #087F9B;
+//time bar same as edu_dark 
+// $edu_dark_blue: #03627F;
+//line graph orange same as $econ_medium
+
+/* RND */
+// $rnd_light: #C2F1F2;
+// $rnd_med_light: #7FC4C9;
+// $rnd_medium: #E87F02;
+// $rnd_med_dark: #C66700;
+// $rnd_dark: #914800;
+// $line_graph_blue: #56A1B2;
+
+/* ENT */
+// $ent_light: #EDEBDF;
+// $ent_med_light: #D3D0C1;
+// $ent_medium: #AAA797;
+// $ent_med_dark: #878476;
+// $ent_dark: #605D51;
+
+/*ECON*/
+/* Main same as medium green */
+// $econ_light: #FCDDC0;
+// $econ_med_light: #FFBB83;
+// $econ_medium: #FF9933;
+// $econ_med_dark: #F27D14;
+// $econ_dark: #C15606;
+/* Line graph pink is ent_pink */
+
+/*Alt Colors*/
 /* Edu */
 $edu_light: #F7EECB;
 $edu_med_light: #F7E184;
@@ -43,10 +77,13 @@ $ent_dark: #8E1043;
 /*ECON*/
 /* Main same as medium green */
 $econ_light: #E3E8A0;
-$econ_light: #B6C12B;
+$econ_med_light: #B6C12B;
 $econ_medium: #899A0F;
 $econ_med_dark: #747C08;
 $econ_dark: #505606;
 /* Line graph pink is ent_pink */
+
+
+
 
 
