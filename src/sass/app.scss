@@ -12,9 +12,6 @@ body{
 }
 
 header{
-  margin: auto;
-  width: 98%;
-  background-color: salmon;
   padding-top: 30px;
   padding-top: 40px;
 }
@@ -110,4 +107,28 @@ aside{
 .graphs{
   float:right;
   width: 65%;
+}
+
+
+// Views Container - Map and Line graphs
+
+.us_map{
+  background-color: orange;
+
+  .legend{
+    border: solid 1px red;
+    padding: 5px;
+    width: 20%;
+    float: right;
+  }
+
+}
+
+
+.line_graph{
+  background-color: pink;
+}
+
+.time_span{
+  background-color: orange;
 }

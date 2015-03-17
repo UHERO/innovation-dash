@@ -8,22 +8,24 @@
     <!--styles-->
   </head>
   <body>
-    <header class="clearfix">
-      <div class="logo">
-        <h1>uHero.</h1>
-      </div>
-      <nav>
-        <ul>
-          <li><a ui-sref="edu">education</a></li>
-          <li><a ui-sref="rnd">research &amp; development</a></li>
-          <li><a ui-sref="ent">entrepreneurship</a></li>
-          <li><a ui-sref="econ">economic prosperity</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="wrapper">
+      <header class="clearfix">
+        <div class="logo">
+          <h1>uHero.</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a ui-sref="edu">education</a></li>
+            <li><a ui-sref="rnd">research &amp; development</a></li>
+            <li><a ui-sref="ent">entrepreneurship</a></li>
+            <li><a ui-sref="econ">economic prosperity</a></li>
+          </ul>
+        </nav>
+      </header>
 
-    <div class="container">
-      <div ui-view></div>
+      <div class="container clearfix">
+        <div ui-view></div>
+      </div>
     </div>
     <!--scripts-->
   </body>
