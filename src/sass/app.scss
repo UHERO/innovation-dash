@@ -22,6 +22,14 @@ h2{
   font-size: 0.95em;
   margin: 8px 0 20px;
 }
+  // background-color: green;
+}
+
+h3{
+  // background-color: pink;
+}
+
+
 
 /* Layouts */
 .wrapper{
@@ -38,6 +46,7 @@ h2{
 nav{
   width: 77%;
   display: inline-block;
+  float: right; 
   height: 50px;
   position: relative;
   z-index: 1;
@@ -131,4 +140,61 @@ aside{
 .graphs{
   float:right;
   width: 65%;
+}}}
+
+
+// Views Container - Map and Line graphs
+
+.views_container{
+  background-color: grey;
+  width: 100%;
+}
+
+.us_map{
+  background-color: orange;
+  max-width: 880px;
+  height: 750px;
+  margin: auto;
+  padding: 20px;
+
+  .map{
+    display: block;
+    background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
+    height: 530px;
+    width: auto;
+    float: left;
+  }
+  
+  .indicator_info{
+    background-color: brown;
+    width: 55%;
+    float: left;
+  }
+  
+  .legend{
+    background-color: yellow;
+    border: solid 1px red;
+    padding: 5px;
+    width: 35%;
+    float: right;
+
+  }
+}
+
+.line_graph{
+  background-color: pink;
+  max-width: 880px;
+  height: 500px;
+  border-top: solid 1px $light_grey;
+  border-bottom: solid 1px $light_grey;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.time_span{
+  background-color: orange;
+  max-width: 880px;
+  height: 80px;
+  margin: auto;
+  padding: 20px;
 }
