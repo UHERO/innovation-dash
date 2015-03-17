@@ -21,6 +21,15 @@ h1{
   @include uHero_font(1.4em, 1, $white, 700);
 }
 
+h2{
+  // background-color: green;
+}
+
+h3{
+  // background-color: pink;
+}
+
+
 
 /* Layouts */
 .wrapper{
@@ -112,23 +121,56 @@ aside{
 
 // Views Container - Map and Line graphs
 
-.us_map{
-  background-color: orange;
-
-  .legend{
-    border: solid 1px red;
-    padding: 5px;
-    width: 20%;
-    float: right;
-  }
-
+.views_container{
+  background-color: grey;
+  width: 100%;
 }
 
+.us_map{
+  background-color: orange;
+  max-width: 880px;
+  height: 750px;
+  margin: auto;
+  padding: 20px;
+
+  .map{
+    display: block;
+    background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
+    height: 530px;
+    width: auto;
+    float: left;
+  }
+  
+  .indicator_info{
+    background-color: brown;
+    width: 55%;
+    float: left;
+  }
+  
+  .legend{
+    background-color: yellow;
+    border: solid 1px red;
+    padding: 5px;
+    width: 35%;
+    float: right;
+
+  }
+}
 
 .line_graph{
   background-color: pink;
+  max-width: 880px;
+  height: 500px;
+  border-top: solid 1px $light_grey;
+  border-bottom: solid 1px $light_grey;
+  margin: auto;
+  padding: 0 20px;
 }
 
 .time_span{
   background-color: orange;
+  max-width: 880px;
+  height: 80px;
+  margin: auto;
+  padding: 20px;
 }
