@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function RndController($scope) {
-    $scope.welcome = 'R & D!';
+    $scope.welcome = 'Resesarch & Development?';
   };
