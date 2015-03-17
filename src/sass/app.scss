@@ -110,6 +110,7 @@ aside{
       width: 85%;
       margin: 5px auto;
       padding: 15px;
+      border-radius: 5px;
 
       a{
         @include uHero_font(0.85em, 1, $body_color, 400);
