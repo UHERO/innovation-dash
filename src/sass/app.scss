@@ -1,6 +1,57 @@
-@import "partials/test";
+@import "partials/settings";
+@import "partials/resets";
+@import "partials/mixins";
+
+/*Globals*/
 
 body{
-  background-color: pink;
+  background-color: $dark_grey;
+  font-size: $base;
+  font-family: $lato;
+}
+
+header{
+  margin: auto;
+  width: 98%;
+  background-color: salmon;
+  padding-top: 30px;
+}
+
+h1{
+  @include uHero_font(1.2em, 1, $white, 700);
+}
+
+
+/* Layouts */
+.logo{
+  width: 20%;
+  display: inline-block;
+  float: left;
+}
+
+nav{
+  width: 75%;
+  display: inline-block;
+  height: 40px;
+  float: right; 
+  ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  
+    li{
+      display: inline;
+      background-color: blue;
+      width: 200px;
+      padding: 20px;
+
+      a{
+        @include uHero_font( 1em, 1, $white, 400);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+    }
+  }
+
 
 }

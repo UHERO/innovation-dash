@@ -1,0 +1,6 @@
+@mixin uHero_font( $font_size, $line_height, $font_color, $font_weight ){
+  font-size : $font-size;
+  line-height : $line-height;
+  color : $font_color;
+  font-weight: $font_weight;
+}
