@@ -21,7 +21,6 @@ h1{
 h2{
   font-size: 0.95em;
   margin: 8px 0 20px;
-}
   // background-color: green;
 }
 
@@ -138,36 +137,26 @@ aside{
 }
 
 .graphs{
-  float:right;
-  width: 65%;
-}}}
+  float:left;
+  width: 69%;
+  padding: 20px 40px;
+}
 
 
 // Views Container - Map and Line graphs
 
-.views_container{
-  background-color: grey;
-  width: 100%;
-}
 
-.us_map{
+section{
   background-color: orange;
-  max-width: 880px;
-  height: 750px;
-  margin: auto;
-  padding: 20px;
-
-  .map{
-    display: block;
-    background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
-    height: 530px;
-    width: auto;
-    float: left;
-  }
+  width: 100%;
+  display: block;
+  margin-bottom: 15px;
   
-  .indicator_info{
+  
+  .map_info{
     background-color: brown;
     width: 55%;
+    height: auto;
     float: left;
   }
   
@@ -179,22 +168,47 @@ aside{
     float: right;
 
   }
+  .map{
+    display: block;
+    background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
+    height: 530px;
+    width: auto;
+  }
 }
 
-.line_graph{
+.line_graph_container{
   background-color: pink;
-  max-width: 880px;
-  height: 500px;
-  border-top: solid 1px $light_grey;
-  border-bottom: solid 1px $light_grey;
-  margin: auto;
-  padding: 0 20px;
+  
+    .graph{
+      background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
+      height: 300px;
+      width: 75%;
+      display: inline-block;
+    }
+
+    .key{
+      background-color: brown;
+      width: 25%;
+      height: 300px;
+      float: right;
+      display: inline-block;
+    }
 }
 
-.time_span{
-  background-color: orange;
-  max-width: 880px;
-  height: 80px;
-  margin: auto;
-  padding: 20px;
+.time_container{
+
+  .timeline_info{
+    background-color: orange;
+    float: left;
+    width: 25%;
+    display: inline-block;
+  }
+
+  .time_span{
+    background-color: yellow;
+    float: right;
+    width: 70%;
+    display: inline-block;
+  }
 }
+
