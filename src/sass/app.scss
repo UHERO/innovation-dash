@@ -47,7 +47,11 @@ p{
 
 
 .nav_rnd,
-.research .title, .research .numbers, .research ul li:hover, .research ul li:active{
+.research .title{
+  background-color: $rnd_med_light;
+} 
+
+.research .numbers, .research ul li:hover, .research ul li:active{
   background-color: $rnd_medium;
 }
 
@@ -63,9 +67,6 @@ p{
   background-color: $econ_medium;
 }
 
-.education ul li:hover a, .education ul li:active a{
-  color: $body_color;
-}
 
 
 /* Layouts */
@@ -228,7 +229,6 @@ section:last-child{
 }
 
 .line_graph_container{
-  background-color: pink;
   
     .graph{
       background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
@@ -247,13 +247,14 @@ section:last-child{
 }
 
 .timeline_info{
+  // background-color: pink;
   float: left;
   width: 35%;
 }
 
 .time_span{
-  background-color: yellow;
-  float: right;
+  // background-color: yellow;
+  float: left;
   width: 60%;
   height: 40px;
 
