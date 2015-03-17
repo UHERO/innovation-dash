@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function GdpStateController($scope) {
-    $scope.welcome = 'GDP by State';
+    $scope.welcome = 'GDP by State?';
   };  

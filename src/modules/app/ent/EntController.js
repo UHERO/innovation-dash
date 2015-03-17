@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function EntController($scope) {
-    $scope.welcome = 'Entrepreneurship!';
+    $scope.welcome = 'Entrepreneurship?';
   };

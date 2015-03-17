@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function LFPartEmplController($scope) {
-    $scope.welcome = 'LF Part Empl Rate';
+    $scope.welcome = 'LF Part Empl Rate?';
   };

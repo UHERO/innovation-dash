@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function EconController($scope) {
-    $scope.welcome = 'Economic Prosperity!';
+    $scope.welcome = 'Economic Prosperity?';
   };
