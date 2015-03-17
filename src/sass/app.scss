@@ -20,7 +20,7 @@ h1{
 
 h2{
   font-size: 0.95em;
-  margin: 8px 0 20px;
+  margin: 8px 0 3px;
   // background-color: green;
 }
 
@@ -28,7 +28,12 @@ h3{
   // background-color: pink;
 }
 
-
+p{
+  padding-left: 30px;
+  font-family: $bitter;
+  font-style: italic;
+  @include uHero_font(0.85em, 1, $body_color, 400);
+}
 
 /* Layouts */
 .wrapper{
@@ -111,8 +116,11 @@ aside{
   background-color: $light_grey;
   float:left;
   padding: 20px;
+  height: 100%;
 
   ul{
+    margin-top: 20px;
+
     li{
       background-color: $white;
       width: 85%;
@@ -134,7 +142,7 @@ aside{
   border-radius: 50%;
   background-color: black;
   color: $white;
-  padding: 2px 9px;
+  padding: 3px 9px;
 }
 
 .graphs{
@@ -146,33 +154,34 @@ aside{
 /* Views Container - Map and Line graphs */
 
 section{
-  background-color: orange;
   width: 100%;
   display: block;
-  margin-bottom: 15px;
-  
-  
+  margin-bottom: 20px;
+  border-bottom: 2px solid $light_grey; 
+  padding-bottom: 30px;
+}
+.info_legend_container{
+  display: block;
+  margin-bottom: 20px;
+
   .map_info{
-    background-color: brown;
     width: 55%;
-    height: auto;
     float: left;
   }
-  
+
   .legend{
-    background-color: yellow;
     border: solid 1px red;
     padding: 5px;
     width: 35%;
     float: right;
 
   }
-  .map{
-    display: block;
-    background-image: url('../assets/images/united_states.svg');
-    height: 530px;
-    width: auto;
-  }
+}
+.map{
+  display: block;
+  background-image: url('../assets/images/united_states.svg');
+  height: 530px;
+  width: auto;
 }
 
 .line_graph_container{
@@ -194,20 +203,18 @@ section{
     }
 }
 
-.time_container{
-
-  .timeline_info{
-    background-color: orange;
-    float: left;
-    width: 25%;
-    display: inline-block;
-  }
-
-  .time_span{
-    background-color: yellow;
-    float: right;
-    width: 70%;
-    display: inline-block;
-  }
+.timeline_info{
+  float: left;
+  width: 35%;
 }
+
+.time_span{
+  background-color: yellow;
+  float: right;
+  width: 60%;
+  height: 40px;
+
+}
+
+
 
