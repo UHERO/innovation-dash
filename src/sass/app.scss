@@ -33,7 +33,7 @@ h3{
   background-color: $edu_med_dark;
 } 
 
-.education .numbers, .education ul li:hover, .education .active {
+.education .numbers, .education aside ul li:hover, .education .item.active {
   background-color: $edu_medium;
 } 
 
@@ -43,19 +43,19 @@ h3{
   background-color: $rnd_med_light;
 } 
 
-.research .numbers, .research ul li:hover, .research .active{
+.research .numbers, .research aside ul li:hover, .research .item.active{
   background-color: $rnd_medium;
 }
 
 
 .nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship ul li:hover, .entrepreneurship .active{
+.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
   background-color: $ent_medium;
 }
 
 
 .nav_econ,
-.economic .title, .economic .numbers, .economic ul li:hover, .economic .active{
+.economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
   background-color: $econ_medium;
 }
 
@@ -115,7 +115,7 @@ nav{
 
 .nav_ent{
   a{
-    padding-left: 16px;
+    padding: 12px 16px 20px;
   }
 }
 
@@ -149,7 +149,6 @@ aside{
     li{
       background-color: $white;
       margin: 5px auto;
-      // padding: 15px;
       border-radius: 3px;
   
       a{
@@ -160,7 +159,7 @@ aside{
         display: block;
       }
 
-      &:hover a, &:active a{
+      &:hover a, &.item.active a{
         color: $white;
       }
     }
@@ -176,9 +175,6 @@ aside{
 }
 
 .graphs{
-  float:left;
-  width: 76.3%;
-  // padding: 20px 40px;
   background-color: $white;
   overflow: hidden;
 }
