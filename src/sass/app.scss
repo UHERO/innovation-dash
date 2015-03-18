@@ -8,6 +8,7 @@ body{
   background-color: $oil;
   font-family: $montserrat;
   @include uHero_font($base, 1, $body_color, 400);
+  letter-spacing: 0.03em;
 }
 
 header{
