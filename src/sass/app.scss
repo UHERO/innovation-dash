@@ -7,7 +7,7 @@
 body{
   background-color: $oil;
   font-family: $montserrat;
-  @include uHero_font($base, 1, $body_color, 400);
+  @include uHero_font($base, 1.2, $body_color, 400);
   letter-spacing: 0.03em;
 }
 
@@ -25,7 +25,8 @@ h2{
 }
 
 h3{
-  // background-color: pink;
+  margin: 10px 25px 0;
+  line-height: 1.2;
 }
 
 /* Common Color Schemes */
@@ -65,7 +66,7 @@ h3{
 /* Layouts */
 .wrapper{
   margin: auto;
-  width: 99%;
+  max-width: 1200px;
 }
 
 .logo{
@@ -215,7 +216,17 @@ section:last-child{
     padding: 5px;
     width: 35%;
     float: right;
-
+    ul{
+      li{
+        span{
+          width: 20px;
+          height: 12px;
+          background-color: black;
+          display: inline-block;
+          // margin-right: 2px;
+        }
+      }
+    }
   }
 }
 .map{
