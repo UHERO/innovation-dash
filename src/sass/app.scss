@@ -39,6 +39,10 @@ h3{
   background-color: $edu_medium;
 } 
 
+.education .info_legend_container .legend, .education .key{
+  border: 2px solid $edu_medium;
+  border-radius: 5px;
+}
 
 .nav_rnd,
 .research .title{
@@ -49,16 +53,30 @@ h3{
   background-color: $rnd_medium;
 }
 
+.research .info_legend_container .legend, .research .key{
+  border: 2px solid $rnd_medium;
+  border-radius: 5px;
+}
 
 .nav_ent,
 .entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
   background-color: $ent_medium;
 }
 
+.entrepreneurship .info_legend_container .legend, .entrepreneurship .key{
+  border: 2px solid $ent_medium;
+  border-radius: 5px;
+}
+
 
 .nav_econ,
 .economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
   background-color: $econ_medium;
+}
+
+.economic .info_legend_container .legend, .economic .key{
+  border: 2px solid $econ_medium;
+  border-radius: 5px;
 }
 
 
@@ -154,7 +172,7 @@ aside{
       border-radius: 3px;
   
       a{
-        @include uHero_font(0.82em, 1, $body_color, 400);
+        @include uHero_font(0.82em, 1.3, $body_color, 400);
         width: 85%;
         text-decoration: none;
         padding: 15px;
@@ -185,7 +203,6 @@ aside{
  Map and Line graphs */
 
 section{
-  width: 100%;
   display: block;
   margin-bottom: 20px;
   border-bottom: 2px solid $light_grey; 
@@ -207,23 +224,29 @@ section:last-child{
   margin-bottom: 20px;
 
   .map_info{
-    width: 55%;
+    width: 60%;
     float: left;
   }
 
   .legend{
-    border: solid 1px red;
-    padding: 5px;
-    width: 35%;
-    float: right;
+    padding: 10px 20px 20px;
+    width: 30%;
+    float: left;
+
+    h4{
+      margin-bottom: 5px;
+      font-size: 0.75em;
+    }
+
     ul{
       li{
         span{
           width: 20px;
           height: 12px;
-          background-color: black;
+          background-color: $edu_med_dark;
           display: inline-block;
-          // margin-right: 2px;
+          border-radius: 2px;
+          margin-right: 3px;
         }
       }
     }
@@ -237,21 +260,25 @@ section:last-child{
   width: auto;
 }
 
+.line_graph_info{
+  margin-bottom: 20px;
+}
+
 .line_graph_container{
   
     .graph{
       background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
-      height: 300px;
-      width: 75%;
-      display: inline-block;
+      height: 320px;
+      width: 65%;
+      float: left;
+      margin-right: 20px;
     }
 
     .key{
-      background-color: brown;
-      width: 25%;
+      width: 17%;
       height: 300px;
-      float: right;
-      display: inline-block;
+      float: left;
+      padding: 10px 20px;
     }
 }
 
@@ -262,7 +289,7 @@ section:last-child{
 }
 
 .time_span{
-  // background-color: yellow;
+  background-color: yellow;
   float: left;
   width: 60%;
   height: 40px;
@@ -308,26 +335,21 @@ footer{
   float: right;
 
   p{
-    width: 40%;
+    width: 50%;
     padding: 25px 0 0;
   }
 }
 .dl{
-  margin-right: 20px;
-  background-image: url('/assets/images/devleague_logo.svg');
-  background-position: 150px 10px; 
+  margin-right: 20px; 
   
-
   .devleague{
     width: 47%;
-    float: right;
-    padding-top: 45px;
-    font-size: 8px;
+    float: left;
   }
 
 }
 
 .uhero{
   background-image: url('/assets/images/uhero_logo.svg');
-  background-position: 150px 10px;
+  background-position: 170px 10px;
 }
