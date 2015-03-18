@@ -33,7 +33,7 @@ h3{
   background-color: $edu_med_dark;
 } 
 
-.education .numbers, .education ul li:hover, .education ul li:active {
+.education .numbers, .education ul li:hover, .education .active {
   background-color: $edu_medium;
 } 
 
@@ -43,19 +43,19 @@ h3{
   background-color: $rnd_med_light;
 } 
 
-.research .numbers, .research ul li:hover, .research ul li:active{
+.research .numbers, .research ul li:hover, .research .active{
   background-color: $rnd_medium;
 }
 
 
 .nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship ul li:hover, .entrepreneurship ul li:active{
+.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship ul li:hover, .entrepreneurship .active{
   background-color: $ent_medium;
 }
 
 
 .nav_econ,
-.economic .title, .economic .numbers, .economic ul li:hover, .economic ul li:active{
+.economic .title, .economic .numbers, .economic ul li:hover, .economic .active{
   background-color: $econ_medium;
 }
 
@@ -88,32 +88,35 @@ nav{
     padding: 0;
   
     li{
-      height: 70px;
       display: inline-block;
-      width: 200px;
-      padding: 10px 30px 20px;
       border-radius: 5px;
       margin: 0 2px;
-      box-sizing: border-box;
       vertical-align: top;
       text-align: center;
 
       a{
         @include uHero_font( 0.75em, 1, $white, 400);
+        box-sizing: border-box;
+        height: 70px;
+        width: 200px;
+        padding: 12px 30px 20px;
         letter-spacing: 0.15em;
         text-decoration: none;
         text-transform: uppercase;
+        display: block;
       }
     }
   }
 }
 
 .nav_edu,.nav_ent{
-  padding-top: 20px; 
+  padding-top: 8px; 
 }
 
 .nav_ent{
-  padding-left: 15px;
+  a{
+    padding-left: 16px;
+  }
 }
 
 .container{
@@ -123,7 +126,6 @@ nav{
   position: relative;
   z-index: 2;
   border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
 }
 
 .title{
@@ -131,8 +133,7 @@ nav{
   height: 43px; 
   text-align: center;
   padding: 30px 0 10px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;  
+  border-top-left-radius: 5px; 
 }
 
 aside{
@@ -147,15 +148,16 @@ aside{
 
     li{
       background-color: $white;
-      width: 85%;
       margin: 5px auto;
-      padding: 15px;
+      // padding: 15px;
       border-radius: 3px;
   
       a{
         @include uHero_font(0.82em, 1, $body_color, 400);
+        width: 85%;
         text-decoration: none;
-
+        padding: 15px;
+        display: block;
       }
 
       &:hover a, &:active a{
@@ -286,7 +288,8 @@ footer{
 }
 
 .additional{
-  padding-top: 50px;
+  padding-top: 30px;
+  height: 50px;
 }
 
 .logos{
