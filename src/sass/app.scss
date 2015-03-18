@@ -5,7 +5,7 @@
 /* Globals */
 
 body{
-  background-color: $dark_grey;
+  background-color: $oil;
   font-family: $montserrat;
   @include uHero_font($base, 1, $body_color, 400);
 }
@@ -21,18 +21,10 @@ h1{
 h2{
   font-size: 0.95em;
   margin: 8px 0 3px;
-  // background-color: green;
 }
 
 h3{
   // background-color: pink;
-}
-
-p{
-  padding-left: 30px;
-  font-family: $bitter;
-  font-style: italic;
-  @include uHero_font(0.85em, 1, $body_color, 400);
 }
 
 /* Common Color Schemes */
@@ -41,7 +33,7 @@ p{
   background-color: $edu_med_dark;
 } 
 
-.education .numbers, .education ul li:hover, .education ul li:active{
+.education .numbers, .education ul li:hover, .education ul li:active {
   background-color: $edu_medium;
 } 
 
@@ -92,7 +84,7 @@ nav{
 
   ul{
     list-style-type: none;
-    margin: 0;
+    margin-right: -2px;
     padding: 0;
   
     li{
@@ -198,6 +190,13 @@ section{
   margin-bottom: 20px;
   border-bottom: 2px solid $light_grey; 
   padding: 20px 40px 30px;
+
+  p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
 }
 
 section:last-child{
@@ -261,3 +260,63 @@ section:last-child{
 }
 
 
+/* Footer */
+footer{
+  // height: 95px;
+  padding: 15px 0;
+
+  p{
+    width: 50%;
+    font-size: 10px;
+    float: left;
+    padding-top: 0;
+  }
+
+  h5{
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+.footer_links{
+  width: 30%;
+  padding: 10px;
+  height: 68px;
+  float: left;
+}
+
+.additional{
+  padding-top: 50px;
+}
+
+.logos{
+  border-radius: 5px;
+  border: 1px solid $body_color;
+  background-repeat: no-repeat;
+  background-size: 200px;
+  float: right;
+
+  p{
+    width: 40%;
+    padding: 25px 0 0;
+  }
+}
+.dl{
+  margin-right: 20px;
+  background-image: url('/assets/images/devleague_logo.svg');
+  background-position: 150px 10px; 
+  
+
+  .devleague{
+    width: 47%;
+    float: right;
+    padding-top: 45px;
+    font-size: 8px;
+  }
+
+}
+
+.uhero{
+  background-image: url('/assets/images/uhero_logo.svg');
+  background-position: 150px 10px;
+}
