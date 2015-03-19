@@ -8,3 +8,13 @@ module.exports = /*@ngInject*/
       }
     };
   };
+
+// controller: ['$scope', '$http', function($scope, $http){
+      //     $scope.stateData = "Default";
+      //     $scope.setStateData = function (url) {
+      //     $http.get( url ).then(function (result){
+      //       $scope.StateData = result.data;
+            
+      //     };
+      //   };
+      // }],
