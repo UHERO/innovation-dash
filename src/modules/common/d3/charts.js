@@ -87,15 +87,116 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .enter().append("path")
       .attr("d", path)
       .style('stroke', '#FFF')
-      .style('stroke-width', 1)
+      .style('stroke-width', 3)
       .style('fill', function (d) {
         return color(valuesByState[d.properties.name]);
       });
   }
 
+  function dataByState(data, state, minYear, maxYear) {
+    var result = [];
+
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].GeoName === state) {
+        console.log(data[i].Years);
+
+        Object.keys(data[i].Years).forEach(function(year) {
+          // TODO: use D3's exit/enter methods to remove this data instead of manually cropping it out this way D:
+          if (year >= minYear && year <= maxYear) {
+
+            // TODO: see if we can plot points without reconfiguring data into this format
+            result.push({
+              year : year,
+              value : data[i].Years[year]
+            });
+          }
+        });
+      }
+    }
+
+    return result;
+  }
+
   // draw line graph
   function drawGraph (data) {
-    
+    //baked in state
+    var hiStateData = dataByState(data, "Hawaii", 1950, 2013);
+    var usAvgData = dataByState(data, "United States", 1950, 2013);
+    var selectedStateData = dataByState(data, "Ohio", 1950, 2013);
+
+    var vis = d3.select('#line-graph');
+    var width = 600;
+    var height = 350;
+    var margins = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 70
+      };
+
+    //TODO: set domains for xScale and yScale dynamically
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([1950, 2013]);
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,50000]);
+
+    var formatXAxis = d3.format('.0f');
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .tickFormat(formatXAxis);
+        // .outerTickSize(0);
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
+        // .outerTickSize(0);
+
+    vis.append("svg:g")
+       .attr("class", "x axis")
+       .attr("transform", "translate(0," + (height - margins.bottom) + ")")
+       .call(xAxis);
+
+    vis.append("svg:g")
+       .attr("class", "y axis")
+       .attr("transform", "translate(" + (margins.left) + ",0)")
+       .call(yAxis);
+
+    vis.append("text")
+      .attr("x", width/2)
+      .attr("y", height + margins.bottom)
+      .style("text-anchor", "middle")
+      .text("Year");
+
+    vis.append("text")
+       .attr("transform", "rotate(-90)")
+       .attr("x", 0 - (height) / 2)
+       .attr("y", 0)
+       .style("text-anchor", "middle")
+       .text("Per Capita Personal Income ($)");
+
+    var lineGen = d3.svg.line()
+      .x(function(d) {
+        return xScale(d.year);
+      })
+      .y(function(d) {
+        return yScale(d.value);
+      })
+      .interpolate("linear");
+
+    console.log(usAvgData);
+
+    vis.append("svg:path")
+       // .data(usAvgData)
+       // .enter()
+       // .attr("d", lineGen())
+       .attr("d", lineGen(usAvgData))
+       .attr("stroke", "#AAA797")
+       .attr("stroke-width", 3)
+       .attr("fill", "none");
+
+    vis.append("svg:path")
+       .attr("d", lineGen(hiStateData))
+       .attr("stroke", "orange") //TODO: change color dynamically
+       .attr("stroke-width", 3)
+       .attr("fill", "none");
   }
 
   // draw slider

@@ -267,9 +267,9 @@ section:last-child{
 .line_graph_container{
   
     .graph{
-      background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
-      height: 320px;
-      width: 65%;
+      // background-image: url('http://www.the-arcade.ie/wp-content/uploads/2015/02/iPg67gVboxwYVQgep1TQHCsTanv.jpg');
+      // height: 320px;
+      // width: 65%;
       float: left;
       margin-right: 20px;
     }
@@ -352,4 +352,30 @@ footer{
 .uhero{
   background-image: url('/assets/images/uhero_logo.svg');
   background-position: 170px 10px;
+}
+
+.axis {
+  path {
+      fill: none;
+      stroke: #AAA797;
+      stroke-width: 3;
+      shape-rendering: crispEdges;
+  }
+
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+}
+
+
+#line-graph {
+  padding-left: 20px;
+  
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
 }
