@@ -16,6 +16,7 @@ module.exports = /*@ngInject*/
         // var mapSource = '/assets/images/USA.json';
         var d3Charts = require('../d3/charts');
         d3Charts('/assets/maps/USA.json',"/assets/csv/per_capita_personal_income.csv", ".uh-maps");
+        // d3Charts('/assets/maps/USA.json',"/assets/csv/per_capita_personal_income.csv", ".uh-maps");
         console.log(d3Charts);
        // scope.names = ['jackie', 'jon', 'jesse'];
        // console.log('scope.names', scope.names);
