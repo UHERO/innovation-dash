@@ -26,9 +26,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   function ready (err, sourceMap, sourceData) {
 
+
     setupMap(width, height);
     
     var data = transformFIPSData(sourceData);
+    console.log('data set ', data);
 
     drawMap(sourceMap, data);
     drawGraph(data);
@@ -79,6 +81,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByState));
+    console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
     var states = topojson.feature(map, map.objects.units).features;
 
@@ -89,6 +92,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .style('stroke', '#FFF')
       .style('stroke-width', 3)
       .style('fill', function (d) {
+        console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
         return color(valuesByState[d.properties.name]);
       });
   }

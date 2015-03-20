@@ -38,16 +38,16 @@ module.exports = /*@ngInject*/
   //     template: '<div class="uh-map">{{stateData}}</div>',
   //     // templateUrl relative to modules
   //     // templateUrl: 'common/directives/templates/uhMap.html',
-  //     controller: ['$scope', '$http', function($scope, $http) {
-  //       $scope.stateData = "DEFAULT!!!!";
-  //       $scope.setStateData = function(url) {
+      // controller: ['$scope', '$http', function($scope, $http) {
+      //   $scope.stateData = "DEFAULT!!!!";
+      //   $scope.setStateData = function(url) {
 
-  //         // $http can be replaced with d3.csv()
-  //         $http.get(url).then(function(result) {
-  //           console.log('result', result);
-  //           $scope.stateData = result.data;
+      //     // $http can be replaced with d3.csv()
+      //     $http.get(url).then(function(result) {
+      //       console.log('result', result);
+      //       $scope.stateData = result.data;
 
-  //           // D3 logic here
+            // D3 logic here
   //         });
   //       };
   //     }],
@@ -57,7 +57,7 @@ module.exports = /*@ngInject*/
   //       // scope.drinks = ['scotch', 'vodka', 'scotchka'];
   //       console.log('scope.d3DataUrl', attrs.d3DataUrl);
 
-  //       scope.setStateData( attrs.d3DataUrl);
+  //       scope.setStateData(attrs.d3DataUrl);
   //     }
   //   };
   // };
