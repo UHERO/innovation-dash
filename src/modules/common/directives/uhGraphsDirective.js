@@ -11,19 +11,11 @@ module.exports = /*@ngInject*/
       },
       template: '<div class="uh-graphs">Data goes Here<div>',
       // templateUrl: 'common/directives/templates/uhGraphs.html',
-      
-      //each controller will render a different graph
-      //Map
-      controller: ['$scope', '$http', function($scope, $http){
-        // var helloD3 = require('../d3/helloworld');
-        // helloD3("/assets/eco_gdp_by_state.csv", "div.helloGraph");
-        //D3 Logic
-      }],
-
-
+    
       link: function (scope, element, attrs) {
-        var helloD3 = require('../d3/helloworld');
-        helloD3("/assets/eco_gdp_by_state.csv", ".uh-graphs");
+        var mapSource = '/assets/images/USA.json'
+        var helloD3 = require('../d3/charts');
+        helloD3("/assets/per_capita_personal_income.csv", ".uh-graphs");
        // scope.names = ['jackie', 'jon', 'jesse'];
        // console.log('scope.names', scope.names);
       }

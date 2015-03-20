@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   
   //Default configs
