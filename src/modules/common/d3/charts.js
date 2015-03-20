@@ -76,7 +76,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     // Iterate over the full dataset and move state name and value into object for the maxYear
     data.forEach(function (d, i) {
-      valuesByState[d.GeoName] = +d.Years[setMaxVals.maxYear];
+      valuesByState[d.State] = +d.Years[setMaxVals.maxYear];
     });
     
     // Create an array containing the min and max values 
@@ -103,7 +103,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].GeoName === state) {
+      if (data[i].State === state) {
 
         var yearValuesArray = d3.entries(data[i].Years);
 

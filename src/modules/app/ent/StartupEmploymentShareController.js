@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function StartupEmploymentShareController($scope) {
-    $scope.welcome = 'startup employment';
+    $scope.welcome = 'Startup Employment';
   };
