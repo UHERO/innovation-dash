@@ -94,13 +94,19 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   function dataByState(data, state, minYear, maxYear) {
+
+
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
       if (data[i].GeoName === state) {
-        console.log(data[i].Years);
 
-        Object.keys(data[i].Years).forEach(function(year) {
+        var yearValuesArray = d3.entries(data[i].Years);
+
+        for (var j = 0; j < yearValuesArray.length; j++) {
+          var year = parseInt(yearValuesArray[j].key);
+
+        // Object.keys(data[i].Years).forEach(function(year) {
           // TODO: use D3's exit/enter methods to remove this data instead of manually cropping it out this way D:
           if (year >= minYear && year <= maxYear) {
 
@@ -110,7 +116,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
               value : data[i].Years[year]
             });
           }
-        });
+        // });
+          
+        }
       }
     }
 
@@ -120,9 +128,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   // draw line graph
   function drawGraph (data) {
     //baked in state
-    var hiStateData = dataByState(data, "Hawaii", 1950, 2013);
-    var usAvgData = dataByState(data, "United States", 1950, 2013);
-    var selectedStateData = dataByState(data, "Ohio", 1950, 2013);
+    var hiStateData = dataByState(data, "Hawaii", 1929, 2013);
+    var usAvgData = dataByState(data, "United States", 1929, 2013);
+    console.log(d3.entries(usAvgData));
+    var selectedStateData = dataByState(data, "Ohio", 1929, 2013);
 
     var vis = d3.select('#line-graph');
     var width = 600;
@@ -135,7 +144,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       };
 
     //TODO: set domains for xScale and yScale dynamically
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([1950, 2013]);
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([1929, 2013]);
     var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,50000]);
 
     var formatXAxis = d3.format('.0f');
@@ -172,7 +181,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
        .style("text-anchor", "middle")
        .text("Per Capita Personal Income ($)");
 
+    // .defined insures that only non-negative values
+    // are graphed
     var lineGen = d3.svg.line()
+      .defined(function(d) {
+        return d.value >= 0;
+      })
       .x(function(d) {
         return xScale(d.year);
       })
@@ -180,8 +194,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         return yScale(d.value);
       })
       .interpolate("linear");
-
-    console.log(usAvgData);
 
     vis.append("svg:path")
        // .data(usAvgData)
