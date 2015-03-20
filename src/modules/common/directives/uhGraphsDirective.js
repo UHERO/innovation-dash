@@ -24,12 +24,29 @@ module.exports = /*@ngInject*/
        };
       }],
 
+
+      controller: ['$scope', '$http', function ($scope, $http){
+        $scope.stateData = "Pass in State Data";
+        $scope.setStateData = function (url){
+          $http.get(url).then(function (result) {
+            $scope.stateData = result.data;
+          });
+        };
+      }],
+    
       link: function (scope, element, attrs) {
         // var mapSource = '/assets/images/USA.json';
         var d3Charts = require('../d3/charts');
+
         // d3Charts('/assets/maps/USA.json',"/assets/csv/per_capita_personal_income.csv", ".uh-maps");
         d3Charts('/assets/maps/USA.json', attrs.d3DataUrl, "#uh-map");
         console.log('attrs', attrs.d3DataUrl);
+
+        // d3Charts('/assets/maps/USA.json',"http://10.0.1.8:4567/economics/eco_per_capita_personal_income", "#uh-map");
+
+        console.log(attrs.d3DataUrl);
+        
+        d3Charts('/assets/maps/USA.json', attrs.d3DataUrl, "#uh-map");
         
       }
     };
