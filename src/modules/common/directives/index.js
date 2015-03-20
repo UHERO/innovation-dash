@@ -2,4 +2,4 @@
 
 module.exports =
   angular.module('uHero.common.directives', [])
-  .directive('uhMap', require('./uhMapDirective'));
+  .directive('uhGraphs', require('./uhGraphsDirective'));
