@@ -34,7 +34,7 @@ module.exports = /*@ngInject*/
 
         console.log(attrs.d3DataUrl);
         
-        d3Charts('/assets/maps/USA.json', attrs.d3DataUrl, "#uh-map");
+        d3Charts('/assets/maps/USA.json', attrs.d3DataUrl, "#uh-map", "#uh-graph");
         
       }
     };

@@ -22,11 +22,6 @@ module.exports =
       templateUrl: 'app/econ/views/per-capita-personal-income.html',
       controller: 'PerCapitaController'
     })
-    .state('econ.average-earnings-per-job', {
-      url: '/average-earnings-per-job',
-      templateUrl: 'app/econ/views/average-earnings-per-job.html',
-      controller: 'AverageEarningsController'
-    })
     .state('econ.regional-price-parities', {
       url: '/regional-price-parities',
       templateUrl: 'app/econ/views/regional-price-parities.html',
@@ -51,16 +46,28 @@ module.exports =
       url: '/lf-part-empl-rate',
       templateUrl: 'app/econ/views/lf-part-empl-rate.html',
       controller: 'LFPartEmplController'
+    })
+    .state('econ.average-earnings-per-job', {
+      url: '/average-earnings-per-job',
+      abstract: true,
+      templateUrl: 'app/econ/views/average-earnings-per-job.html',
+      controller: 'AverageEarningsController'
+    })
+    .state('econ.average-earnings-per-job-hawaii', {
+      url: '/average-earnings-per-job-hawaii',
+      templateUrl: 'app/econ/views/average-earnings-per-job-hawaii.html',
+      controller: 'AverageEarningsHawaiiController'
     });
   })
 
   .controller('EconController', require('./EconController'))
   .controller('GdpStateController', require('./GdpStateController'))
   .controller('PerCapitaController', require('./PerCapitaController'))
-  .controller('AverageEarningsController', require('./AverageEarningsController'))
   .controller('RegionalPriceController', require('./RegionalPriceController'))
   .controller('NonFarmController', require('./NonFarmController'))
   .controller('UnemploymentRateController', require('./UnemploymentRateController'))
   .controller('StateLocalTaxController', require('./StateLocalTaxController'))
-  .controller('LFPartEmplController', require('./LFPartEmplController'));
+  .controller('LFPartEmplController', require('./LFPartEmplController'))
+  .controller('AverageEarningsController', require('./AverageEarningsController'))
+  .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'));
 
