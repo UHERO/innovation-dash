@@ -15,9 +15,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   height = 600;
 
   // TODO: set values using brush/slider
-  var selectedMinYear = 1969;
+  var selectedMinYear = 2006;
   var selectedMaxYear = 2013;
-  var yMaxVal = 70000;
+  var stateNames = ['Hawaii', 'United States', 'Nebraska'];
+  // var yMaxVal = 70000;
 
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
@@ -36,10 +37,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
     console.log('data set', data);
 
-    var stateNames = ['Hawaii', 'United States', 'Nebraska'];
     var filteredStates = filterStateObjects (data, stateNames);
-    // var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
-    // console.log('yMaxVal', yMaxVal);
+    var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
+    // var yMinVal = 0;
+    var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    console.log('yMaxVal', yMaxVal);
 
     // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
     var setMaxVals = findMaxFIPSVals(data);
@@ -49,7 +51,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     console.log('setMinVals', setMinVals);
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
-    drawGraph(data, selectedMinYear, selectedMaxYear, yMaxVal);
+    drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
+    // drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
     drawBrush(data);
     
   }
@@ -103,7 +106,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .enter().append("path")
       .attr("d", path)
       .style('stroke', '#FFF')
-      .style('stroke-width', 3)
+      .style('stroke-width', 1)
       .style('fill', function (d) {
         console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
         return color(valuesByState[d.properties.name]);
@@ -121,7 +124,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         for (var j = 0; j < yearValuesArray.length; j++) {
           var year = parseInt(yearValuesArray[j].key);
 
-        // Object.keys(data[i].Years).forEach(function(year) {
           // TODO: use D3's exit/enter methods to remove this data instead of manually cropping it out this way D:
           if (year >= selectedMinYear && year <= selectedMaxYear) {
 
@@ -141,12 +143,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   // draw line graph
-  function drawGraph (data, selectedMinYear, selectedMaxYear, yMaxVal) {
+  function drawGraph (data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal) {
     //baked in state
-    var hiStateData = dataByState(data, "Hawaii", selectedMinYear, selectedMaxYear);
-    var usAvgData = dataByState(data, "United States", selectedMinYear, selectedMaxYear);
-    console.log(d3.entries(usAvgData));
-    var selectedStateData = dataByState(data, "Ohio", selectedMinYear, selectedMaxYear);
+    var hiStateData = dataByState(data, stateNames[0], selectedMinYear, selectedMaxYear);
+    var usAvgData = dataByState(data, stateNames[1], selectedMinYear, selectedMaxYear);
+    var selectedStateData = dataByState(data, stateNames[2], selectedMinYear, selectedMaxYear);
 
     var vis = d3.select('#line-graph');
     var width = 600;
@@ -160,7 +161,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     //TODO: set domains for xScale and yScale dynamically
     var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([selectedMinYear, selectedMaxYear]);
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,yMaxVal]);
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([yMinVal,yMaxVal]);
 
     var formatXAxis = d3.format('.0f');
 
@@ -211,9 +212,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .interpolate("linear");
 
     vis.append("svg:path")
-       // .data(usAvgData)
-       // .enter()
-       // .attr("d", lineGen())
        .attr("d", lineGen(usAvgData))
        .attr("stroke", "#AAA797")
        .attr("stroke-width", 3)
