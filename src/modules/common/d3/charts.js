@@ -35,20 +35,18 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     
     var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
-    console.log('data set', data);
 
     var filteredStates = filterStateObjects (data, stateNames);
     var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
     // var yMinVal = 0;
     var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
-    console.log('yMaxVal', yMaxVal);
 
     // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
     var setMaxVals = findMaxFIPSVals(data);
-    console.log('setMaxVals', setMaxVals);
+    // console.log('setMaxVals', setMaxVals);
 
     var setMinVals = findMinFIPSVals(data);
-    console.log('setMinVals', setMinVals);
+    // console.log('setMinVals', setMinVals);
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
     drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
@@ -97,7 +95,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByState));
-    console.log('yearvalrange', yearValuesRange);
+    // console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
     var states = topojson.feature(map, map.objects.units).features;
 
@@ -108,7 +106,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .style('stroke', '#FFF')
       .style('stroke-width', 1)
       .style('fill', function (d) {
-        console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
+        // console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
         return color(valuesByState[d.properties.name]);
       });
   }
@@ -154,7 +152,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var vis = d3.select(graphEl).append('svg')
       .attr('width', width)
       .attr('height', height);
-    console.log('visavis',vis);
     var margins = {
         top: 20,
         right: 20,

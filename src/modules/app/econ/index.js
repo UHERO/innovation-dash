@@ -107,8 +107,8 @@ module.exports =
   .controller('StateLocalTaxController', require('./StateLocalTaxController'))
   .controller('LFPartEmplController', require('./LFPartEmplController'))
   .controller('AverageEarningsController', require('./AverageEarningsController'))
-  .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'));
-  .controller('NonFarmHawaiiController', require('./NonFarmHawaiiHawaiiController'));
-  .controller('UnemploymentRateHawaiiController', require('./UnemploymentRateHawaiiController'));
+  .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'))
+  .controller('NonFarmHawaiiController', require('./NonFarmHawaiiController'))
+  .controller('UnemploymentRateHawaiiController', require('./UnemploymentRateHawaiiController'))
   .controller('PerCapitaHawaiiController', require('./PerCapitaHawaiiController'));
 
