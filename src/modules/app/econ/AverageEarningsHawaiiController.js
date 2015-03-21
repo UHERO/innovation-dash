@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = /*@ngInject*/
-  function AverageEarningsController($scope) {
+  function AverageEarningsHawaiiController($scope) {
     $scope.welcome = 'Average Earnings Per Job Hawaii';
   };

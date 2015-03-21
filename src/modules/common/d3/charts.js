@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
-  
+  // console.log(mapEl, graphEl)
   //Default configs
   var width, height, projection, path, svg, g;
   var viewColors = {
@@ -149,9 +149,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var usAvgData = dataByState(data, stateNames[1], selectedMinYear, selectedMaxYear);
     var selectedStateData = dataByState(data, stateNames[2], selectedMinYear, selectedMaxYear);
 
-    var vis = d3.select('#line-graph');
     var width = 600;
-    var height = 350;
+    var height = 370;
+    var vis = d3.select(graphEl).append('svg')
+      .attr('width', width)
+      .attr('height', height);
+    console.log('visavis',vis);
     var margins = {
         top: 20,
         right: 20,

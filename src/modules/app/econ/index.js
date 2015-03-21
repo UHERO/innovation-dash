@@ -53,9 +53,14 @@ module.exports =
       templateUrl: 'app/econ/views/average-earnings-per-job.html',
       controller: 'AverageEarningsController'
     })
-    .state('econ.average-earnings-per-job-hawaii', {
-      url: '/average-earnings-per-job-hawaii',
-      templateUrl: 'app/econ/views/average-earnings-per-job-hawaii.html',
+    .state('econ.average-earnings-per-job.us', {
+      url: '/us',
+      templateUrl: 'app/econ/views/average-earnings-per-job.us.html',
+      controller: 'AverageEarningsController'
+    })
+    .state('econ.average-earnings-per-job.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/econ/views/average-earnings-per-job.hawaii.html',
       controller: 'AverageEarningsHawaiiController'
     });
   })
