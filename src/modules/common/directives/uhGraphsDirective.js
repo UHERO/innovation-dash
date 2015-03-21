@@ -17,11 +17,14 @@ module.exports = /*@ngInject*/
         $scope.setStateData = function(url) {
 
           // $http can be replaced with d3.csv()
-          $http.get(url).then(function(result) {
-            console.log('result', result);
-          $scope.stateData = result.data;
-        });
-       };
+          $http.get(url)
+            .success(function(result) {
+              console.log('result', result);
+              $scope.stateData = result.data;
+            }).error(function(){
+              console.log('error');
+            });
+        };
       }],
     
       link: function (scope, element, attrs) {
