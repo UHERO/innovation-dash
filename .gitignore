@@ -5,3 +5,4 @@ build
 release
 tmp
 bower_components
+.DS_Store
