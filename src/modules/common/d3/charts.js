@@ -14,6 +14,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   width = 800;
   height = 600;
 
+  // TODO: set values using brush/slider
+  var selectedMinYear = 1969;
+  var selectedMaxYear = 2013;
+  var yMaxVal = 70000;
+
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
   // get Source Data
@@ -25,15 +30,26 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   function ready (err, sourceMap, sourceData) {
-
-
     setupMap(width, height);
     
-    var data = transformFIPSData(sourceData);
-    console.log('data set ', data);
+    var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
+    // var data = transformFIPSData(sourceData); // PRODUCTION OK
+    console.log('data set', data);
 
-    drawMap(sourceMap, data);
-    drawGraph(data);
+    var stateNames = ['Hawaii', 'United States', 'Nebraska'];
+    var filteredStates = filterStateObjects (data, stateNames);
+    // var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
+    // console.log('yMaxVal', yMaxVal);
+
+    // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
+    var setMaxVals = findMaxFIPSVals(data);
+    console.log('setMaxVals', setMaxVals);
+
+    var setMinVals = findMinFIPSVals(data);
+    console.log('setMinVals', setMinVals);
+
+    drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
+    drawGraph(data, selectedMinYear, selectedMaxYear, yMaxVal);
     drawBrush(data);
     
   }
@@ -66,17 +82,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   // Draw Graph Compenents
 
   // This drawMap will only work with FIPS structured data on US map
-  function drawMap (map, data) {
-    var setMaxVals = findMaxFIPSVals(data);
-    var setMinVals = findMinFIPSVals(data);
-
+  function drawMap (map, data, selectedMinYear, selectedMaxYear) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
     var valuesByState = window.vbs = {};
 
-    // Iterate over the full dataset and move state name and value into object for the maxYear
+    // Iterate over the full dataset and move state name and value into object for the selectedMaxYear
     data.forEach(function (d, i) {
-      valuesByState[d.State] = +d.Years[setMaxVals.maxYear];
+      valuesByState[d.State] = +d.Years[selectedMaxYear];
     });
     
     // Create an array containing the min and max values 
@@ -97,9 +110,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       });
   }
 
-  function dataByState(data, state, minYear, maxYear) {
-
-
+  function dataByState(data, state, selectedMinYear, selectedMaxYear) {
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
@@ -112,7 +123,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
         // Object.keys(data[i].Years).forEach(function(year) {
           // TODO: use D3's exit/enter methods to remove this data instead of manually cropping it out this way D:
-          if (year >= minYear && year <= maxYear) {
+          if (year >= selectedMinYear && year <= selectedMaxYear) {
 
             // TODO: see if we can plot points without reconfiguring data into this format
             result.push({
@@ -130,12 +141,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   // draw line graph
-  function drawGraph (data) {
+  function drawGraph (data, selectedMinYear, selectedMaxYear, yMaxVal) {
     //baked in state
-    var hiStateData = dataByState(data, "Hawaii", 1929, 2013);
-    var usAvgData = dataByState(data, "United States", 1929, 2013);
+    var hiStateData = dataByState(data, "Hawaii", selectedMinYear, selectedMaxYear);
+    var usAvgData = dataByState(data, "United States", selectedMinYear, selectedMaxYear);
     console.log(d3.entries(usAvgData));
-    var selectedStateData = dataByState(data, "Ohio", 1929, 2013);
+    var selectedStateData = dataByState(data, "Ohio", selectedMinYear, selectedMaxYear);
 
     var vis = d3.select('#line-graph');
     var width = 600;
@@ -148,8 +159,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       };
 
     //TODO: set domains for xScale and yScale dynamically
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([1929, 2013]);
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,50000]);
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([selectedMinYear, selectedMaxYear]);
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,yMaxVal]);
 
     var formatXAxis = d3.format('.0f');
 
@@ -243,6 +254,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       }, {Years: {}});
     });  
   } //end transformFIPSData
+
+  // Takes data and an array of state names (strings) to find
+  function filterStateObjects (data, stateNamesArr) {
+    return stateNamesArr.map(function(item) {
+      // .filter returns array, so we need to pluck out element
+      return _.filter(data, 'State', item)[0];
+    });
+  }
 
   function findMaxFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
