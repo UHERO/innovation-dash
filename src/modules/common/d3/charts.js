@@ -15,8 +15,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   height = 600;
 
   // TODO: set values using brush/slider
-  var selectedMinYear = 2006;
-  var selectedMaxYear = 2013;
+  var selectedMinYear = 2003;
+  var selectedMaxYear = 2006;
   var stateNames = ['Hawaii', 'United States', 'Nebraska'];
   // var yMaxVal = 70000;
 
@@ -226,17 +226,65 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   // draw slider
   function drawBrush (data, setMinVals, setMaxVals) {
-    d3.select('#uh-brush-test')
-      .call(d3.slider()
-      .axis(true)
-      .value( [selectedMinYear, selectedMaxYear] )
-      .min(setMinVals.minYear)
-      .max(setMaxVals.maxYear)
-      .step(1)
-      .on("slide", function(event, value) {
-        d3.select('#textmin').text(value[0]);
-        d3.select('#textmax').text(value[1]);
-    }));
+    // d3.select('#uh-brush-test')
+    //   .call(d3.slider()
+    //   .axis(true)
+    //   .value( [selectedMinYear, selectedMaxYear] )
+    //   .min(setMinVals.minYear)
+    //   .max(setMaxVals.maxYear)
+    //   .step(1)
+    //   .on("slide", function(event, value) {
+    //     selectedMinYear = value[0];
+    //     selectedMaxYear = value[1];
+    //     console.log (selectedMinYear, selectedMaxYear);
+    //     d3.select('#textmin').text(value[0]);
+    //     d3.select('#textmax').text(value[1]);
+    // }));
+    
+    var tickFormat = d3.format('.0f');
+
+    var scale = d3.scale.linear()
+      .domain([setMinVals.minYear, setMaxVals.maxYear])
+      .range([0, 600]);
+
+    var brush = d3.svg.brush();
+    brush.x(scale)
+         .extent([selectedMinYear, selectedMaxYear]);
+    console.log('setMinVals.minYear, setMaxVals.maxYear', [setMinVals.minYear, setMaxVals.maxYear]);
+
+    var brushSVG = d3.select("#uh-brush-test");
+
+    var brushAxis = d3.svg.axis()
+      .scale(scale)
+      .orient("bottom")
+      .tickFormat(tickFormat)
+      .innerTickSize(20)
+      // .ticks(4)
+      .tickPadding(20);
+
+    var axisG = brushSVG.append("g");
+    brushAxis(axisG);
+    axisG.attr("transform", "translate(20, 45)");
+    axisG.selectAll("path")
+      .style({ fill: "none" });
+    axisG.selectAll("line")
+      .style({ stroke: "#AAA797" });
+
+
+    // appending brush after axis so ticks appear before slider
+    var brushG = brushSVG.append('g');
+    brush(brushG);
+    brushG.attr("transform", "translate(20, 50)")
+      .selectAll("rect").attr("height", 10);
+    brushG.selectAll(".background")
+      .style({ fill: "#D3D0C1", visibility: "visible" });
+    brushG.selectAll(".extent")
+      .style({ fill: "#F27D14", visibility: "visible" });
+    brushG.selectAll(".resize rect")
+      .attr("width", 12)
+      .attr("height", 18)
+      .attr("y", -4)
+      .style({ fill: "#FF9933", visibility: "visible" });
   }
 
   // Utility functions
