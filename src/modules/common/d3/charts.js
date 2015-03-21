@@ -53,7 +53,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
     drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
     // drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
-    drawBrush(data);
+    drawBrush(data, setMinVals, setMaxVals);
     
   }
 
@@ -225,8 +225,18 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   // draw slider
-  function drawBrush (data) {
-    // body...
+  function drawBrush (data, setMinVals, setMaxVals) {
+    d3.select('#uh-brush-test')
+      .call(d3.slider()
+      .axis(true)
+      .value( [selectedMinYear, selectedMaxYear] )
+      .min(setMinVals.minYear)
+      .max(setMaxVals.maxYear)
+      .step(1)
+      .on("slide", function(event, value) {
+        d3.select('#textmin').text(value[0]);
+        d3.select('#textmax').text(value[1]);
+    }));
   }
 
   // Utility functions

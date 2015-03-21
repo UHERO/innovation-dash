@@ -1,6 +1,7 @@
 @import "partials/settings";
 @import "partials/resets";
 @import "partials/mixins";
+@import "partials/d3.slider";
 
 /* Globals */
 
@@ -282,15 +283,15 @@ section:last-child{
 }
 
 .timeline_info{
-  float: left;
-  width: 35%;
+  // float: left;
+  // width: 35%;
 }
 
 .time_span{
-  background-color: yellow;
-  float: left;
-  width: 60%;
-  height: 40px;
+  // background-color: yellow;
+  // float: left;
+  // width: 60%;
+  // height: 40px;
 
 }
 
@@ -366,10 +367,50 @@ footer{
   }
 }
 
-
 #line-graph {
   padding-left: 20px;
   
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+}
+
+// the little helper text that show minYear, maxYear
+// FOR DEBUGGING PURPOSES
+#uh-brush {
+  padding-top: 20px;
+  padding-bottom: 30px;
+
+  span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #AAA797;
+  }
+}
+
+/* Tweaks to D3 SLIDER styles (in _d3.slider.scss) */
+.d3-slider {
+  background-color: #D3D0C1;
+  border: none;
+}
+
+.d3-slider-range {
+  background-color: #F27D14;
+}
+
+.d3-slider-handle {
+  background: #FF9933;
+  border: none;
+  border-radius: 0;
+  width: 1em;
+  height: 1.38em;
+}
+
+.d3-slider-axis {
+  top: -3px;
+
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;

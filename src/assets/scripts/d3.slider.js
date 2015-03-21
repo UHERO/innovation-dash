@@ -79,6 +79,7 @@ d3.slider = function module() {
 
           handle1.style("left", formatPercent(scale(value[ 0 ])));
           divRange.style("left", formatPercent(scale(value[ 0 ])));
+          divRange.style("top", "0%"); // TWEAK FOR UHERO PROJECT
           drag.on("drag", onDragHorizontal);
 
           var width = 100 - parseFloat(formatPercent(scale(value[ 1 ])));
@@ -131,6 +132,8 @@ d3.slider = function module() {
           axis = d3.svg.axis()
               .ticks(Math.round(sliderLength / 100))
               .tickFormat(tickFormat)
+              .tickPadding(12)
+              .innerTickSize(20) // TWEAK FOR UHERO PROJECT (longer than default)
               .orient((orientation === "horizontal") ? "bottom" :  "right");
 
         }      
