@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme) {
   // console.log(mapEl, graphEl)
   //Default configs
   var width, height, projection, path, svg, g;
@@ -138,7 +138,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     // console.log('yearvalrange', yearValuesRange);
-    var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
+    var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
+    
+    console.log('color',color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -431,7 +433,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   function findMaxFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
-      console.log(data);
+      // console.log(data);
       var keysArr = d3.keys(item.Years);
     
       if (keysArr.length > result.numOfYrs) {
