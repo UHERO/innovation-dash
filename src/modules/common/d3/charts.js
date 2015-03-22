@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
-  
+  // console.log(mapEl, graphEl)
   //Default configs
   var width, height, projection, path, svg, g;
   var viewColors = {
@@ -14,6 +14,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   width = 800;
   height = 600;
 
+  // Check if map source is JSON or SVG
+  var isSVGMap = false;
+  var svgRE = /svg$/;
+  
+  isSVGMap = svgRE.test(mapSource) ? true : false;
+
   // TODO: set values using brush/slider
   var selectedMinYear = 2006;
   var selectedMaxYear = 2013;
@@ -24,53 +30,76 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   // get Source Data
   function getDataSets (mapSource, dataSource) {
-    queue()
-      .defer(d3.json, mapSource)
-      .defer(d3.csv, dataSource)
-      .await(ready);
+
+    var q = queue().defer(d3.csv, dataSource);
+    
+    if (isSVGMap) {
+      q.defer(d3.xml, mapSource, 'image/svg+xml').await(function (err, dataSource, mapSource) {
+        var hawaiiSvg = document.importNode(mapSource.documentElement, true);
+        ready(err, dataSource, hawaiiSvg, isSVGMap);
+      });
+    } else {
+      q.defer(d3.json, mapSource).await(function (err, dataSource, mapSource) {
+        ready(err, dataSource, mapSource, isSVGMap);
+      });
+    }
   }
 
-  function ready (err, sourceMap, sourceData) {
-    setupMap(width, height);
+  function ready (err, sourceData, sourceMap, isSVGMap) {
+
+    setupMap(sourceMap, width, height);
     
     var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
-    console.log('data set', data);
 
-    var filteredStates = filterStateObjects (data, stateNames);
-    var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
-    // var yMinVal = 0;
-    var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
-    console.log('yMaxVal', yMaxVal);
+
+    // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
+    // var filteredStates = filterStateObjects (data, stateNames);
+    // var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
+    // // var yMinVal = 0;
+    // var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
 
     // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
     var setMaxVals = findMaxFIPSVals(data);
-    console.log('setMaxVals', setMaxVals);
+    // console.log('setMaxVals', setMaxVals);
 
     var setMinVals = findMinFIPSVals(data);
-    console.log('setMinVals', setMinVals);
+    // console.log('setMinVals', setMinVals);
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
-    drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
+    // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
     // drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
     drawBrush(data);
     
   }
 
   // Setup Graph Components
-  function setupMap (width, height) {
+  function setupMap (sourceMap, width, height) {
     projection = d3.geo.albersUsa()
       .scale(1000)
       .translate([width / 2, height / 2]);
 
-    path = d3.geo.path()
-      .projection(projection);
+    if (isSVGMap) {
+      var parentNode = document.getElementById(mapEl.slice(1));
+      parentNode.appendChild(sourceMap);
+      svg = d3.select(mapEl).select('svg');
 
-    svg = d3.select(mapEl).append('svg')
+    } else {
+      svg = d3.select(mapEl);
+      projection = d3.geo.albersUsa()
+        .scale(1000)
+        .translate([width / 2, height / 2]);
+
+      path = d3.geo.path()
+        .projection(projection);
+      
+      svg = d3.select(mapEl).append('svg');
+      g = svg.append('g');
+    }
+
+    svg
       .attr('width', width)
       .attr('height', height);
-
-    g = svg.append('g');
   }
 
   function setupGraph (width, height) {
@@ -88,29 +117,37 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   function drawMap (map, data, selectedMinYear, selectedMaxYear) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
-    var valuesByState = window.vbs = {};
+    var valuesByArea = window.vbs = {};
+
+    var areaType = isSVGMap ? 'County' : 'State';
 
     // Iterate over the full dataset and move state name and value into object for the selectedMaxYear
     data.forEach(function (d, i) {
-      valuesByState[d.State] = +d.Years[selectedMaxYear];
+      valuesByArea[d[areaType]] = +d.Years[selectedMaxYear];
     });
     
     // Create an array containing the min and max values 
-    var yearValuesRange = d3.extent(d3.values(valuesByState));
-    console.log('yearvalrange', yearValuesRange);
+    var yearValuesRange = d3.extent(d3.values(valuesByArea));
+    // console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
-    var states = topojson.feature(map, map.objects.units).features;
 
-    g.selectAll(".states")
-      .data(states)
-      .enter().append("path")
-      .attr("d", path)
-      .style('stroke', '#FFF')
-      .style('stroke-width', 1)
-      .style('fill', function (d) {
-        console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
-        return color(valuesByState[d.properties.name]);
-      });
+    if (isSVGMap) {
+      for (var key in valuesByArea) {
+        var countySvg = d3.select('#'+key);
+          countySvg.selectAll('path').style('fill', color(valuesByArea[key]));
+      }
+    } else {
+      var states = topojson.feature(map, map.objects.units).features;
+      g.selectAll(".states")
+        .data(states)
+        .enter().append("path")
+        .attr("d", path)
+        .style('stroke', '#FFF')
+        .style('stroke-width', 3)
+        .style('fill', function (d) {
+          return color(valuesByArea[d.properties.name]);
+        });
+    }
   }
 
   function dataByState(data, state, selectedMinYear, selectedMaxYear) {
@@ -149,9 +186,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var usAvgData = dataByState(data, stateNames[1], selectedMinYear, selectedMaxYear);
     var selectedStateData = dataByState(data, stateNames[2], selectedMinYear, selectedMaxYear);
 
-    var vis = d3.select('#line-graph');
     var width = 600;
-    var height = 350;
+    var height = 370;
+    var vis = d3.select(graphEl).append('svg')
+      .attr('width', width)
+      .attr('height', height);
     var margins = {
         top: 20,
         right: 20,
@@ -350,4 +389,3 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   } //end findMinFIPSVals
 
 }; // end module.exports
-

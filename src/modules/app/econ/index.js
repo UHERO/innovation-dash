@@ -17,30 +17,10 @@ module.exports =
       templateUrl: 'app/econ/views/gdp-by-state.html',
       controller: 'GdpStateController'
     })
-    .state('econ.per-capita-personal-income', {
-      url: '/per-capita-personal-income',
-      templateUrl: 'app/econ/views/per-capita-personal-income.html',
-      controller: 'PerCapitaController'
-    })
-    .state('econ.average-earnings-per-job', {
-      url: '/average-earnings-per-job',
-      templateUrl: 'app/econ/views/average-earnings-per-job.html',
-      controller: 'AverageEarningsController'
-    })
     .state('econ.regional-price-parities', {
       url: '/regional-price-parities',
       templateUrl: 'app/econ/views/regional-price-parities.html',
       controller: 'RegionalPriceController'
-    })
-    .state('econ.non-farm-jobs', {
-      url: '/non-farm-jobs',
-      templateUrl: 'app/econ/views/non-farm-jobs.html',
-      controller: 'NonFarmController'
-    })
-    .state('econ.unemployment-rate', {
-      url: '/unemployment-rate',
-      templateUrl: 'app/econ/views/unemployment-rate.html',
-      controller: 'UnemploymentRateController'
     })
     .state('econ.state-and-local-tax-burden', {
       url: '/state-and-local-tax-burden',
@@ -51,16 +31,84 @@ module.exports =
       url: '/lf-part-empl-rate',
       templateUrl: 'app/econ/views/lf-part-empl-rate.html',
       controller: 'LFPartEmplController'
+    })
+    .state('econ.per-capita-personal-income', {
+      url: '/per-capita-personal-income',
+      abstract: true,
+      templateUrl: 'app/econ/views/per-capita-personal-income.html'      
+      // controller: 'PerCapitaController'
+    })
+    .state('econ.per-capita-personal-income.us', {
+      url: '/us',
+      templateUrl: 'app/econ/views/per-capita-personal-income.us.html',
+      controller: 'PerCapitaController'
+    })
+    .state('econ.per-capita-personal-income.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/econ/views/per-capita-personal-income.hawaii.html',
+      controller: 'PerCapitaHawaiiController'
+    })
+    .state('econ.non-farm-jobs', {
+      url: '/non-farm-jobs',
+      abstract: true,
+      templateUrl: 'app/econ/views/non-farm-jobs.html'
+      // controller: 'NonFarmController'
+    })
+    .state('econ.non-farm-jobs.us', {
+      url: '/us',
+      templateUrl: 'app/econ/views/non-farm-jobs.us.html',
+      controller: 'NonFarmController'
+    })
+    .state('econ.non-farm-jobs.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/econ/views/non-farm-jobs.hawaii.html',
+      controller: 'NonFarmHawaiiController'
+    })
+    .state('econ.unemployment-rate', {
+      url: '/unemployment-rate',
+      abstract: true,
+      templateUrl: 'app/econ/views/unemployment-rate.html'
+      // controller: 'UnemploymentRateController'
+    })
+    .state('econ.unemployment-rate.us', {
+      url: '/us',
+      templateUrl: 'app/econ/views/unemployment-rate.us.html',
+      controller: 'UnemploymentRateController'
+    })
+    .state('econ.unemployment-rate.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/econ/views/unemployment-rate.hawaii.html',
+      controller: 'UnemploymentRateHawaiiController'
+    })
+    .state('econ.average-earnings-per-job', {
+      url: '/average-earnings-per-job',
+      abstract: true,
+      templateUrl: 'app/econ/views/average-earnings-per-job.html'
+      // controller: 'AverageEarningsController'
+    })
+    .state('econ.average-earnings-per-job.us', {
+      url: '/us',
+      templateUrl: 'app/econ/views/average-earnings-per-job.us.html',
+      controller: 'AverageEarningsController'
+    })
+    .state('econ.average-earnings-per-job.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/econ/views/average-earnings-per-job.hawaii.html',
+      controller: 'AverageEarningsHawaiiController'
     });
   })
 
   .controller('EconController', require('./EconController'))
   .controller('GdpStateController', require('./GdpStateController'))
   .controller('PerCapitaController', require('./PerCapitaController'))
-  .controller('AverageEarningsController', require('./AverageEarningsController'))
   .controller('RegionalPriceController', require('./RegionalPriceController'))
   .controller('NonFarmController', require('./NonFarmController'))
   .controller('UnemploymentRateController', require('./UnemploymentRateController'))
   .controller('StateLocalTaxController', require('./StateLocalTaxController'))
-  .controller('LFPartEmplController', require('./LFPartEmplController'));
+  .controller('LFPartEmplController', require('./LFPartEmplController'))
+  .controller('AverageEarningsController', require('./AverageEarningsController'))
+  .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'))
+  .controller('NonFarmHawaiiController', require('./NonFarmHawaiiController'))
+  .controller('UnemploymentRateHawaiiController', require('./UnemploymentRateHawaiiController'))
+  .controller('PerCapitaHawaiiController', require('./PerCapitaHawaiiController'));
 
