@@ -5,10 +5,7 @@ module.exports = /*@ngInject*/
     return {
 
       // require: '^d3Data',
-      scope: {
-        //get stuff from controller via bi-directional binding
-        d3Data: '='
-      },
+      scope: {},
       // template: '<div class="uh-maps">Data goes Here<div>',
       templateUrl: 'common/directives/templates/uhGraphs.html',
       
@@ -28,13 +25,7 @@ module.exports = /*@ngInject*/
         // var mapSource = '/assets/images/USA.json';
         var d3Charts = require('../d3/charts');
 
-        // d3Charts('/assets/maps/USA.json',"/assets/csv/per_capita_personal_income.csv", ".uh-maps");
-
-        // d3Charts('/assets/maps/USA.json',"http://10.0.1.8:4567/economics/eco_per_capita_personal_income", "#uh-map");
-
-        console.log(attrs.d3DataUrl);
-        
-        d3Charts('/assets/maps/USA.json', attrs.d3DataUrl, "#uh-map", "#uh-graph");
+        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph");
         
       }
     };
