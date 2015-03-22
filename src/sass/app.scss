@@ -1,7 +1,6 @@
 @import "partials/settings";
 @import "partials/resets";
 @import "partials/mixins";
-@import "partials/d3.slider";
 
 /* Globals */
 
@@ -380,8 +379,6 @@ footer{
 // the little helper text that show minYear, maxYear
 // FOR DEBUGGING PURPOSES
 #uh-brush {
-  padding-top: 20px;
-  padding-bottom: 30px;
 
   span {
     font-family: 'Montserrat', sans-serif;

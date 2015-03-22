@@ -251,7 +251,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     var scale = d3.scale.linear()
       .domain([setMinVals.minYear, setMaxVals.maxYear])
-      .range([0, 600]);
+      .range([0, 768]);
 
     var brush = d3.svg.brush();
     brush.x(scale)
