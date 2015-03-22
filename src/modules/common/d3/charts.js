@@ -15,8 +15,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   height = 600;
 
   // TODO: set values using brush/slider
-  var selectedMinYear = 2003;
-  var selectedMaxYear = 2006;
+  var selectedMinYear;
+  var selectedMaxYear;
   var stateNames = ['Hawaii', 'United States', 'Nebraska'];
   // var yMaxVal = 70000;
 
@@ -49,6 +49,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     var setMinVals = findMinFIPSVals(data);
     console.log('setMinVals', setMinVals);
+
+    selectedMinYear = setMinVals.minYear;
+    selectedMaxYear = setMaxVals.maxYear;
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
     // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
