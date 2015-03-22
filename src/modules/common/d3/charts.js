@@ -274,6 +274,54 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("stroke", "orange") //TODO: change color dynamically
        .attr("stroke-width", 3)
        .attr("fill", "none");
+
+
+    // Legend
+    // appends line graph indicator heading
+    d3.select('#line-graph')
+      .insert('g')
+      .append('text')
+      .attr('class','legend_text')
+      .attr("x", graphWidth + 30)
+      .attr("y", 10)
+      .text('Legend');
+
+    // appends key labels 
+    d3.select('#line-graph')
+      .insert('g')
+      .selectAll('text')
+      .data(stateNames)
+      .enter()
+      .append('text')
+      .attr('class','legend_text')
+      .attr("x", graphWidth + 70)
+      .attr("y", function(d,i){
+        return i * 20 + 50;
+      })
+      .text(function(d){
+        return d;
+      });
+   
+   // adds colors to keys
+    var legendcolors = ['green', 'red', 'blue'];   
+
+    d3.select('#line-graph')
+      .insert('g')
+      .selectAll('rect')
+      .data(legendcolors)
+      .enter()
+      .append("rect")
+      .attr("x", graphWidth + 30)
+      .attr("y",function(d,i){
+        return i * 20 + 42;
+      })
+      .attr("width", 30)
+      .attr("height", 5)
+      .style("fill", function(d){
+        var color = d;
+        return color;
+      });
+
   }
 
   // draw slider
