@@ -101,7 +101,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByState));
-    console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
     var states = topojson.feature(map, map.objects.units).features;
 
@@ -112,7 +111,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .style('stroke', '#FFF')
       .style('stroke-width', 1)
       .style('fill', function (d) {
-        console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
         return color(valuesByState[d.properties.name]);
       });
   }
@@ -256,8 +254,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var brush = d3.svg.brush();
     brush.x(scale)
          .extent([selectedMinYear, selectedMaxYear]);
-    console.log('setMinVals.minYear, setMaxVals.maxYear', [setMinVals.minYear, setMaxVals.maxYear]);
-
     brush.on("brushend", brushed);
 
     var savedExtent = brush.extent(); // FOR PREVENTING BRUSH EMPTYING
@@ -268,7 +264,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       savedExtent[1] = d3.round(savedExtent[1]);
 
       d3.select(this).call(brush.extent(savedExtent));
-      console.log(savedExtent);
 
       drawMap(sourceMap, data, savedExtent[0], savedExtent[1]);
       drawGraph(data, savedExtent[0], savedExtent[1], yMinVal, yMaxVal); 
