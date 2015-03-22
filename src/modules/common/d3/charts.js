@@ -285,7 +285,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     return _.map(data, function (item) {
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
-          var transformedVal = parseInt(n, 10);
+          var transformedVal = +n;
           result.Years[key] = transformedVal ? transformedVal : -1;
         } else {
           result[key] = n;
