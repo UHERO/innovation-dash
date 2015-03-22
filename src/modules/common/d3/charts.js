@@ -51,9 +51,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     console.log('setMinVals', setMinVals);
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
-    drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
-    // drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
-    drawBrush(data, setMinVals, setMaxVals);
+    // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
+    drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
+    // drawBrush(data, setMinVals, setMaxVals);
+    drawBrush(data, setMinVals, setMaxVals, sourceMap, yMinVal, yMaxVal);
     
   }
 
@@ -149,7 +150,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var usAvgData = dataByState(data, stateNames[1], selectedMinYear, selectedMaxYear);
     var selectedStateData = dataByState(data, stateNames[2], selectedMinYear, selectedMaxYear);
 
+    d3.select("#line-graph").html("");
     var vis = d3.select('#line-graph');
+
     var width = 600;
     var height = 350;
     var margins = {
@@ -225,7 +228,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   }
 
   // draw slider
-  function drawBrush (data, setMinVals, setMaxVals) {
+  function drawBrush (data, setMinVals, setMaxVals, sourceMap, yMinVal, yMaxVal) {
     // d3.select('#uh-brush-test')
     //   .call(d3.slider()
     //   .axis(true)
@@ -251,6 +254,55 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     brush.x(scale)
          .extent([selectedMinYear, selectedMaxYear]);
     console.log('setMinVals.minYear, setMaxVals.maxYear', [setMinVals.minYear, setMaxVals.maxYear]);
+
+    brush.on("brushend", brushed);
+
+    var savedExtent = brush.extent(); // FOR PREVENTING BRUSH EMPTYING
+
+    function brushed() {
+      savedExtent = brush.extent();
+      savedExtent[0] = d3.round(savedExtent[0]);
+      savedExtent[1] = d3.round(savedExtent[1]);
+
+      d3.select(this).call(brush.extent(savedExtent));
+      console.log(savedExtent);
+
+      drawMap(sourceMap, data, savedExtent[0], savedExtent[1]);
+      drawGraph(data, savedExtent[0], savedExtent[1], yMinVal, yMaxVal); 
+
+
+      // if (!brush.empty()) {
+      //   savedExtent = brush.extent();
+      //   savedExtent[0] = d3.round(savedExtent[0]);
+      //   savedExtent[1] = d3.round(savedExtent[1]);
+
+      //   d3.select(this).call(brush.extent(savedExtent));
+      //   console.log(savedExtent);
+      // } else {
+      //   d3.select(this).call(brush.extent(savedExtent));
+      // }
+    }
+
+    /*
+    Prevent default brush clear on click
+     */
+    // var oldMouseDown = brush.on('mousedown.brush');
+    // brush.on('mousedown.brush', function() {
+    //   brush.on('mouseup.brush', function() {
+    //     clearHandlers();
+    //   });
+
+    //   brush.on('mousemove.brush', function() {
+    //     clearHandlers();
+    //     oldMouseDown.call(this);
+    //     brush.on('mousemove.brush').call(this);
+    //   });
+
+    //   function clearHandlers() {
+    //     brush.on('mousemove.brush', null);
+    //     brush.on('mouseup.brush', null);
+    //   }
+    // });
 
     var brushSVG = d3.select("#uh-brush-test");
 
