@@ -34,7 +34,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var q = queue().defer(d3.csv, dataSource);
     
     if (isSVGMap) {
-      console.log('inside isSVGMap');
       q.defer(d3.xml, mapSource, 'image/svg+xml').await(function (err, dataSource, mapSource) {
         var hawaiiSvg = document.importNode(mapSource.documentElement, true);
         ready(err, dataSource, hawaiiSvg, isSVGMap);
@@ -53,11 +52,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
-    var stateNames = ['Hawaii', 'United States', 'Nebraska'];
-    var filteredStates = filterStateObjects (data, stateNames);
-    var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
-    // var yMinVal = 0;
-    var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+
+    // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
+    // var filteredStates = filterStateObjects (data, stateNames);
+    // var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
+    // // var yMinVal = 0;
+    // var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
 
     // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
     var setMaxVals = findMaxFIPSVals(data);
@@ -67,7 +67,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     // console.log('setMinVals', setMinVals);
 
     drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
-    drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
+    // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
     // drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
     drawBrush(data);
     
@@ -82,7 +82,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     if (isSVGMap) {
       var parentNode = document.getElementById(mapEl.slice(1));
       parentNode.appendChild(sourceMap);
-      svg = d3.select(mapEl);
+      svg = d3.select(mapEl).select('svg');
 
     } else {
       svg = d3.select(mapEl);
@@ -117,20 +117,25 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   function drawMap (map, data, selectedMinYear, selectedMaxYear) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
-    var valuesByState = window.vbs = {};
+    var valuesByArea = window.vbs = {};
+
+    var areaType = isSVGMap ? 'County' : 'State';
 
     // Iterate over the full dataset and move state name and value into object for the selectedMaxYear
     data.forEach(function (d, i) {
-      valuesByState[d.State] = +d.Years[selectedMaxYear];
+      valuesByArea[d[areaType]] = +d.Years[selectedMaxYear];
     });
     
     // Create an array containing the min and max values 
-    var yearValuesRange = d3.extent(d3.values(valuesByState));
+    var yearValuesRange = d3.extent(d3.values(valuesByArea));
     // console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
 
     if (isSVGMap) {
-      console.log('Inside drawMap is SVGMap');
+      for (var key in valuesByArea) {
+        var countySvg = d3.select('#'+key);
+          countySvg.selectAll('path').style('fill', color(valuesByArea[key]));
+      }
     } else {
       var states = topojson.feature(map, map.objects.units).features;
       g.selectAll(".states")
@@ -140,8 +145,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         .style('stroke', '#FFF')
         .style('stroke-width', 3)
         .style('fill', function (d) {
-          // console.log('color', color(valuesByState[d.properties.name]),'val',valuesByState[d.properties.name]);
-          return color(valuesByState[d.properties.name]);
+          return color(valuesByArea[d.properties.name]);
         });
     }
   }
