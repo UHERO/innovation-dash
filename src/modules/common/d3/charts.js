@@ -309,8 +309,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         return color;
       });
 
-
->>>>>>> parent of 91d1f2c... install c3 and d3.legend
   }
 
   // draw slider
