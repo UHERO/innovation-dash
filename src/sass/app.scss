@@ -214,6 +214,10 @@ section{
     font-style: italic;
     @include uHero_font(0.85em, 1, $body_color, 400);
   }
+
+  &:last-child {
+    padding: 20px 40px 10px;
+  }
 }
 
 section:last-child{
@@ -267,7 +271,7 @@ section:last-child{
   
     .graph{
       // background-color: salmon;
-      height: 320px;
+      // height: 320px;
       // width: 65%;
       float: left;
       margin-right: 20px;
@@ -369,6 +373,19 @@ footer{
 #line-graph {
   padding-left: 20px;
   
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+}
+
+#uh-graph {
+  svg {
+    padding-left: 20px;
+    padding-bottom: 30px;
+  }
+
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
