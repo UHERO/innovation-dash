@@ -25,6 +25,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   var selectedMaxYear = 2013;
   var stateNames = ['Hawaii', 'United States', 'Nebraska'];
   // var yMaxVal = 70000;
+  
+  var knownSummaryRecords = ['United States'];
 
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
@@ -52,7 +54,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
-
+    var datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
     // var filteredStates = filterStateObjects (data, stateNames);
     // var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
@@ -299,6 +301,20 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       return _.filter(data, 'State', item)[0];
     });
   }
+
+  function popSummaryData (data, knownSumRecArr) {
+    
+    var summarizedDataRecords = [];
+
+    data.map(function (record, idx, arr) {
+      for (var i = knownSumRecArr.length - 1; i >= 0; i--) {
+        if (record.State === knownSumRecArr[i]) {
+          summarizedDataRecords.push(arr.splice(idx, 1)[0]);
+        }    
+      }
+    });
+    return summarizedDataRecords;
+  } //end popSummaryData
 
   function findMaxFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
