@@ -8,7 +8,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
-    edu:  ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"] 
+    edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
 
   width = 800;
@@ -144,6 +144,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     // console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
+    console.log('color',color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
