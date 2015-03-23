@@ -20,14 +20,21 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   
   isSVGMap = svgRE.test(mapSource) ? true : false;
 
-  // TODO: set values using brush/slider
   var selectedMinYear;
   var selectedMaxYear;
-  var stateNames = ['Hawaii', 'Nebraska']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
-  // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
-  // var yMaxVal = 70000;
-  
+  var geoAreaCategory = 'County';
+  var geoAreaNames;
+
+  // TODO: do this dynamically
+  if (geoAreaCategory === 'County') {
+    geoAreaNames = ['Honolulu', 'Maui'];
+  } else {
+    geoAreaNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
+  }
+
   var knownSummaryRecords = ['United States'];
+  var datasetSummaryRecords;
+  var filteredStates;
 
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
@@ -55,30 +62,29 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
-    var datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
-    // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
-    var filteredStates = filterStateObjects (data, stateNames);
-    var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
-    // // var yMinVal = 0;
-    var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
+    
+    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames);
 
-    // TODO: maybe tweak so that only max values for that timespan (not just states) get returned
+    if (datasetSummaryRecords.length !== 0) {
+      filteredStates.unshift(datasetSummaryRecords[0]);
+    }
+
+    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
+    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+
+    // TODO: maybe tweak so that only max values for selected timespan (not all years for filteredStates) get returned
     var setMaxVals = findMaxFIPSVals(data);
-    // console.log('setMaxVals', setMaxVals);
-
     var setMinVals = findMinFIPSVals(data);
-    // console.log('setMinVals', setMinVals);
 
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
 
-    drawMap(sourceMap, data, selectedMinYear, selectedMaxYear);
+    drawMap(sourceMap, data);
     // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
 
-    drawGraph(data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to selected min year
-    // drawBrush(data, setMinVals, setMaxVals);
-    drawBrush(data, setMinVals, setMaxVals, sourceMap, yMinVal, yMaxVal);
-    
+    drawGraph(data, yMinVal, yMaxVal);
+    drawBrush(sourceMap, data, setMinVals, setMaxVals, yMinVal, yMaxVal);
   }
 
   // Setup Graph Components
@@ -119,10 +125,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
 
-  // Draw Graph Compenents
+  // Draw Graph Components
 
   // This drawMap will only work with FIPS structured data on US map
-  function drawMap (map, data, selectedMinYear, selectedMaxYear) {
+  function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
     var valuesByArea = window.vbs = {};
@@ -135,12 +141,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     });
     
     // Create an array containing the min and max values 
-
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     // console.log('yearvalrange', yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-    
-    console.log('color',color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -161,7 +164,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     }
   }
 
-  function dataByState(data, state, selectedMinYear, selectedMaxYear) {
+  function dataByState(data, state) {
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
@@ -190,19 +193,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     return result;
   }
 
-  // draw line graph
-  function drawGraph (data, selectedMinYear, selectedMaxYear, yMinVal, yMaxVal) {
-    //baked in state
-    var hiStateData = dataByState(data, stateNames[0], selectedMinYear, selectedMaxYear);
-    var usAvgData = dataByState(data, stateNames[1], selectedMinYear, selectedMaxYear);
-    var selectedStateData = dataByState(data, stateNames[2], selectedMinYear, selectedMaxYear);
-
+  // Draw Line Graph
+  function drawGraph (data, yMinVal, yMaxVal) {
     var width = 600;
     var height = 370;
 
     d3.select(graphEl).html("");
     var vis = d3.select(graphEl).append('svg')
-      .attr('width', width)
+      .attr('width', width + 200)
       .attr('height', height);
     var margins = {
         top: 20,
@@ -211,9 +209,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         left: 70
       };
 
-    //TODO: set domains for xScale and yScale dynamically
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([selectedMinYear, selectedMaxYear]);
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([yMinVal,yMaxVal]);
+    var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
+    var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
 
     var formatXAxis = d3.format('.0f');
 
@@ -247,6 +244,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("x", 0 - (height) / 2)
        .attr("y", 0)
        .style("text-anchor", "middle")
+       //TODO: update text based on current Indicator
        .text("Per Capita Personal Income ($)");
 
     // .defined insures that only non-negative values
@@ -263,39 +261,58 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       })
       .interpolate("linear");
 
-    vis.append("svg:path")
-       .attr("d", lineGen(usAvgData))
-       .attr("stroke", "#AAA797")
-       .attr("stroke-width", 3)
-       .attr("fill", "none");
+    // when there is a US Average data object
+    if (datasetSummaryRecords.length !== 0) {
+      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0]);
+  
+      vis.append("svg:path")
+         .attr("d", lineGen(usAvgData))
+         .attr("stroke", "#D3D0C1")
+         .attr("stroke-width", 3)
+         .attr("fill", "none");
+    }
+
+    var hiStateData = dataByState(filteredStates, geoAreaNames[0]);
+    var selectedStateData = dataByState(filteredStates, geoAreaNames[1]);
 
     vis.append("svg:path")
-       .attr("d", lineGen(hiStateData))
-       .attr("stroke", "orange") //TODO: change color dynamically
-       .attr("stroke-width", 3)
-       .attr("fill", "none");
+     .attr("d", lineGen(hiStateData))
+     .attr("stroke", "#4F5050")
+     .attr("stroke-width", 3)
+     .attr("fill", "none");
 
+    // adding selected state line
+    vis.append("svg:path")
+     .attr("d", lineGen(selectedStateData))
+     .attr("stroke", "orange")
+     .attr("stroke-width", 3)
+     .attr("fill", "none");
 
     // Legend
     // appends line graph indicator heading
-    d3.select('#line-graph')
-      .insert('g')
+    vis.insert('g')
       .append('text')
       .attr('class','legend_text')
-      .attr("x", graphWidth + 30)
+      .attr("x", width + 30)
       .attr("y", 10)
       .text('Legend');
 
+    // deals with not having US average data or not:
+    var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
+    if (datasetSummaryRecords.length !== 0 && legendData[0] !== knownSummaryRecords) {
+      legendData.unshift(knownSummaryRecords);
+    }
+
     // appends key labels 
-    d3.select('#line-graph')
-      .insert('g')
+    vis.insert('g')
       .selectAll('text')
-      .data(stateNames)
+      // .data(legendData)
+      .data(legendData)
       .enter()
       .append('text')
       .attr('class','legend_text')
-      .attr("x", graphWidth + 70)
-      .attr("y", function(d,i){
+      .attr("x", width + 70)
+      .attr("y", function(d, i){
         return i * 20 + 50;
       })
       .text(function(d){
@@ -303,49 +320,38 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       });
    
    // adds colors to keys
-    var legendcolors = ['green', 'red', 'blue'];   
-
-    d3.select('#line-graph')
-      .insert('g')
+    vis.insert('g')
       .selectAll('rect')
-      .data(legendcolors)
+      .data(legendData)
       .enter()
       .append("rect")
-      .attr("x", graphWidth + 30)
-      .attr("y",function(d,i){
+      .attr("x", width + 30)
+      .attr("y", function(d, i){
         return i * 20 + 42;
       })
       .attr("width", 30)
       .attr("height", 5)
       .style("fill", function(d){
-        var color = d;
-        return color;
+        if (d == "United States") {
+          return "#D3D0C1";
+        } else if (d == "Hawaii") {
+          return "#4F5050";
+        } else {
+          return "orange";
+        }
       });
 
   }
 
-  // draw slider
-  function drawBrush (data, setMinVals, setMaxVals, sourceMap, yMinVal, yMaxVal) {
-    // d3.select('#uh-brush-test')
-    //   .call(d3.slider()
-    //   .axis(true)
-    //   .value( [selectedMinYear, selectedMaxYear] )
-    //   .min(setMinVals.minYear)
-    //   .max(setMaxVals.maxYear)
-    //   .step(1)
-    //   .on("slide", function(event, value) {
-    //     selectedMinYear = value[0];
-    //     selectedMaxYear = value[1];
-    //     console.log (selectedMinYear, selectedMaxYear);
-    //     d3.select('#textmin').text(value[0]);
-    //     d3.select('#textmax').text(value[1]);
-    // }));
+  // Draw Slider
+  function drawBrush (sourceMap, data, setMinVals, setMaxVals,  yMinVal, yMaxVal) {
     
     var tickFormat = d3.format('.0f');
 
     var scale = d3.scale.linear()
       .domain([setMinVals.minYear, setMaxVals.maxYear])
-      .range([0, 768]);
+      .range([0, 760]) //TODO: check this value
+      ;
 
     var brush = d3.svg.brush();
     brush.x(scale)
@@ -361,42 +367,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
       d3.select(this).call(brush.extent(savedExtent));
 
-      drawMap(sourceMap, data, savedExtent[0], savedExtent[1]);
-      drawGraph(data, savedExtent[0], savedExtent[1], yMinVal, yMaxVal); 
+      selectedMinYear = savedExtent[0];
+      selectedMaxYear = savedExtent[1];
 
-
-      // if (!brush.empty()) {
-      //   savedExtent = brush.extent();
-      //   savedExtent[0] = d3.round(savedExtent[0]);
-      //   savedExtent[1] = d3.round(savedExtent[1]);
-
-      //   d3.select(this).call(brush.extent(savedExtent));
-      //   console.log(savedExtent);
-      // } else {
-      //   d3.select(this).call(brush.extent(savedExtent));
-      // }
+      drawMap(sourceMap, data);
+      drawGraph(data, yMinVal, yMaxVal); 
     }
-
-    /*
-    Prevent default brush clear on click
-     */
-    // var oldMouseDown = brush.on('mousedown.brush');
-    // brush.on('mousedown.brush', function() {
-    //   brush.on('mouseup.brush', function() {
-    //     clearHandlers();
-    //   });
-
-    //   brush.on('mousemove.brush', function() {
-    //     clearHandlers();
-    //     oldMouseDown.call(this);
-    //     brush.on('mousemove.brush').call(this);
-    //   });
-
-    //   function clearHandlers() {
-    //     brush.on('mousemove.brush', null);
-    //     brush.on('mouseup.brush', null);
-    //   }
-    // });
 
     var brushSVG = d3.select("#uh-brush-test");
 
@@ -405,7 +381,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .orient("bottom")
       .tickFormat(tickFormat)
       .innerTickSize(20)
-      // .ticks(4)
+      // .tickValues(scale.ticks(0).concat(scale.domain())) // shows only start and end ticks
       .tickPadding(20);
 
     var axisG = brushSVG.append("g");
@@ -415,7 +391,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .style({ fill: "none" });
     axisG.selectAll("line")
       .style({ stroke: "#AAA797" });
-
 
     // appending brush after axis so ticks appear before slider
     var brushG = brushSVG.append('g');
@@ -458,10 +433,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   } //end transformFIPSData
 
   // Takes data and an array of state names (strings) to find
-  function filterStateObjects (data, stateNamesArr) {
-    return stateNamesArr.map(function(item) {
+  function filterStateObjects (data, geoAreaNamesArr, geoAreaCategory) {
+    return geoAreaNamesArr.map(function(item) {
       // .filter returns array, so we need to pluck out element
-      return _.filter(data, 'State', item)[0];
+      return _.filter(data, geoAreaCategory, item)[0];
     });
   }
 
@@ -481,7 +456,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
   function findMaxFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
-      // console.log(data);
       var keysArr = d3.keys(item.Years);
     
       if (keysArr.length > result.numOfYrs) {
@@ -517,5 +491,24 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       return result;
     }, {numOfYrs: 0, minYear: Infinity, minVal: Infinity});
   } //end findMinFIPSVals
+  
+  // takes in array of data objects, and outputs array with min value and max value of all values in all data objects.
+  function findGraphMinMax (data) {
+    var allValuesArr = [];
+
+    data.forEach(function (item, index) {
+      allValuesArr = allValuesArr.concat(d3.values(item.Years));
+    });
+
+    // remove -1 from values array
+    var filteredValues = _.remove(allValuesArr, function (value) {
+      return value != -1;
+    });
+    
+    return { 
+      minVal : _.min(filteredValues), 
+      maxVal : _.max(filteredValues)
+    };
+  } //end findGraphMinMax
 
 }; // end module.exports
