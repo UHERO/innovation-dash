@@ -57,14 +57,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     
-    filteredStates = filterStateObjects(data, stateNames);
+    filteredStates = window.fStates = filterStateObjects(data, stateNames);
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
     }
 
-    var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
-    var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
+    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
 
     // TODO: maybe tweak so that only max values for selected timespan (not all years for filteredStates) get returned
     var setMaxVals = findMaxFIPSVals(data);
@@ -202,8 +202,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         left: 70
       };
 
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).nice().domain([selectedMinYear, selectedMaxYear]);
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).nice().domain([yMinVal,yMaxVal]);
+    var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
+    var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
 
     var formatXAxis = d3.format('.0f');
 
@@ -344,7 +344,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     var scale = d3.scale.linear()
       .domain([setMinVals.minYear, setMaxVals.maxYear])
       .range([0, 760]) //TODO: check this value
-      .nice();
+      ;
 
     var brush = d3.svg.brush();
     brush.x(scale)
@@ -374,7 +374,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .orient("bottom")
       .tickFormat(tickFormat)
       .innerTickSize(20)
-      // .ticks(4)
+      // .tickValues(scale.ticks(0).concat(scale.domain())) // shows only start and end ticks
       .tickPadding(20);
 
     var axisG = brushSVG.append("g");
@@ -484,5 +484,24 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       return result;
     }, {numOfYrs: 0, minYear: Infinity, minVal: Infinity});
   } //end findMinFIPSVals
+  
+  // takes in array of data objects, and outputs array with min value and max value of all values in all data objects.
+  function findGraphMinMax (data) {
+    var allValuesArr = [];
+
+    data.forEach(function (item, index) {
+      allValuesArr = allValuesArr.concat(d3.values(item.Years));
+    });
+
+    // remove -1 from values array
+    var filteredValues = _.remove(allValuesArr, function (value) {
+      return value != -1;
+    });
+    
+    return { 
+      minVal : _.min(filteredValues), 
+      maxVal : _.max(filteredValues)
+    };
+  } //end findGraphMinMax
 
 }; // end module.exports
