@@ -202,8 +202,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
         left: 70
       };
 
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([selectedMinYear, selectedMaxYear]).nice();
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([yMinVal,yMaxVal]).nice();
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).nice().domain([selectedMinYear, selectedMaxYear]);
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).nice().domain([yMinVal,yMaxVal]);
 
     var formatXAxis = d3.format('.0f');
 
