@@ -28,7 +28,7 @@ module.exports = /*@ngInject*/
         // var mapSource = '/assets/images/USA.json';
         var d3Charts = require('../d3/charts');
 
-        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph");
+        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph","#legendElement");
         
       }
     };

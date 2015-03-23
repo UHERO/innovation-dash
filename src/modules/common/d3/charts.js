@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brushEl) {
 
   //Default configs
-  var width, height, projection, path, svg, g;
+  var width, height, projection, path, svg, g, mapLegend;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -135,6 +135,54 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
+
+    // Takes the difference of the min and max values then seperates them into 3 mid range values
+    var minYVR = yearValuesRange[0];
+    var maxYVR = yearValuesRange[1];
+    var minMaxDifference = maxYVR - minYVR;
+    console.log('minMaxDifference',minMaxDifference);
+    var mid1 = minYVR+(minMaxDifference*0.25);
+    var mid2 = minYVR+(minMaxDifference*0.50);
+    var mid3 = minYVR+(minMaxDifference*0.75);
+    console.log('min',minYVR);
+    console.log('mid1',mid1);
+    console.log('mid2',mid2);
+    console.log('mid3',mid3);
+    console.log('max',maxYVR);
+    var legendDomain = [];
+    legendDomain.push(minYVR,mid1,mid2,mid3,maxYVR);
+    var legendColorScale = d3.scale.quantile()
+      .domain(legendDomain)
+      .range(viewColors.econ); // Switch out for Joelle's color change
+    console.log('legendColorScale',legendColorScale);
+
+    d3.select(legendEl).html('');
+    var legend = d3.selectAll(legendEl);
+
+          legend.data(legendDomain)
+          .enter()
+          .append('g')
+          .attr('class', 'legend');
+          // .attr('transform', function(d, i) {
+          //   var height = 18 + 4;     
+          //   var offset =  height * legendDomain.length / 2;
+          //   var horz = -2 * 18;                  
+          //   var vert = i * height - offset;                  
+          //   return 'translate(' + horz + ',' + vert + ')';   
+          // });
+
+        legend.append('rect')
+          .attr('width', 18)                     
+          .attr('height', 18)                    
+          .style('fill', legendColorScale())                              
+          .style('stroke', legendColorScale());                           
+          
+        legend.append('text')
+          .attr('x',0)         
+          .attr('y',0)         
+          .text(function(d) { return d; });                  
+
+    // CURRENT WORK
 
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
 
