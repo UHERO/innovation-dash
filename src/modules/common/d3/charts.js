@@ -25,14 +25,21 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   var geoAreaCategory;
   var geoAreaNames;
 
-  // TODO: do this dynamically
-  if (isSVGMap) {
-    geoAreaCategory = 'County';
-    geoAreaNames = ['Honolulu', 'Maui'];
-  } else {
-    geoAreaCategory = 'State';
-    geoAreaNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
+
+  function buildGeoNameList (isHawaii, selectedGeoArea) {
+    geoAreaNames = [];
+    if (isHawaii) {
+      geoAreaCategory = 'County';
+      geoAreaNames[0] = 'Honolulu';
+    } else {
+      geoAreaCategory = 'State';
+      geoAreaNames[0] = 'Hawaii';
+    }
+    if (selectedGeoArea) geoAreaNames.push(selectedGeoArea);
+  
   }
+
+  buildGeoNameList(isSVGMap);
 
   var knownSummaryRecords = ['United States'];
   var datasetSummaryRecords;
@@ -72,9 +79,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       filteredStates.unshift(datasetSummaryRecords[0]);
     }
 
-    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
-
     // TODO: maybe tweak so that only max values for selected timespan (not all years for filteredStates) get returned
     var setMaxVals = findMaxFIPSVals(data);
     var setMinVals = findMinFIPSVals(data);
@@ -83,10 +87,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     selectedMaxYear = setMaxVals.maxYear;
 
     drawMap(sourceMap, data);
-    // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
-
-    drawGraph(data, yMinVal, yMaxVal);
-    drawBrush(sourceMap, data, setMinVals, setMaxVals, yMinVal, yMaxVal);
+    drawGraph();
+    drawBrush(sourceMap, data, setMinVals, setMaxVals);
   }
 
   // Setup Graph Components
@@ -163,7 +165,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         .style('stroke-width', 1)
         .style('fill', function (d) {
           return color(valuesByArea[d.properties.name]);
-        });
+        })
+        .on('click', passMapClickTarget);
     }
   }
 
@@ -198,7 +201,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
   // Draw Line Graph
-  function drawGraph (data, yMinVal, yMaxVal) {
+  function drawGraph () {
+    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
+    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+
     var width = 600;
     var height = 370;
 
@@ -348,7 +354,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
   // Draw Slider
-  function drawBrush (sourceMap, data, setMinVals, setMaxVals,  yMinVal, yMaxVal) {
+  function drawBrush (sourceMap, data, setMinVals, setMaxVals) {
     
     var tickFormat = d3.format('.0f');
 
@@ -375,7 +381,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       selectedMaxYear = savedExtent[1];
 
       drawMap(sourceMap, data);
-      drawGraph(data, yMinVal, yMaxVal); 
+      drawGraph(); 
     }
 
     var brushSVG = d3.select("#uh-brush-test");
@@ -416,6 +422,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
   // Utility functions
+  function passMapClickTarget (target) {
+    buildGeoNameList(isSVGMap, target.properties.name);
+    drawGraph();
+    console.log('map clicked', target.properties.name);
+  }
 
   // Instantiate into a function to take a value and return a color based on the range
   function setQuantileColorScale (domainArr, rangeArr) {
