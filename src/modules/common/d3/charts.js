@@ -22,13 +22,15 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
   var selectedMinYear;
   var selectedMaxYear;
-  var geoAreaCategory = 'County';
+  var geoAreaCategory;
   var geoAreaNames;
 
   // TODO: do this dynamically
-  if (geoAreaCategory === 'County') {
+  if (isSVGMap) {
+    geoAreaCategory = 'County';
     geoAreaNames = ['Honolulu', 'Maui'];
   } else {
+    geoAreaCategory = 'State';
     geoAreaNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
   }
 
@@ -64,7 +66,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     
-    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames);
+    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
@@ -165,11 +167,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     }
   }
 
-  function dataByState(data, state) {
+  function dataByState(data, geoAreaName, geoAreaCategory) {
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].State === state) {
+
+      if (data[i][geoAreaCategory] === geoAreaName) {
 
         var yearValuesArray = d3.entries(data[i].Years);
 
@@ -264,7 +267,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0]);
+      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
   
       vis.append("svg:path")
          .attr("d", lineGen(usAvgData))
@@ -273,8 +276,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
          .attr("fill", "none");
     }
 
-    var hiStateData = dataByState(filteredStates, geoAreaNames[0]);
-    var selectedStateData = dataByState(filteredStates, geoAreaNames[1]);
+    var hiStateData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    var selectedStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
 
     vis.append("svg:path")
      .attr("d", lineGen(hiStateData))
@@ -335,7 +338,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .style("fill", function(d){
         if (d == "United States") {
           return "#D3D0C1";
-        } else if (d == "Hawaii") {
+        } else if (d == "Hawaii" || d == "Honolulu") {
           return "#4F5050";
         } else {
           return "orange";
