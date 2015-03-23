@@ -22,7 +22,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   var selectedMinYear;
   var selectedMaxYear;
-  var stateNames = ['Hawaii', 'Nebraska']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
+  var stateNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
   // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
   
   var knownSummaryRecords = ['United States'];
@@ -58,6 +58,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     
     filteredStates = filterStateObjects(data, stateNames);
+
+    if (datasetSummaryRecords.length !== 0) {
+      filteredStates.unshift(datasetSummaryRecords[0]);
+    }
 
     var yMaxVal = findMaxFIPSVals(filteredStates).maxVal;
     var yMinVal = findMinFIPSVals(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
@@ -252,7 +256,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      var usAvgData = dataByState(datasetSummaryRecords, knownSummaryRecords[0]);
+      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0]);
   
       vis.append("svg:path")
          .attr("d", lineGen(usAvgData))
@@ -309,11 +313,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       });
    
    // adds colors to keys
-    var legendcolors = ['#D3D0C1', '#4F5050', 'orange'];   
-
     vis.insert('g')
       .selectAll('rect')
-      .data(legendcolors)
+      .data(legendData)
       .enter()
       .append("rect")
       .attr("x", width + 30)
@@ -323,8 +325,13 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .attr("width", 30)
       .attr("height", 5)
       .style("fill", function(d){
-        var color = d;
-        return color;
+        if (d == "United States") {
+          return "#D3D0C1";
+        } else if (d == "Hawaii") {
+          return "#4F5050";
+        } else {
+          return "orange";
+        }
       });
 
   }
