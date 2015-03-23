@@ -288,7 +288,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     // adding selected state line
     vis.append("svg:path")
      .attr("d", lineGen(selectedStateData))
-     .attr("stroke", "orange")
+     .attr("stroke", viewColors[colorScheme][2])
      .attr("stroke-width", 3)
      .attr("fill", "none");
 
@@ -341,7 +341,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         } else if (d == "Hawaii" || d == "Honolulu") {
           return "#4F5050";
         } else {
-          return "orange";
+          return viewColors[colorScheme][2];
         }
       });
 
@@ -396,6 +396,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     axisG.selectAll("line")
       .style({ stroke: "#AAA797" });
 
+    // viewColors[colorScheme]
+
     // appending brush after axis so ticks appear before slider
     var brushG = brushSVG.append('g');
     brush(brushG);
@@ -403,13 +405,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .selectAll("rect").attr("height", 10);
     brushG.selectAll(".background")
       .style({ fill: "#D3D0C1", visibility: "visible" });
+      // .style({ fill: "#D3D0C1", visibility: "visible" });
     brushG.selectAll(".extent")
-      .style({ fill: "#F27D14", visibility: "visible" });
+      .style({ fill: viewColors[colorScheme][4], visibility: "visible" });
     brushG.selectAll(".resize rect")
       .attr("width", 12)
       .attr("height", 18)
       .attr("y", -4)
-      .style({ fill: "#FF9933", visibility: "visible" });
+      .style({ fill: viewColors[colorScheme][2], visibility: "visible" });
   }
 
   // Utility functions
