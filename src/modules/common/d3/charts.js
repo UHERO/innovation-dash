@@ -22,9 +22,16 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
   var selectedMinYear;
   var selectedMaxYear;
-  var stateNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
-  // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
-  
+  var geoAreaCategory = 'County';
+  var geoAreaNames;
+
+  // TODO: do this dynamically
+  if (geoAreaCategory === 'County') {
+    geoAreaNames = ['Honolulu', 'Maui'];
+  } else {
+    geoAreaNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
+  }
+
   var knownSummaryRecords = ['United States'];
   var datasetSummaryRecords;
   var filteredStates;
@@ -57,7 +64,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     
-    filteredStates = window.fStates = filterStateObjects(data, stateNames);
+    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames);
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
@@ -265,8 +272,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
          .attr("fill", "none");
     }
 
-    var hiStateData = dataByState(filteredStates, stateNames[0]);
-    var selectedStateData = dataByState(filteredStates, stateNames[1]);
+    var hiStateData = dataByState(filteredStates, geoAreaNames[0]);
+    var selectedStateData = dataByState(filteredStates, geoAreaNames[1]);
 
     vis.append("svg:path")
      .attr("d", lineGen(hiStateData))
@@ -291,7 +298,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
       .text('Legend');
 
     // deals with not having US average data or not:
-    var legendData = stateNames.slice(0); // prevents changes to stateNames when modifying legendData
+    var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
     if (datasetSummaryRecords.length !== 0 && legendData[0] !== knownSummaryRecords) {
       legendData.unshift(knownSummaryRecords);
     }
@@ -426,10 +433,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl) {
   } //end transformFIPSData
 
   // Takes data and an array of state names (strings) to find
-  function filterStateObjects (data, stateNamesArr) {
-    return stateNamesArr.map(function(item) {
+  function filterStateObjects (data, geoAreaNamesArr, geoAreaCategory) {
+    return geoAreaNamesArr.map(function(item) {
       // .filter returns array, so we need to pluck out element
-      return _.filter(data, 'State', item)[0];
+      return _.filter(data, geoAreaCategory, item)[0];
     });
   }
 
