@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
 
   //Default configs
@@ -137,7 +137,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Draw Graph Components
 
   // This drawMap will only work with FIPS structured data on US map
-  function drawMap (map, data, legendFlag) {
+  function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
     var valuesByArea = window.vbs = {};
@@ -155,70 +155,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
-    // Draws the legend for the main graph
-    if(legendFlag){
-      drawHistogram(yearValuesRange);
-    }
-
-    // Func to create the legend for the main graph
-    function drawHistogram (yearValuesRange) {
-
-
-      var middleRanges = color.quantiles();
-      // mapRange array generation now within the drawHistogram func, using the yearValuesRange
-      var mapRanges = [];
-      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-      mapRanges[1] = [middleRanges[0], middleRanges[1]];
-      mapRanges[2] = [middleRanges[1], middleRanges[2]];
-      mapRanges[3] = [middleRanges[2], middleRanges[3]];
-      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
-
-      d3.select(legendEl).html("");
-
-      var svgLegend = d3.select(legendEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
-      var legendKey = mapRanges.slice(0);
-
-      svgLegend.append('text')
-        .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"toplegend_text"})
-          // below line is hardcoded. need to fix to dynamic with $scope or other
-        .text("8th Grade Math Scale Scores")
-        .style("fill", "black");
-
-      // Legend color blocks
-      svgLegend.insert('g')
-        .selectAll('rect')
-        .data(viewColors[colorScheme])
-        .enter()
-        .append("rect")
-        .attr("x", 5)
-        .attr("y", function(d, i){
-          return i * 26 + 29;
-        })
-        .attr("rx", 2)
-        .attr("ry", 2)
-        .attr("width", 25)
-        .attr("height", 15)
-        .style({
-          "fill": function(d){ return d;},
-          "display" : "inline-block",
-        });
-
-      // Legend number ranges
-      svgLegend.insert('g')
-        .selectAll('text')
-        .data(legendKey)
-        .enter()
-        .append('text')
-        .attr('class','toplegend_text')
-        .attr("x", 45)
-        .attr("y", function(d, i){
-          return i * 26 + 40;
-        })
-        .text(function(d,i){
-          // may have to convert to percents depending on chart
-          return d[0].toFixed(4) + " - " + d[1].toFixed(4);
-        });
-    }
+    // Draws the histogram for the main graph
+    drawHistogram(yearValuesRange, color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -248,6 +186,64 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
           }
         });
     }
+  }
+
+function drawHistogram (yearValuesRange, colorScale) {
+
+  var middleRanges = colorScale.quantiles();
+  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+  var mapRanges = [];
+  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+  mapRanges[1] = [middleRanges[0], middleRanges[1]];
+  mapRanges[2] = [middleRanges[1], middleRanges[2]];
+  mapRanges[3] = [middleRanges[2], middleRanges[3]];
+  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+  d3.select(histogramEl).html("");
+
+  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+  var histogramKeys = mapRanges.slice(0);
+
+  svgHistogram.append('text')
+    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+    // below line is hardcoded. need to fix to dynamic with $scope or other
+    .text(legendText)
+    .style("fill", "black");
+
+  // Histogram color blocks
+  svgHistogram.insert('g')
+    .selectAll('rect')
+    .data(viewColors[colorScheme])
+    .enter()
+    .append("rect")
+    .attr("x", 5)
+    .attr("y", function(d, i){
+      return i * 26 + 29;
+    })
+    .attr("rx", 2)
+    .attr("ry", 2)
+    .attr("width", 25)
+    .attr("height", 15)
+    .style({
+      "fill": function(d){ return d;},
+      "display" : "inline-block",
+    });
+
+  // Histogram number ranges
+  svgHistogram.insert('g')
+    .selectAll('text')
+    .data(histogramKeys)
+    .enter()
+    .append('text')
+    .attr('class','histogram_text')
+    .attr("x", 45)
+    .attr("y", function(d, i){
+      return i * 26 + 40;
+    })
+    .text(function(d,i){
+      // may have to convert to percents depending on chart
+      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+    });
   }
 
   function dataByState(data, geoAreaName, geoAreaCategory) {
