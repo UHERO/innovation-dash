@@ -207,7 +207,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         })
         .text(function(d,i){
           // may have to convert to percents depending on chart
-          return d[0].toFixed(2) + " - " + d[1].toFixed(2);
+          return d[0].toFixed(4) + " - " + d[1].toFixed(4);
         });
     }
 
@@ -521,7 +521,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
           var transformedVal = +n;
-          result.Years[key] = transformedVal ? transformedVal : -1;
+          result.Years[key] = transformedVal ? transformedVal : null;
         } else {
           result[key] = n;
         }

@@ -73,6 +73,6 @@ module.exports =
   .controller('AcademicRnDByCountyController', require('./AcademicRnDByCountyController'))
   .controller('FederalRnDController', require('./FederalRnDController'))
   .controller('BusinessRnDController', require('./BusinessRnDController'))
-  .controller('UniversityStartupsController', require('./RndController'))
+  .controller('UniversityStartupsController', require('./UniversityStartupsController'))
   .controller('TechnologyLicensingController', require('./TechnologyLicensingController'));
 
