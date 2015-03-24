@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
   //Default configs
   var width, height, projection, path, svg, g;
@@ -9,6 +9,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
     edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+  };
+  var measurement_units = {
+    percent : '%',
+    dollars : '$'
   };
 
   width = 800;
@@ -310,7 +314,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .attr('class','legend_text')
       .attr("x", width + 30)
       .attr("y", 10)
-      .text('Legend');
+      .text(legendText);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
