@@ -154,35 +154,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     var legendColorScale = d3.scale.quantile()
       .domain(legendDomain)
       .range(viewColors.econ); // Switch out for Joelle's color change
-    // console.log('legendColorScale',legendColorScale);
+    console.log('legendColorScale',legendColorScale);
 
-    // d3.select(legendEl).html('');
-    // var legend = d3.selectAll(legendEl);
-
-    //       legend.data(legendDomain)
-    //       .enter()
-    //       .append('g')
-    //       .attr('class', 'legend');
-    //       // .attr('transform', function(d, i) {
-    //       //   var height = 18 + 4;     
-    //       //   var offset =  height * legendDomain.length / 2;
-    //       //   var horz = -2 * 18;                  
-    //       //   var vert = i * height - offset;                  
-    //       //   return 'translate(' + horz + ',' + vert + ')';   
-    //       // });
-
-    //     legend.append('rect')
-    //       .attr('width', 18)                     
-    //       .attr('height', 18)                    
-    //       .style('fill', legendColorScale())                              
-    //       .style('stroke', legendColorScale());                           
-          
-    //     legend.append('text')
-    //       .attr('x',0)         
-    //       .attr('y',0)         
-    //       .text(function(d) { return d; });                  
-
-    // CURRENT WORK
+    // CURRENT WORK BRANDON
 
     var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
 
