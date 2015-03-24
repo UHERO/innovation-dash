@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure) {
   // console.log(mapEl, graphEl)
   //Default configs
   var width, height, projection, path, svg, g;
@@ -249,7 +249,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("y", 0)
        .style("text-anchor", "middle")
        //TODO: update text based on current Indicator
-       .text("Per Capita Personal Income ($)");
+       .text(yUnitMeasure);
 
     // .defined insures that only non-negative values
     // are graphed
