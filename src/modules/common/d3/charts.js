@@ -226,11 +226,18 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var xAxis = d3.svg.axis()
         .scale(xScale)
         .tickFormat(formatXAxis);
-        // .outerTickSize(0);
+
+    var numXAxisTicks = d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1).length;
+
+    // based on our svg width, when there's 7 or fewer ticks, duplicate year labels are shown
+    if (numXAxisTicks < 8) {
+      console.log('hey!');
+      xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
+    }
+
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
-        // .outerTickSize(0);
 
     vis.append("svg:g")
        .attr("class", "x axis")
