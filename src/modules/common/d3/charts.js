@@ -391,7 +391,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .style("fill", function(d){
         if (d == "United States") {
           return "#D3D0C1";
-        } else if (d == "Hawaii" || d == "Honolulu") {
+        } else if ((d == "Hawaii" && geoAreaCategory !== "County") || d == "Honolulu") {
           return "#4F5050";
         } else {
           return viewColors[colorScheme][2];
