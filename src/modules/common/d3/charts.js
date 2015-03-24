@@ -146,16 +146,18 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
-
-    /* START OF MAP HISTOGRAM FUNCTION */
     console.log('yearValuesRange',yearValuesRange);
-    var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
-      console.log('color.quantiles()',color.quantiles());
-      console.log('color.quantiles().length',color.quantiles().length);
-      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
+    // Draws the legend for the main graph
+    drawHistogram(yearValuesRange);
+
+    // Func to create the legend for the main graph
+    function drawHistogram (yearValuesRange) {
+
+      var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
       var middleRanges = color.quantiles();
+      // mapRange array generation now within the drawHistogram func, using the yearValuesRange
       var mapRanges = [];
       mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
       mapRanges[1] = [middleRanges[0], middleRanges[1]];
@@ -163,13 +165,50 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       mapRanges[3] = [middleRanges[2], middleRanges[3]];
       mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
-    function drawHistogram (mapRanges) {
-      console.log('mapRanges',mapRanges);
-      console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
-    }
+      var svgLegend = d3.select(legendEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+      var legendKey = mapRanges.slice(0);
 
-    drawHistogram(mapRanges);
-    /* END OF MAP HISTOGRAM FUNCTION */
+      svgLegend.append('text')
+        .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"toplegend_text"})
+          // below line is hardcoded. need to fix to dynamic with $scope or other
+        .text("8th Grade Math Scale Scores")
+        .style("fill", "black");
+
+      // Legend color blocks
+      svgLegend.insert('g')
+        .selectAll('rect')
+        .data(viewColors[colorScheme])
+        .enter()
+        .append("rect")
+        .attr("x", 5)
+        .attr("y", function(d, i){
+          return i * 26 + 29;
+        })
+        .attr("rx", 2)
+        .attr("ry", 2)
+        .attr("width", 25)
+        .attr("height", 15)
+        .style({
+          "fill": function(d){ return d;},
+          "display" : "inline-block",
+        });
+
+      // Legend number ranges
+      svgLegend.insert('g')
+        .selectAll('text')
+        .data(legendKey)
+        .enter()
+        .append('text')
+        .attr('class','toplegend_text')
+        .attr("x", 45)
+        .attr("y", function(d, i){
+          return i * 26 + 40;
+        })
+        .text(function(d,i){
+          // may have to convert to percents depending on chart
+          return d[0].toFixed(2) + " - " + d[1].toFixed(2);
+        });
+    }
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
