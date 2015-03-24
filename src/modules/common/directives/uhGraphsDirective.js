@@ -6,7 +6,7 @@ module.exports = /*@ngInject*/
 
       // require: '^yUnitMeasure',
       scope: {
-        d3YUnitMeasure : '='
+        // d3YUnitMeasure : '='
       },
       // template: '<div class="uh-maps">Data goes Here<div>',
       templateUrl: 'common/directives/templates/uhGraphs.html',
