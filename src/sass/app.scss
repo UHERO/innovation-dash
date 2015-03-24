@@ -319,6 +319,11 @@ section:last-child{
       height: 300px;
       float: left;
       padding: 10px 20px;
+      border: solid 1px red;
+
+      .key_text{
+        font-size: 10px;
+      }
     }
 }
 

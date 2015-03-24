@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
 
   //Default configs
@@ -286,7 +286,7 @@ function drawHistogram (yearValuesRange, colorScale) {
 
     d3.select(graphEl).html("");
     var vis = d3.select(graphEl).append('svg')
-      .attr('width', width + 200)
+      .attr('width', width)
       .attr('height', height);
     var margins = {
         top: 20,
@@ -387,10 +387,13 @@ function drawHistogram (yearValuesRange, colorScale) {
 
     // Legend
     // appends line graph indicator heading
-    vis.insert('g')
+    d3.select(keyEl).html("");
+    var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+
+    svgKey.insert('g')
       .append('text')
-      .attr('class','legend_text')
-      .attr("x", width + 30)
+      .attr('class','key_text')
+      .attr("x", 0)
       .attr("y", 10)
       .text(legendText);
 
@@ -401,14 +404,14 @@ function drawHistogram (yearValuesRange, colorScale) {
     }
 
     // appends key labels 
-    vis.insert('g')
+    svgKey.insert('g')
       .selectAll('text')
       // .data(legendData)
       .data(legendData)
       .enter()
       .append('text')
-      .attr('class','legend_text')
-      .attr("x", width + 70)
+      .attr('class','key_text')
+      .attr("x", 40)
       .attr("y", function(d, i){
         return i * 20 + 50;
       })
@@ -417,12 +420,12 @@ function drawHistogram (yearValuesRange, colorScale) {
       });
    
    // adds colors to keys
-    vis.insert('g')
+    svgKey.insert('g')
       .selectAll('rect')
       .data(legendData)
       .enter()
       .append("rect")
-      .attr("x", width + 30)
+      .attr("x", 0)
       .attr("y", function(d, i){
         return i * 20 + 42;
       })
