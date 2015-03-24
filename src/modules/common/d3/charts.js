@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme) {
-  // console.log(mapEl, graphEl)
+
   //Default configs
   var width, height, projection, path, svg, g;
   var viewColors = {
@@ -44,6 +44,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   var knownSummaryRecords = ['United States'];
   var datasetSummaryRecords;
   var filteredStates;
+  var data; // TODO: check whether or not we REALLY need to set data var outside of ready function
 
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
@@ -68,7 +69,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     setupMap(sourceMap, width, height);
     
-    var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
+    data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
@@ -79,7 +80,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       filteredStates.unshift(datasetSummaryRecords[0]);
     }
 
-    // TODO: maybe tweak so that only max values for selected timespan (not all years for filteredStates) get returned
     var setMaxVals = findMaxFIPSVals(data);
     var setMinVals = findMinFIPSVals(data);
 
@@ -146,9 +146,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
-    // console.log('yearvalrange', yearValuesRange);
+
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-    console.log('color',color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -284,7 +283,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     var hiStateData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
     var selectedStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
-
     vis.append("svg:path")
      .attr("d", lineGen(hiStateData))
      .attr("stroke", "#4F5050")
@@ -424,6 +422,13 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Utility functions
   function passMapClickTarget (target) {
     buildGeoNameList(isSVGMap, target.properties.name);
+
+    var selectedGeoAreaObj = filterStateObjects(data, [target.properties.name], geoAreaCategory)[0];
+
+    // sometimes there won't be US Average data (datasetSumaryRecords)
+    // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
+    filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
+
     drawGraph();
     console.log('map clicked', target.properties.name);
   }
