@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
 
   //Default configs
@@ -280,14 +280,14 @@ function drawHistogram (yearValuesRange, colorScale) {
   // Draw Line Graph
   function drawGraph () {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMinVal = findGraphMinMax(filteredStates).minVal;
 
     var width = 600;
     var height = 370;
 
     d3.select(graphEl).html("");
     var vis = d3.select(graphEl).append('svg')
-      .attr('width', width + 200)
+      .attr('width', width)
       .attr('height', height);
     var margins = {
         top: 20,
@@ -317,11 +317,6 @@ function drawHistogram (yearValuesRange, colorScale) {
         .scale(yScale)
         .orient("left");
 
-    // PERCENTAGE CONVERSION: do only if measurement_units is "%"
-    // if (measurement_units === "%") {
-      // yAxis.tickFormat(d3.format("p"));
-    // }
-
     vis.append("svg:g")
        .attr("class", "x axis")
        .attr("transform", "translate(0," + (height - margins.bottom) + ")")
@@ -343,7 +338,6 @@ function drawHistogram (yearValuesRange, colorScale) {
        .attr("x", 0 - (height) / 2)
        .attr("y", 0)
        .style("text-anchor", "middle")
-       //TODO: update text based on current Indicator
        .text(yUnitMeasure);
 
     // .defined insures that only non-negative values
@@ -387,11 +381,18 @@ function drawHistogram (yearValuesRange, colorScale) {
      .attr("fill", "none");
 
     // Legend
+    drawLegend(vis);
+  }
+
+  function drawLegend(graphSVG) {
     // appends line graph indicator heading
-    vis.insert('g')
+    d3.select(keyEl).html("");
+    var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+
+    svgKey.insert('g')
       .append('text')
-      .attr('class','legend_text')
-      .attr("x", width + 30)
+      .attr('class','key_text')
+      .attr("x", 0)
       .attr("y", 10)
       .text(legendText);
 
@@ -402,14 +403,14 @@ function drawHistogram (yearValuesRange, colorScale) {
     }
 
     // appends key labels 
-    vis.insert('g')
+    svgKey.insert('g')
       .selectAll('text')
       // .data(legendData)
       .data(legendData)
       .enter()
       .append('text')
-      .attr('class','legend_text')
-      .attr("x", width + 70)
+      .attr('class','key_text')
+      .attr("x", 40)
       .attr("y", function(d, i){
         return i * 20 + 50;
       })
@@ -418,12 +419,12 @@ function drawHistogram (yearValuesRange, colorScale) {
       });
    
    // adds colors to keys
-    vis.insert('g')
+    svgKey.insert('g')
       .selectAll('rect')
       .data(legendData)
       .enter()
       .append("rect")
-      .attr("x", width + 30)
+      .attr("x", 0)
       .attr("y", function(d, i){
         return i * 20 + 42;
       })
@@ -438,7 +439,6 @@ function drawHistogram (yearValuesRange, colorScale) {
           return viewColors[colorScheme][2];
         }
       });
-
   }
 
   // Draw Slider
@@ -512,6 +512,8 @@ function drawHistogram (yearValuesRange, colorScale) {
   // Utility functions
   function passMapClickTarget (targetName) {
     buildGeoNameList(isSVGMap, targetName);
+
+    console.log('clicked on', targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
