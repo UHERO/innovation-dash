@@ -29,8 +29,19 @@ module.exports =
     })
     .state('edu.education-attainment', {
       url: '/education-attainment',
+      abstract: true,
       templateUrl: 'app/edu/views/education-attainment.html',
+      // controller: 'EducationAttainmentController'
+    })
+    .state('edu.education-attainment.us', {
+      url: '/us',
+      templateUrl: 'app/edu/views/education-attainment.us.html',
       controller: 'EducationAttainmentController'
+    })
+    .state('edu.education-attainment.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/edu/views/education-attainment.hawaii.html',
+      controller: 'EducationAttainmentHawaiiController'
     })
     .state('edu.post-sec-degree', {
       url: '/post-sec-degree',
