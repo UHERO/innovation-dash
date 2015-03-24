@@ -147,6 +147,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     console.log('yearValuesRange',yearValuesRange);
+    
+    var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
     // Draws the legend for the main graph
     drawHistogram(yearValuesRange);
@@ -154,7 +156,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     // Func to create the legend for the main graph
     function drawHistogram (yearValuesRange) {
 
-      var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
       var middleRanges = color.quantiles();
       // mapRange array generation now within the drawHistogram func, using the yearValuesRange
