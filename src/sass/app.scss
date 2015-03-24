@@ -270,6 +270,8 @@ section:last-child{
   .legend{
     padding: 10px 20px 20px;
     width: 30%;
+    color: $body_color;
+    font-size: $base*0.8;
     float: left;
 
     h4{

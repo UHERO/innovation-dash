@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
 
   //Default configs
@@ -91,7 +91,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
 
-    drawMap(sourceMap, data);
+    drawMap(sourceMap, data, true);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
   }
@@ -151,30 +151,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
-
-    /* START OF MAP HISTOGRAM FUNCTION */
     console.log('yearValuesRange',yearValuesRange);
+    
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
-      console.log('color.quantiles()',color.quantiles());
-      console.log('color.quantiles().length',color.quantiles().length);
-      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
-
-      var middleRanges = color.quantiles();
-      var mapRanges = [];
-      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-      mapRanges[1] = [middleRanges[0], middleRanges[1]];
-      mapRanges[2] = [middleRanges[1], middleRanges[2]];
-      mapRanges[3] = [middleRanges[2], middleRanges[3]];
-      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
-
-    function drawHistogram (mapRanges) {
-      console.log('mapRanges',mapRanges);
-      console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
-    }
-
-    drawHistogram(mapRanges);
-    /* END OF MAP HISTOGRAM FUNCTION */
+    // Draws the histogram for the main graph
+    drawHistogram(yearValuesRange, color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -204,6 +186,64 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
           }
         });
     }
+  }
+
+function drawHistogram (yearValuesRange, colorScale) {
+
+  var middleRanges = colorScale.quantiles();
+  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+  var mapRanges = [];
+  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+  mapRanges[1] = [middleRanges[0], middleRanges[1]];
+  mapRanges[2] = [middleRanges[1], middleRanges[2]];
+  mapRanges[3] = [middleRanges[2], middleRanges[3]];
+  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+  d3.select(histogramEl).html("");
+
+  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+  var histogramKeys = mapRanges.slice(0);
+
+  svgHistogram.append('text')
+    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+    // below line is hardcoded. need to fix to dynamic with $scope or other
+    .text(legendText)
+    .style("fill", "black");
+
+  // Histogram color blocks
+  svgHistogram.insert('g')
+    .selectAll('rect')
+    .data(viewColors[colorScheme])
+    .enter()
+    .append("rect")
+    .attr("x", 5)
+    .attr("y", function(d, i){
+      return i * 26 + 29;
+    })
+    .attr("rx", 2)
+    .attr("ry", 2)
+    .attr("width", 25)
+    .attr("height", 15)
+    .style({
+      "fill": function(d){ return d;},
+      "display" : "inline-block",
+    });
+
+  // Histogram number ranges
+  svgHistogram.insert('g')
+    .selectAll('text')
+    .data(histogramKeys)
+    .enter()
+    .append('text')
+    .attr('class','histogram_text')
+    .attr("x", 45)
+    .attr("y", function(d, i){
+      return i * 26 + 40;
+    })
+    .text(function(d,i){
+      // may have to convert to percents depending on chart
+      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+    });
   }
 
   function dataByState(data, geoAreaName, geoAreaCategory) {
@@ -427,7 +467,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data);
+      drawMap(sourceMap, data, false);
       drawGraph(); 
     }
 
@@ -495,7 +535,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
           var transformedVal = +n;
-          result.Years[key] = transformedVal ? transformedVal : -1;
+          result.Years[key] = transformedVal ? transformedVal : null;
         } else {
           result[key] = n;
         }
