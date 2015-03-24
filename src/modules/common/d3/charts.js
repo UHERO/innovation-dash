@@ -86,7 +86,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
 
-    drawMap(sourceMap, data);
+    drawMap(sourceMap, data, true);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
   }
@@ -132,7 +132,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Draw Graph Components
 
   // This drawMap will only work with FIPS structured data on US map
-  function drawMap (map, data) {
+  function drawMap (map, data, legendFlag) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
     var valuesByArea = window.vbs = {};
@@ -151,7 +151,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
     // Draws the legend for the main graph
-    drawHistogram(yearValuesRange);
+    if(legendFlag){
+      drawHistogram(yearValuesRange);
+    }
 
     // Func to create the legend for the main graph
     function drawHistogram (yearValuesRange) {
@@ -452,7 +454,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data);
+      drawMap(sourceMap, data, false);
       drawGraph(); 
     }
 
