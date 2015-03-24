@@ -1,14 +1,19 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+
 
   //Default configs
-  var width, height, projection, path, svg, g;
+  var width, height, projection, path, svg, g, mapLegend;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
     edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+  };
+  var measurement_units = {
+    percent : '%',
+    dollars : '$'
   };
 
   width = 800;
@@ -147,7 +152,29 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
 
+    /* START OF MAP HISTOGRAM FUNCTION */
+    console.log('yearValuesRange',yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
+
+      console.log('color.quantiles()',color.quantiles());
+      console.log('color.quantiles().length',color.quantiles().length);
+      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
+
+      var middleRanges = color.quantiles();
+      var mapRanges = [];
+      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+      mapRanges[1] = [middleRanges[0], middleRanges[1]];
+      mapRanges[2] = [middleRanges[1], middleRanges[2]];
+      mapRanges[3] = [middleRanges[2], middleRanges[3]];
+      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+    function drawHistogram (mapRanges) {
+      console.log('mapRanges',mapRanges);
+      console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
+    }
+
+    drawHistogram(mapRanges);
+    /* END OF MAP HISTOGRAM FUNCTION */
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -212,7 +239,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Draw Line Graph
   function drawGraph () {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMinVal = findGraphMinMax(filteredStates).minVal; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
 
     var width = 600;
     var height = 370;
@@ -249,6 +276,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         .scale(yScale)
         .orient("left");
 
+    // PERCENTAGE CONVERSION: do only if measurement_units is "%"
+    // if (measurement_units === "%") {
+      // yAxis.tickFormat(d3.format("p"));
+    // }
+
     vis.append("svg:g")
        .attr("class", "x axis")
        .attr("transform", "translate(0," + (height - margins.bottom) + ")")
@@ -271,7 +303,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("y", 0)
        .style("text-anchor", "middle")
        //TODO: update text based on current Indicator
-       .text("Per Capita Personal Income ($)");
+       .text(yUnitMeasure);
 
     // .defined insures that only non-negative values
     // are graphed
@@ -320,7 +352,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .attr('class','legend_text')
       .attr("x", width + 30)
       .attr("y", 10)
-      .text('Legend');
+      .text(legendText);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
