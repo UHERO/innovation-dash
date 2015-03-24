@@ -178,8 +178,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
-        var countySvg = d3.select('#'+key);
-          countySvg.selectAll('path').style('fill', color(valuesByArea[key]));
+        var countySvg = d3.select('#'+key)
+          .on('click', function () {
+            if (this.id !== 'Honolulu') {
+              return passMapClickTarget(this.id);
+            }
+          });
+          countySvg.selectAll('path')
+            .style('fill', color(valuesByArea[key]));
       }
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -192,7 +198,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         .style('fill', function (d) {
           return color(valuesByArea[d.properties.name]);
         })
-        .on('click', passMapClickTarget);
+        .on('click', function (d) {
+          if (d.properties.name !== 'Hawaii') {
+            return passMapClickTarget(d.properties.name);
+          }
+        });
     }
   }
 
@@ -459,17 +469,16 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
   // Utility functions
-  function passMapClickTarget (target) {
-    buildGeoNameList(isSVGMap, target.properties.name);
+  function passMapClickTarget (targetName) {
+    buildGeoNameList(isSVGMap, targetName);
 
-    var selectedGeoAreaObj = filterStateObjects(data, [target.properties.name], geoAreaCategory)[0];
+    var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
     // sometimes there won't be US Average data (datasetSumaryRecords)
     // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
     filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
 
     drawGraph();
-    console.log('map clicked', target.properties.name);
   }
 
   // Instantiate into a function to take a value and return a color based on the range
