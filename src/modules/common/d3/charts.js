@@ -147,29 +147,29 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
 
-    // Takes the difference of the min and max values then seperates them into 3 mid range values
-    var minYVR = yearValuesRange[0];
-    var maxYVR = yearValuesRange[1];
-    var minMaxDifference = maxYVR - minYVR;
-    console.log('minMaxDifference',minMaxDifference);
-    var mid1 = minYVR+(minMaxDifference*0.25);
-    var mid2 = minYVR+(minMaxDifference*0.50);
-    var mid3 = minYVR+(minMaxDifference*0.75);
-    console.log('min',minYVR);
-    console.log('mid1',mid1);
-    console.log('mid2',mid2);
-    console.log('mid3',mid3);
-    console.log('max',maxYVR);
-    var legendDomain = [];
-    legendDomain.push(minYVR,mid1,mid2,mid3,maxYVR);
-    var legendColorScale = d3.scale.quantile()
-      .domain(legendDomain)
-      .range(viewColors.econ); // Switch out for Joelle's color change
-    console.log('legendColorScale',legendColorScale);
-
-    // CURRENT WORK BRANDON
-
+    /* START OF MAP HISTOGRAM FUNCTION */
+    console.log('yearValuesRange',yearValuesRange);
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
+
+      console.log('color.quantiles()',color.quantiles());
+      console.log('color.quantiles().length',color.quantiles().length);
+      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
+
+      var middleRanges = color.quantiles();
+      var mapRanges = [];
+      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+      mapRanges[1] = [middleRanges[0], middleRanges[1]];
+      mapRanges[2] = [middleRanges[1], middleRanges[2]];
+      mapRanges[3] = [middleRanges[2], middleRanges[3]];
+      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+    function drawHistogram (mapRanges) {
+      console.log('mapRanges',mapRanges);
+      console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
+    }
+
+    drawHistogram(mapRanges);
+    /* END OF MAP HISTOGRAM FUNCTION */
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -224,7 +224,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Draw Line Graph
   function drawGraph () {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMinVal = findGraphMinMax(filteredStates).minVal; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
 
     var width = 600;
     var height = 370;
@@ -260,6 +260,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
+
+    // PERCENTAGE CONVERSION: do only if measurement_units is "%"
+    // if (measurement_units === "%") {
+      // yAxis.tickFormat(d3.format("p"));
+    // }
 
     vis.append("svg:g")
        .attr("class", "x axis")
