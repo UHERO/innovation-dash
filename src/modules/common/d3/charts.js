@@ -166,6 +166,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       mapRanges[3] = [middleRanges[2], middleRanges[3]];
       mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
+      d3.select(legendEl).html("");
+
       var svgLegend = d3.select(legendEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
       var legendKey = mapRanges.slice(0);
 
