@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, legendEl) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+
 
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
@@ -9,6 +10,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
     edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+  };
+  var measurement_units = {
+    percent : '%',
+    dollars : '$'
   };
 
   width = 800;
@@ -217,8 +222,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
-        var countySvg = d3.select('#'+key);
-          countySvg.selectAll('path').style('fill', color(valuesByArea[key]));
+        var countySvg = d3.select('#'+key)
+          .on('click', function () {
+            if (this.id !== 'Honolulu') {
+              return passMapClickTarget(this.id);
+            }
+          });
+          countySvg.selectAll('path')
+            .style('fill', color(valuesByArea[key]));
       }
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -231,7 +242,11 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
         .style('fill', function (d) {
           return color(valuesByArea[d.properties.name]);
         })
-        .on('click', passMapClickTarget);
+        .on('click', function (d) {
+          if (d.properties.name !== 'Hawaii') {
+            return passMapClickTarget(d.properties.name);
+          }
+        });
     }
   }
 
@@ -332,7 +347,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("y", 0)
        .style("text-anchor", "middle")
        //TODO: update text based on current Indicator
-       .text("Per Capita Personal Income ($)");
+       .text(yUnitMeasure);
 
     // .defined insures that only non-negative values
     // are graphed
@@ -381,7 +396,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .attr('class','legend_text')
       .attr("x", width + 30)
       .attr("y", 10)
-      .text('Legend');
+      .text(legendText);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -420,7 +435,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .style("fill", function(d){
         if (d == "United States") {
           return "#D3D0C1";
-        } else if (d == "Hawaii" || d == "Honolulu") {
+        } else if ((d == "Hawaii" && geoAreaCategory !== "County") || d == "Honolulu") {
           return "#4F5050";
         } else {
           return viewColors[colorScheme][2];
@@ -498,17 +513,16 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   }
 
   // Utility functions
-  function passMapClickTarget (target) {
-    buildGeoNameList(isSVGMap, target.properties.name);
+  function passMapClickTarget (targetName) {
+    buildGeoNameList(isSVGMap, targetName);
 
-    var selectedGeoAreaObj = filterStateObjects(data, [target.properties.name], geoAreaCategory)[0];
+    var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
     // sometimes there won't be US Average data (datasetSumaryRecords)
     // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
     filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
 
     drawGraph();
-    console.log('map clicked', target.properties.name);
   }
 
   // Instantiate into a function to take a value and return a color based on the range
