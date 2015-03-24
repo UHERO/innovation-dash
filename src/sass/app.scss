@@ -39,7 +39,7 @@ h3{
   background-color: $edu_medium;
 } 
 
-.education .info_legend_container .legend, .education .key{
+.education .info_legend_container .legend, .education .key, .education .map_toggle{
   border: 2px solid $edu_medium;
   border-radius: 5px;
 }
@@ -53,7 +53,7 @@ h3{
   background-color: $rnd_medium;
 }
 
-.research .info_legend_container .legend, .research .key{
+.research .info_legend_container .legend, .research .key, .research .map_toggle{
   border: 2px solid $rnd_medium;
   border-radius: 5px;
 }
@@ -63,7 +63,7 @@ h3{
   background-color: $ent_medium;
 }
 
-.entrepreneurship .info_legend_container .legend, .entrepreneurship .key{
+.entrepreneurship .info_legend_container .legend, .entrepreneurship .key, .entrepreneurship .map_toggle{
   border: 2px solid $ent_medium;
   border-radius: 5px;
 }
@@ -74,7 +74,7 @@ h3{
   background-color: $econ_medium;
 }
 
-.economic .info_legend_container .legend, .economic .key{
+.economic .info_legend_container .legend, .economic .key, .economic .map_toggle{
   border: 2px solid $econ_medium;
   border-radius: 5px;
 }
@@ -187,7 +187,38 @@ aside{
 }
 
 .map_toggle{
+  width: 300px;
+  height: 100px;
+  position: absolute;
+  z-index: 3;
+  margin-top: 135px;
+  margin-left: 230px;
 
+  h3{
+    text-align: center;
+  }
+
+  ul{
+    li{
+      display: inline;
+      a{
+        width: 48%;
+        display: inline-block;
+        // background-color: salmon;
+        height: 70px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .mini_us{
+        float: right;
+        background-image: url(/assets/images/united_states.svg);
+      }
+      .mini_hi{
+        float: left;
+        background-image: url(/assets/images/hawaii.svg);
+      }
+    }
+  }
 }
 
 .numbers{
