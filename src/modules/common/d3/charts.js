@@ -13,7 +13,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogr
   };
   var measurement_units = {
     percent : '%',
-    dollars : '$'
+    dollars : '$',
+    number : ''
   };
 
   width = 800;
