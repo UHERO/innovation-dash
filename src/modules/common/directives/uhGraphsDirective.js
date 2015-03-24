@@ -23,7 +23,7 @@ module.exports = /*@ngInject*/
 
         // console.log('colorScheme',attrs.colorScheme);
         console.log('attrs.yUnitMeasure',attrs.d3YUnitMeasure, attrs.measurementUnit);
-        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme, attrs.d3YUnitMeasure, attrs.legendText, attrs.measurementUnit, "#legendElement");
+        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme, attrs.d3YUnitMeasure, attrs.legendText, attrs.measurementUnit);
         // d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme);
       }
     };
