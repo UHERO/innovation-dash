@@ -4,7 +4,10 @@ module.exports = /*@ngInject*/
   function uhGraphsDirective() { //uh-map 
     return {
 
-      scope: {},
+      // require: '^yUnitMeasure',
+      scope: {
+        // d3YUnitMeasure : '='
+      },
       // template: '<div class="uh-maps">Data goes Here<div>',
       templateUrl: 'common/directives/templates/uhGraphs.html',
       
@@ -14,10 +17,13 @@ module.exports = /*@ngInject*/
     
       link: function (scope, element, attrs) {
         // var mapSource = '/assets/images/USA.json';
+        // scope.yUnitMeasure = "Link Scaled Measueremet";
+        // console.log('scope.yUnitMeasure',scope.yUnitMeasure);
         var d3Charts = require('../d3/charts');
-        console.log('colorScheme',attrs.colorScheme);
-        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme);
-        
+        // console.log('colorScheme',attrs.colorScheme);
+        console.log('attrs.yUnitMeasure',attrs.d3YUnitMeasure);
+        d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme, attrs.d3YUnitMeasure);
+        // d3Charts(attrs.mapUrl, attrs.d3DataUrl, "#uh-map", "#uh-graph", '#uh-brush', attrs.colorScheme);
       }
     };
   };
