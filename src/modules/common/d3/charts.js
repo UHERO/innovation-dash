@@ -279,7 +279,7 @@ function drawHistogram (yearValuesRange, colorScale) {
   // Draw Line Graph
   function drawGraph () {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMinVal = findGraphMinMax(filteredStates).minVal;
 
     var width = 600;
     var height = 370;
@@ -316,11 +316,6 @@ function drawHistogram (yearValuesRange, colorScale) {
         .scale(yScale)
         .orient("left");
 
-    // PERCENTAGE CONVERSION: do only if measurement_units is "%"
-    // if (measurement_units === "%") {
-      // yAxis.tickFormat(d3.format("p"));
-    // }
-
     vis.append("svg:g")
        .attr("class", "x axis")
        .attr("transform", "translate(0," + (height - margins.bottom) + ")")
@@ -342,7 +337,6 @@ function drawHistogram (yearValuesRange, colorScale) {
        .attr("x", 0 - (height) / 2)
        .attr("y", 0)
        .style("text-anchor", "middle")
-       //TODO: update text based on current Indicator
        .text(yUnitMeasure);
 
     // .defined insures that only non-negative values
@@ -386,6 +380,10 @@ function drawHistogram (yearValuesRange, colorScale) {
      .attr("fill", "none");
 
     // Legend
+    drawLegend(vis);
+  }
+
+  function drawLegend(graphSVG) {
     // appends line graph indicator heading
     d3.select(keyEl).html("");
     var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
@@ -440,7 +438,6 @@ function drawHistogram (yearValuesRange, colorScale) {
           return viewColors[colorScheme][2];
         }
       });
-
   }
 
   // Draw Slider
@@ -514,6 +511,8 @@ function drawHistogram (yearValuesRange, colorScale) {
   // Utility functions
   function passMapClickTarget (targetName) {
     buildGeoNameList(isSVGMap, targetName);
+
+    console.log('clicked on', targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
