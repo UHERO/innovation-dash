@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brushEl) {
+module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, legendEl) {
 
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
@@ -8,7 +8,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
-    edu:  ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"] 
+    edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
 
   width = 800;
@@ -22,12 +22,29 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
 
   var selectedMinYear;
   var selectedMaxYear;
-  var stateNames = ['Hawaii', 'California']; // filterStateObjects breaks when we try to check 'United States' object. I think we removed this when drawing the US map...
-  // var stateNames = ['Hawaii', 'United States', 'Nebraska'];
+  var geoAreaCategory;
+  var geoAreaNames;
+
+
+  function buildGeoNameList (isHawaii, selectedGeoArea) {
+    geoAreaNames = [];
+    if (isHawaii) {
+      geoAreaCategory = 'County';
+      geoAreaNames[0] = 'Honolulu';
+    } else {
+      geoAreaCategory = 'State';
+      geoAreaNames[0] = 'Hawaii';
+    }
+    if (selectedGeoArea) geoAreaNames.push(selectedGeoArea);
   
+  }
+
+  buildGeoNameList(isSVGMap);
+
   var knownSummaryRecords = ['United States'];
   var datasetSummaryRecords;
   var filteredStates;
+  var data; // TODO: check whether or not we REALLY need to set data var outside of ready function
 
   getDataSets(mapSource, dataSource); // Trigger getting data and drawing charts
 
@@ -52,21 +69,17 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
 
     setupMap(sourceMap, width, height);
     
-    var data = window.transData = transformFIPSData(sourceData); // DEV ONLY
+    data = window.transData = transformFIPSData(sourceData); // DEV ONLY
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
     
-    filteredStates = window.fStates = filterStateObjects(data, stateNames);
+    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
     }
 
-    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
-
-    // TODO: maybe tweak so that only max values for selected timespan (not all years for filteredStates) get returned
     var setMaxVals = findMaxFIPSVals(data);
     var setMinVals = findMinFIPSVals(data);
 
@@ -74,10 +87,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     selectedMaxYear = setMaxVals.maxYear;
 
     drawMap(sourceMap, data);
-    // drawGraph(data, setMinVals.minYear, selectedMaxYear, yMinVal, yMaxVal); // sets x axis (years) to minimimum year of loaded csv
-
-    drawGraph(data, yMinVal, yMaxVal);
-    drawBrush(sourceMap, data, setMinVals, setMaxVals, yMinVal, yMaxVal);
+    drawGraph();
+    drawBrush(sourceMap, data, setMinVals, setMaxVals);
   }
 
   // Setup Graph Components
@@ -158,7 +169,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
 
     // CURRENT WORK BRANDON
 
-    var color = setQuantileColorScale(yearValuesRange,viewColors.econ);
+    var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
@@ -175,15 +186,17 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
         .style('stroke-width', 1)
         .style('fill', function (d) {
           return color(valuesByArea[d.properties.name]);
-        });
+        })
+        .on('click', passMapClickTarget);
     }
   }
 
-  function dataByState(data, state) {
+  function dataByState(data, geoAreaName, geoAreaCategory) {
     var result = [];
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].State === state) {
+
+      if (data[i][geoAreaCategory] === geoAreaName) {
 
         var yearValuesArray = d3.entries(data[i].Years);
 
@@ -209,7 +222,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
   }
 
   // Draw Line Graph
-  function drawGraph (data, yMinVal, yMaxVal) {
+  function drawGraph () {
+    var yMaxVal = findGraphMinMax(filteredStates).maxVal;
+    var yMinVal = findGraphMinMax(filteredStates).minVal - 1; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+
     var width = 600;
     var height = 370;
 
@@ -232,11 +248,18 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     var xAxis = d3.svg.axis()
         .scale(xScale)
         .tickFormat(formatXAxis);
-        // .outerTickSize(0);
+
+    var numXAxisTicks = d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1).length;
+
+    // based on our svg width, when there's 7 or fewer ticks, duplicate year labels are shown
+    if (numXAxisTicks < 8) {
+      console.log('hey!');
+      xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
+    }
+
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
-        // .outerTickSize(0);
 
     vis.append("svg:g")
        .attr("class", "x axis")
@@ -278,7 +301,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0]);
+      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
   
       vis.append("svg:path")
          .attr("d", lineGen(usAvgData))
@@ -287,9 +310,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
          .attr("fill", "none");
     }
 
-    var hiStateData = dataByState(filteredStates, stateNames[0]);
-    var selectedStateData = dataByState(filteredStates, stateNames[1]);
-
+    var hiStateData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    var selectedStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
     vis.append("svg:path")
      .attr("d", lineGen(hiStateData))
      .attr("stroke", "#4F5050")
@@ -299,7 +321,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     // adding selected state line
     vis.append("svg:path")
      .attr("d", lineGen(selectedStateData))
-     .attr("stroke", "orange")
+     .attr("stroke", viewColors[colorScheme][2])
      .attr("stroke-width", 3)
      .attr("fill", "none");
 
@@ -313,7 +335,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
       .text('Legend');
 
     // deals with not having US average data or not:
-    var legendData = stateNames.slice(0); // prevents changes to stateNames when modifying legendData
+    var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
     if (datasetSummaryRecords.length !== 0 && legendData[0] !== knownSummaryRecords) {
       legendData.unshift(knownSummaryRecords);
     }
@@ -349,17 +371,17 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
       .style("fill", function(d){
         if (d == "United States") {
           return "#D3D0C1";
-        } else if (d == "Hawaii") {
+        } else if (d == "Hawaii" || d == "Honolulu") {
           return "#4F5050";
         } else {
-          return "orange";
+          return viewColors[colorScheme][2];
         }
       });
 
   }
 
   // Draw Slider
-  function drawBrush (sourceMap, data, setMinVals, setMaxVals,  yMinVal, yMaxVal) {
+  function drawBrush (sourceMap, data, setMinVals, setMaxVals) {
     
     var tickFormat = d3.format('.0f');
 
@@ -386,7 +408,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
       selectedMaxYear = savedExtent[1];
 
       drawMap(sourceMap, data);
-      drawGraph(data, yMinVal, yMaxVal); 
+      drawGraph(); 
     }
 
     var brushSVG = d3.select("#uh-brush-test");
@@ -407,6 +429,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
     axisG.selectAll("line")
       .style({ stroke: "#AAA797" });
 
+    // viewColors[colorScheme]
+
     // appending brush after axis so ticks appear before slider
     var brushG = brushSVG.append('g');
     brush(brushG);
@@ -414,16 +438,29 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
       .selectAll("rect").attr("height", 10);
     brushG.selectAll(".background")
       .style({ fill: "#D3D0C1", visibility: "visible" });
+      // .style({ fill: "#D3D0C1", visibility: "visible" });
     brushG.selectAll(".extent")
-      .style({ fill: "#F27D14", visibility: "visible" });
+      .style({ fill: viewColors[colorScheme][4], visibility: "visible" });
     brushG.selectAll(".resize rect")
       .attr("width", 12)
       .attr("height", 18)
       .attr("y", -4)
-      .style({ fill: "#FF9933", visibility: "visible" });
+      .style({ fill: viewColors[colorScheme][2], visibility: "visible" });
   }
 
   // Utility functions
+  function passMapClickTarget (target) {
+    buildGeoNameList(isSVGMap, target.properties.name);
+
+    var selectedGeoAreaObj = filterStateObjects(data, [target.properties.name], geoAreaCategory)[0];
+
+    // sometimes there won't be US Average data (datasetSumaryRecords)
+    // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
+    filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
+
+    drawGraph();
+    console.log('map clicked', target.properties.name);
+  }
 
   // Instantiate into a function to take a value and return a color based on the range
   function setQuantileColorScale (domainArr, rangeArr) {
@@ -448,10 +485,10 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, legendEl, brus
   } //end transformFIPSData
 
   // Takes data and an array of state names (strings) to find
-  function filterStateObjects (data, stateNamesArr) {
-    return stateNamesArr.map(function(item) {
+  function filterStateObjects (data, geoAreaNamesArr, geoAreaCategory) {
+    return geoAreaNamesArr.map(function(item) {
       // .filter returns array, so we need to pluck out element
-      return _.filter(data, 'State', item)[0];
+      return _.filter(data, geoAreaCategory, item)[0];
     });
   }
 
