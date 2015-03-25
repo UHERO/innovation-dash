@@ -179,11 +179,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       mapRanges[3] = [middleRanges[2], middleRanges[3]];
       mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
-    function drawHistogram (mapRanges) {
-      console.log('mapRanges',mapRanges);
-      console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
-    }
-
     resetMapTooltips();
     setHoverTooltipColor(colorScheme);
 
