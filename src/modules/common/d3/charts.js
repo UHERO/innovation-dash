@@ -418,7 +418,7 @@ function drawHistogram (yearValuesRange, colorScale) {
 
               return yearAtX + " | " + knownSummaryRecords[0] + ': ' + usValAtYear + " | " +
               geoAreaNames[0] + ": " + hiValAtYear + " | " + 
-              geoAreaNames[1] + ": " + usValAtYear ;
+              geoAreaNames[1] + ": " + selectedValAtYear ;
 
             });
           vis.select(".verticalLine")
