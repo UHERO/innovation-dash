@@ -2,5 +2,5 @@
 
 module.exports = /*@ngInject*/
   function TechnologyLicensingController($scope) {
-    $scope.welcome = 'TechnologyLicensingController';
+    $scope.welcome = 'Technology Licensing Money Controller';
   };

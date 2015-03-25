@@ -2,17 +2,10 @@
   <div class="info_legend_container clearfix">
     <div class="map_info">
       <h2><span class="numbers">2</span> In Hawaii...</h2>  
-      <h3>In <span>{{currentyear}}</span>, <span>{{percent}} of full time graduate students</span> were science, engineering and health</h3>
+      <h3>In <span class="uh-current-year"></span>, <span class="uh-percent"></span> of <span class="uh-summary-measurement"></span></h3>
     </div> <!-- indicator_info -->
-    <div class="legend" id="legendElement">
-      <h4>Legend Data</h4>
-        <ul>
-          <li><span></span> {{sampledata}}</li>
-          <li><span></span> {{sampledata}}</li>
-          <li><span></span> {{sampledata}}</li>
-          <li><span></span> {{sampledata}}</li>
-          <li><span></span> {{sampledata}}</li>
-        </ul>
+    <div class="legend" id="uh-histogram">
+
     </div> <!-- legend -->
   </div> <!-- info_legend_container -->
   <!-- <div ui-view></div> -->
@@ -38,15 +31,14 @@
 <section>
   <div class="line_graph_info">
     <h2><span class="numbers">4</span> In Hawaii...</h2>
-    <h3>In {{endyear}}, this was an increase of {{percent}} in {{majors}} since {{startyear}}</h3>
+    <h3>In <span class="uh-current-year"></span>, this was a <span class="uh-value-change"></span> since <span class="uh-previous-year"></span></h3>
   </div>
   <div class="line_graph_container clearfix">
     <div id="uh-graph" class="graph">
       <!-- <svg id="line-graph" width="600" height="370"></svg> -->
     </div>
-    <!-- <div class="key">
-      <h2>Legend Data</h2>
-    </div> --> <!-- legend --> 
+    <div class="key" id="uh-key">
+    </div> <!-- legend --> 
   </div> <!-- line_graph_container --> 
 </section>
 

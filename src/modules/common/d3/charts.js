@@ -1,10 +1,10 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
-
+module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
+  var lineGen;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -13,7 +13,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   };
   var measurement_units = {
     percent : '%',
-    dollars : '$'
+    dollars : '$',
+    number : ''
+  };
+  var graphColors = {
+    usColor: "#AAA797",
+    hiColor: "#4F5050",
+    selectedColor: viewColors[colorScheme][2],
+    text: "#6E7070"
   };
 
   width = 800;
@@ -29,7 +36,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   var selectedMaxYear;
   var geoAreaCategory;
   var geoAreaNames;
-
   var fixedXYs = {
         Hawaii: {top:'454px', left:'250px' },
         Honolulu: {top:'114px', left:'340px' }
@@ -94,10 +100,13 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
+    scope.currentyear = selectedMaxYear;
 
     drawMap(sourceMap, data);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
+    renderSummaryText();
+    
   }
 
   // Setup Graph Components
@@ -139,8 +148,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
 
   // Draw Graph Components
-
-  // This drawMap will only work with FIPS structured data on US map
+   // This drawMap will only work with FIPS structured data on US map
   function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
@@ -155,9 +163,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
-
-    /* START OF MAP HISTOGRAM FUNCTION */
     console.log('yearValuesRange',yearValuesRange);
+    
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
       console.log('color.quantiles()',color.quantiles());
@@ -177,10 +184,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       console.log('ranges for first gap',mapRanges[0][0] + " - " + mapRanges[0][1]);
     }
 
-    drawHistogram(mapRanges);
-    /* END OF MAP HISTOGRAM FUNCTION */
     resetMapTooltips();
     setHoverTooltipColor(colorScheme);
+
+    // Draws the histogram for the main graph
+    drawHistogram(yearValuesRange, color);
+
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
@@ -259,6 +268,65 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     bodyEl.classed(colorKeyMap[colorKey], true);
   }
 
+
+function drawHistogram (yearValuesRange, colorScale) {
+
+  var middleRanges = colorScale.quantiles();
+  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+  var mapRanges = [];
+  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+  mapRanges[1] = [middleRanges[0], middleRanges[1]];
+  mapRanges[2] = [middleRanges[1], middleRanges[2]];
+  mapRanges[3] = [middleRanges[2], middleRanges[3]];
+  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+  d3.select(histogramEl).html("");
+
+  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+  var histogramKeys = mapRanges.slice(0);
+
+  svgHistogram.append('text')
+    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+    // below line is hardcoded. need to fix to dynamic with $scope or other
+    .text(legendText)
+    .style("fill", "black");
+
+  // Histogram color blocks
+  svgHistogram.insert('g')
+    .selectAll('rect')
+    .data(viewColors[colorScheme])
+    .enter()
+    .append("rect")
+    .attr("x", 5)
+    .attr("y", function(d, i){
+      return i * 26 + 29;
+    })
+    .attr("rx", 2)
+    .attr("ry", 2)
+    .attr("width", 25)
+    .attr("height", 15)
+    .style({
+      "fill": function(d){ return d;},
+      "display" : "inline-block",
+    });
+
+  // Histogram number ranges
+  svgHistogram.insert('g')
+    .selectAll('text')
+    .data(histogramKeys)
+    .enter()
+    .append('text')
+    .attr('class','histogram_text')
+    .attr("x", 45)
+    .attr("y", function(d, i){
+      return i * 26 + 40;
+    })
+    .text(function(d,i){
+      // may have to convert to percents depending on chart
+      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+    });
+  }
+
   function dataByState(data, geoAreaName, geoAreaCategory) {
     var result = [];
 
@@ -289,17 +357,47 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     return result;
   }
 
+  // Renders summary text to Map and Line Graph
+  function renderSummaryText(){
+  // Appends summary text above US map
+    // current selected year for map and line graph
+    d3.selectAll(currentYearEl).html("")
+      .insert('text')
+      .text(selectedMaxYear);
+    // percent change
+    d3.select(currentPercentEl).html("")
+      .insert('text')
+      .text("{{ insert % }}"); 
+    // unit of measure - taken from legendText variable
+    d3.select(summaryMeasurementEl).html("")
+      .insert('text')
+      .text(legendText);
+
+    // change in value - from previous to current years
+    d3.select(valueChangeEl).html("")
+      .insert('text')
+      .text("{{ increase / decrease in value }}"); 
+    // previous year
+    d3.select(previousYearEl).html("")
+      .insert('text')
+      .text(selectedMinYear);
+  }
+
   // Draw Line Graph
   function drawGraph () {
+    var usAvgData;
+    var hiStateData;
+    var selectedStateData;
+
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
-    var yMinVal = findGraphMinMax(filteredStates).minVal; // sets min val to 1 below smallest value (in case we don't want chart to start at 0). allows some padding for very small Y values (e.g. Unemployment Rates)
+    var yMinVal = findGraphMinMax(filteredStates).minVal;
 
     var width = 600;
     var height = 370;
 
     d3.select(graphEl).html("");
     var vis = d3.select(graphEl).append('svg')
-      .attr('width', width + 200)
+      .attr('width', width)
       .attr('height', height);
     var margins = {
         top: 20,
@@ -311,6 +409,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
     var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
 
+    /* START OF LINE GRAPH AXES */
     var formatXAxis = d3.format('.0f');
 
     var xAxis = d3.svg.axis()
@@ -321,18 +420,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     // based on our svg width, when there's 7 or fewer ticks, duplicate year labels are shown
     if (numXAxisTicks < 8) {
-      console.log('hey!');
       xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
     }
 
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
-
-    // PERCENTAGE CONVERSION: do only if measurement_units is "%"
-    // if (measurement_units === "%") {
-      // yAxis.tickFormat(d3.format("p"));
-    // }
 
     vis.append("svg:g")
        .attr("class", "x axis")
@@ -347,6 +440,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
     vis.append("text")
       .attr("x", width/2)
       .attr("y", height + margins.bottom)
+      .attr("class", "label")
       .style("text-anchor", "middle")
       .text("Year");
 
@@ -354,13 +448,14 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
        .attr("transform", "rotate(-90)")
        .attr("x", 0 - (height) / 2)
        .attr("y", 0)
+       .attr("class", "label")
        .style("text-anchor", "middle")
-       //TODO: update text based on current Indicator
        .text(yUnitMeasure);
+    /* END OF LINE GRAPH AXES */
 
-    // .defined insures that only non-negative values
-    // are graphed
-    var lineGen = d3.svg.line()
+    /* START OF LINE DRAWINGS */
+    // .defined insures that only non-negative values are graphed
+    lineGen = d3.svg.line()
       .defined(function(d) {
         return d.value >= 0;
       })
@@ -374,38 +469,104 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
-  
-      vis.append("svg:path")
-         .attr("d", lineGen(usAvgData))
-         .attr("stroke", "#D3D0C1")
-         .attr("stroke-width", 3)
-         .attr("fill", "none");
+      usAvgData = window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
+    
+      drawLine(vis, usAvgData, graphColors.usColor);
     }
 
-    var hiStateData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
-    var selectedStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
-    vis.append("svg:path")
-     .attr("d", lineGen(hiStateData))
-     .attr("stroke", "#4F5050")
-     .attr("stroke-width", 3)
-     .attr("fill", "none");
+    hiStateData = window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    drawLine(vis, hiStateData, graphColors.hiColor);
 
-    // adding selected state line
-    vis.append("svg:path")
-     .attr("d", lineGen(selectedStateData))
-     .attr("stroke", viewColors[colorScheme][2])
-     .attr("stroke-width", 3)
-     .attr("fill", "none");
+    selectedStateData = window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
 
-    // Legend
+    if (selectedStateData.length !== 0) {
+      drawLine(vis, selectedStateData, graphColors.selectedColor);
+    }
+    /* END OF LINE DRAWINGS */
+
+    /* START OF LINE HOVER */
+
+     var verticalLine = vis.append('line')
+      .attr({ 'x1': 0, 'y1': 0, 'x2' : 0, 'y2': height })
+      .attr("stroke", "#AAA797")
+      .attr("class", "verticalLine")
+      .attr("visibility", "hidden");
+
+     vis.on("mousemove", function() {
+        var mouseX = d3.mouse(this)[0];
+        var mouseY = d3.mouse(this)[1];
+
+        if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
+          var yearAtX = Math.round(xScale.invert(mouseX));
+          var hoverData = window.hData = [
+              [knownSummaryRecords[0], usAvgData, graphColors.usColor], 
+              [geoAreaNames[0], hiStateData, graphColors.hiColor], 
+              [geoAreaNames[1], selectedStateData, graphColors.selectedColor]
+            ]
+            .filter(function (item) {
+              return item[0] !== undefined;
+            })
+            .map(function (item) {
+              return [item[0], findGeoValueAtYear(item[1], yearAtX), item[2]];
+            });
+
+          hoverData.unshift(["Year", yearAtX, graphColors.text]);
+
+          vis.selectAll('.tooltip').remove();
+
+          vis.insert('g')
+            .selectAll('text')
+            .data(hoverData)
+            .enter()
+            .append('text')
+            .attr('class', 'tooltip')
+            .attr('fill', function(d) {
+              return d[2];
+            })
+            .attr('x', mouseX + 20)
+            .attr('y', function (d, i) {
+              return mouseY + 10 + i * 30;
+            })
+            .html(function(d) {
+              if (d[1] === undefined) {
+                d[1] = "N/A"; // may need to remove this
+              }
+              if (d[0] === "Year") {
+                return d[1];
+              } else {
+                return d[0] + ": " + d[1];
+              }
+            });
+
+          vis.select(".verticalLine")
+            .attr("visibility", "visible")
+            .attr("transform", function() {
+              return "translate(" + mouseX + ", 0)";
+            });
+        }
+    });
+
+    vis.on("mouseout", function() {
+      vis.selectAll('.tooltip').remove();
+      vis.select(".verticalLine").attr("visibility", "hidden");
+    });
+
+    /* START OF GRAPH LEGEND */
     // appends line graph indicator heading
     vis.insert('g')
       .append('text')
-      .attr('class','legend_text')
+      .attr('class','legendText')
       .attr("x", width + 30)
+    d3.select(keyEl).html("");
+    var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
+
+    svgKey.insert('g')
+      .append('text')
+      .attr('class','key_text')
+      .attr("x", 0)
       .attr("y", 10)
-      .text(legendText);
+      .text(legendText)
+      .call(wrap,130);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -415,42 +576,74 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
 
     // appends key labels 
     vis.insert('g')
+    svgKey.insert('g')
       .selectAll('text')
-      // .data(legendData)
       .data(legendData)
       .enter()
       .append('text')
-      .attr('class','legend_text')
-      .attr("x", width + 70)
+      .attr('class','key_text')
+      .attr("x", 40)
       .attr("y", function(d, i){
-        return i * 20 + 50;
+        return i * 20 + 70;
       })
-      .text(function(d){
+      .text(function (d){
         return d;
       });
    
    // adds colors to keys
     vis.insert('g')
+    svgKey.insert('g')
       .selectAll('rect')
       .data(legendData)
       .enter()
       .append("rect")
-      .attr("x", width + 30)
+      .attr("x", 0)
       .attr("y", function(d, i){
-        return i * 20 + 42;
+        return i * 20 + 64;
       })
       .attr("width", 30)
       .attr("height", 5)
-      .style("fill", function(d){
+      .style("fill", function (d) {
         if (d == "United States") {
-          return "#D3D0C1";
-        } else if (d == "Hawaii" || d == "Honolulu") {
-          return "#4F5050";
+          return graphColors.usColor;
+        } else if ((d == "Hawaii" && geoAreaCategory !== "County") || d == "Honolulu") {
+          return graphColors.hiColor;
         } else {
-          return viewColors[colorScheme][2];
+          return graphColors.selectedColor;
         }
       });
 
+    function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = 0,
+            tspan = text.text(null)
+              .append("tspan")
+              .attr("x", 0)
+              .attr("y", y)
+              .attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0)
+              .attr("y", y)
+              .attr("dy", ++lineNumber * lineHeight + dy + "em")
+              .text(word);
+          }
+        }
+      });
+    }   
+    /* END OF GRAPH LEGEND */
   }
 
   // Draw Slider
@@ -480,8 +673,9 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data);
-      drawGraph(); 
+      drawMap(sourceMap, data, false);
+      drawGraph();
+      renderSummaryText(); 
     }
 
     var brushSVG = d3.select("#uh-brush-test");
@@ -501,8 +695,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       .style({ fill: "none" });
     axisG.selectAll("line")
       .style({ stroke: "#AAA797" });
-
-    // viewColors[colorScheme]
 
     // appending brush after axis so ticks appear before slider
     var brushG = brushSVG.append('g');
@@ -524,6 +716,8 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
   // Utility functions
   function passMapClickTarget (targetName) {
     buildGeoNameList(isSVGMap, targetName);
+
+    console.log('clicked on', targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
@@ -548,7 +742,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
           var transformedVal = +n;
-          result.Years[key] = transformedVal ? transformedVal : -1;
+          result.Years[key] = transformedVal ? transformedVal : null;
         } else {
           result[key] = n;
         }
@@ -634,5 +828,17 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, brushEl, color
       maxVal : _.max(filteredValues)
     };
   } //end findGraphMinMax
+
+  function drawLine(graphSVG, data, color) {
+    graphSVG.append("svg:path")
+       .attr("d", lineGen(data))
+       .attr("stroke", color)
+       .attr("stroke-width", 3)
+       .attr("fill", "none");
+  } //end drawLine
+
+  function findGeoValueAtYear (lineData, year) {
+    return _.result(_.find(lineData, { 'year': year}), 'value');
+  }
 
 }; // end module.exports

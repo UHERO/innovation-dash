@@ -61,6 +61,11 @@ module.exports =
       url: '/technology-licensing',
       templateUrl: 'app/rnd/views/technology-licensing.html',
       controller: 'TechnologyLicensingController'
+    })
+    .state('rnd.technology-licensing-numbers', {
+      url: '/technology-licensing-numbers',
+      templateUrl: 'app/rnd/views/technology-licensing-numbers.html',
+      controller: 'TechnologyLicensingNumberController'
     });
   })
 
@@ -73,6 +78,7 @@ module.exports =
   .controller('AcademicRnDByCountyController', require('./AcademicRnDByCountyController'))
   .controller('FederalRnDController', require('./FederalRnDController'))
   .controller('BusinessRnDController', require('./BusinessRnDController'))
-  .controller('UniversityStartupsController', require('./RndController'))
-  .controller('TechnologyLicensingController', require('./TechnologyLicensingController'));
+  .controller('UniversityStartupsController', require('./UniversityStartupsController'))
+  .controller('TechnologyLicensingController', require('./TechnologyLicensingController'))
+  .controller('TechnologyLicensingNumberController', require('./TechnologyLicensingNumberController'));
 
