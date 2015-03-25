@@ -317,7 +317,7 @@ section:last-child{
       width: 17%;
       height: 300px;
       float: left;
-      padding: 10px 20px;
+      padding: 10px 10px;
 
       .key_text{
         font-size: 10px;
@@ -416,7 +416,7 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+    // fill: #AAA797;
   }
 }
 
@@ -429,7 +429,10 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+
+    &.label {
+      fill: #AAA797;
+    }
   }
 }
 
