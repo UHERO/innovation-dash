@@ -181,10 +181,13 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
-        console.log('key',key);
           if (key !== 'Honolulu') {
-            countySvg.on('click', passMapClickTarget(key));
-            countySvg.on('mousemove', drawMapTooltip(key, 'hover'));
+            countySvg.on('click', function () {
+              return passMapClickTarget(this.id);
+            });
+            countySvg.on('mousemove', function () {
+              return drawMapTooltip(this.id, 'hover');
+            });
           }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
@@ -216,7 +219,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
   function drawMapTooltip (name, type, fixedXYs) {
-    
     var tooltip = d3.select('#' + type + '-tooltip');
     if (type === 'fixed') {
       tooltip.style('top', function () {
@@ -228,7 +230,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       tooltip.select('.arrow_box').text(name);
     } else {
       tooltip.style('top', function () {
-        window.myd3event = d3.event;
         return d3.event.pageY +'px';
       });
       tooltip.style('left', function () {
