@@ -1,7 +1,6 @@
 'use strict';
 
-module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
-
+module.exports = function (scope, mapSource, dataSource, currentYearEl, currentPercentEl, summaryMeasurementEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
@@ -29,7 +28,6 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogr
   var selectedMaxYear;
   var geoAreaCategory;
   var geoAreaNames;
-
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -90,10 +88,13 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogr
 
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
+    scope.currentyear = selectedMaxYear;
 
     drawMap(sourceMap, data, true);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
+    mapSummary();
+    
   }
 
   // Setup Graph Components
@@ -135,8 +136,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, keyEl, histogr
 
 
   // Draw Graph Components
-
-  // This drawMap will only work with FIPS structured data on US map
+   // This drawMap will only work with FIPS structured data on US map
   function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
@@ -274,6 +274,26 @@ function drawHistogram (yearValuesRange, colorScale) {
     }
 
     return result;
+  }
+
+  // Appends summary text above US map
+  // need to call function when values on brush changes
+  function mapSummary(){
+    // current selected year
+    d3.select(currentYearEl).html("");
+    var currentYear = d3.select(currentYearEl)
+      .insert('text')
+      .text(selectedMaxYear);
+    // percent change
+    d3.select(currentPercentEl).html("");
+    var currentPercent = d3.select(currentPercentEl)
+      .insert('text')
+      .text("insert %"); 
+    //unit of measure - taken from legendText variable
+    d3.select(summaryMeasurementEl).html("");
+    var summaryMeasurement = d3.select(summaryMeasurementEl)
+      .insert('text')
+      .text(legendText);
   }
 
   // Draw Line Graph
@@ -468,7 +488,8 @@ function drawHistogram (yearValuesRange, colorScale) {
       selectedMaxYear = savedExtent[1];
 
       drawMap(sourceMap, data, false);
-      drawGraph(); 
+      drawGraph();
+      mapSummary(); 
     }
 
     var brushSVG = d3.select("#uh-brush-test");
