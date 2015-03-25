@@ -406,21 +406,53 @@ function drawHistogram (yearValuesRange, colorScale) {
      .attr("stroke-width", 3)
      .attr("fill", "none");
 
-    // Legend
     drawLegend(vis);
   }
 
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = 0,
+          tspan = text.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0)
+            .attr("y", y)
+            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+            .text(word);
+        }
+      }
+    });
+  }           
+
+  // Legend
   function drawLegend(graphSVG) {
     // appends line graph indicator heading
     d3.select(keyEl).html("");
-    var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+    var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
 
     svgKey.insert('g')
       .append('text')
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
-      .text(legendText);
+      .text(legendText)
+      .call(wrap,130);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -438,7 +470,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .attr('class','key_text')
       .attr("x", 40)
       .attr("y", function(d, i){
-        return i * 20 + 50;
+        return i * 20 + 70;
       })
       .text(function(d){
         return d;
@@ -452,7 +484,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .append("rect")
       .attr("x", 0)
       .attr("y", function(d, i){
-        return i * 20 + 42;
+        return i * 20 + 64;
       })
       .attr("width", 30)
       .attr("height", 5)
