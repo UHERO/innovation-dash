@@ -163,21 +163,14 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
-    console.log('yearValuesRange',yearValuesRange);
-    
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-
-      console.log('color.quantiles()',color.quantiles());
-      console.log('color.quantiles().length',color.quantiles().length);
-      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
-
-      var middleRanges = color.quantiles();
-      var mapRanges = [];
-      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-      mapRanges[1] = [middleRanges[0], middleRanges[1]];
-      mapRanges[2] = [middleRanges[1], middleRanges[2]];
-      mapRanges[3] = [middleRanges[2], middleRanges[3]];
-      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    var middleRanges = color.quantiles();
+    var mapRanges = [];
+    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    mapRanges[1] = [middleRanges[0], middleRanges[1]];
+    mapRanges[2] = [middleRanges[1], middleRanges[2]];
+    mapRanges[3] = [middleRanges[2], middleRanges[3]];
+    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
     resetMapTooltips();
     setHoverTooltipColor(colorScheme);
@@ -190,8 +183,8 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         var countySvg = d3.select('#'+key);
         console.log('key',key);
           if (key !== 'Honolulu') {
-            countySvg.on('click', function () { return passMapClickTarget(this.id);});
-            countySvg.on('mousemove', function () { return drawMapTooltip(this.id, 'hover');});
+            countySvg.on('click', passMapClickTarget(key));
+            countySvg.on('mousemove', drawMapTooltip(key, 'hover'));
           }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
@@ -251,7 +244,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
   function setHoverTooltipColor (colorKey) {
-    console.log('colorKey',colorKey);
     var colorKeyMap = {
       econ: 'economic',
       rnd:  'research',
@@ -348,7 +340,6 @@ function drawHistogram (yearValuesRange, colorScale) {
         }
       }
     }
-
     return result;
   }
 
@@ -551,7 +542,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     vis.insert('g')
       .append('text')
       .attr('class','legendText')
-      .attr("x", width + 30)
+      .attr("x", width + 30);
     d3.select(keyEl).html("");
     var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
 
@@ -570,7 +561,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     }
 
     // appends key labels 
-    vis.insert('g')
+    vis.insert('g');
     svgKey.insert('g')
       .selectAll('text')
       .data(legendData)
@@ -586,7 +577,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       });
    
    // adds colors to keys
-    vis.insert('g')
+    vis.insert('g');
     svgKey.insert('g')
       .selectAll('rect')
       .data(legendData)
@@ -612,7 +603,6 @@ function drawHistogram (yearValuesRange, colorScale) {
       text.each(function() {
         var text = d3.select(this),
             words = text.text().split(/\s+/).reverse(),
-            word,
             line = [],
             lineNumber = 0,
             lineHeight = 1.1, // ems
@@ -623,7 +613,8 @@ function drawHistogram (yearValuesRange, colorScale) {
               .attr("x", 0)
               .attr("y", y)
               .attr("dy", dy + "em");
-        while (word = words.pop()) {
+        while (words.length > 0) {
+          var word = words.pop();
           line.push(word);
           tspan.text(line.join(" "));
           if (tspan.node().getComputedTextLength() > width) {
@@ -711,8 +702,6 @@ function drawHistogram (yearValuesRange, colorScale) {
   // Utility functions
   function passMapClickTarget (targetName) {
     buildGeoNameList(isSVGMap, targetName);
-
-    console.log('clicked on', targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
 
