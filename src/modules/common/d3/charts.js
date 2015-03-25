@@ -12,7 +12,8 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, currentP
   };
   var measurement_units = {
     percent : '%',
-    dollars : '$'
+    dollars : '$',
+    number : ''
   };
 
   width = 800;
