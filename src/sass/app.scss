@@ -35,13 +35,14 @@ h3{
   background-color: $edu_med_dark;
 } 
 
-.education .numbers, .education aside ul li:hover, .education .item.active {
-  background-color: $edu_medium;
-} 
-
-.education .info_legend_container .legend, .education .key, .education .map_toggle, .education .key{
-  border: 2px solid $edu_medium;
-  border-radius: 5px;
+.education {
+    .numbers, aside ul li:hover, .item.active {
+    background-color: $edu_medium;
+  } 
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $edu_medium;
+    border-radius: 5px;
+  }
 }
 
 .nav_rnd,
@@ -49,13 +50,14 @@ h3{
   background-color: $rnd_med_light;
 } 
 
-.research .numbers, .research aside ul li:hover, .research .item.active{
-  background-color: $rnd_medium;
-}
-
-.research .info_legend_container .legend, .research .key, .research .map_toggle, .research .key{
-  border: 2px solid $rnd_medium;
-  border-radius: 5px;
+.research {
+    .numbers, aside ul li:hover, .item.active{
+    background-color: $rnd_medium;
+  }
+   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
+    border: 2px solid $rnd_medium;
+    border-radius: 5px;
+  }
 }
 
 .nav_ent,
@@ -316,7 +318,7 @@ section:last-child{
       height: 300px;
       float: left;
       padding: 10px 20px;
-      
+
       .key_text{
         font-size: 10px;
       }
