@@ -492,6 +492,7 @@ function drawHistogram (yearValuesRange, colorScale) {
      vis.on("mousemove", function() {
         var mouseX = d3.mouse(this)[0];
         var mouseY = d3.mouse(this)[1];
+        var flipTextOverLine = (mouseX > width - width/3);
 
         if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
           var yearAtX = Math.round(xScale.invert(mouseX));
@@ -520,7 +521,19 @@ function drawHistogram (yearValuesRange, colorScale) {
             .attr('fill', function(d) {
               return d[2];
             })
-            .attr('x', mouseX + 20)
+            .attr('text-anchor', function() {
+              if (flipTextOverLine) {
+                return "end";
+              } else {
+                return "start";
+              }
+            })
+            .attr('x', function() {
+              if (flipTextOverLine) {
+                return mouseX - 20;
+              }
+              return mouseX + 20;
+            })
             .attr('y', function (d, i) {
               return mouseY + 10 + i * 30;
             })
