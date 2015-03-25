@@ -16,6 +16,12 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, b
     percent : '%',
     dollars : '$'
   };
+  var graphColors = {
+    usColor: "#AAA797",
+    hiColor: "#4F5050",
+    selectedColor: viewColors[colorScheme][2],
+    text: "#6E7070"
+  };
 
   width = 800;
   height = 600;
@@ -282,12 +288,6 @@ function drawHistogram (yearValuesRange, colorScale) {
     var usAvgData;
     var hiStateData;
     var selectedStateData;
-    var graphColors = {
-      usColor: "#AAA797",
-      hiColor: "#4F5050",
-      selectedColor: viewColors[colorScheme][2],
-      text: "#6E7070"
-    };
 
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
     var yMinVal = findGraphMinMax(filteredStates).minVal;
@@ -428,6 +428,9 @@ function drawHistogram (yearValuesRange, colorScale) {
               return mouseY + 10 + i * 30;
             })
             .html(function(d) {
+              if (d[1] === undefined) {
+                d[1] = "N/A"; // may need to remove this
+              }
               if (d[0] === "Year") {
                 return d[1];
               } else {
@@ -448,13 +451,11 @@ function drawHistogram (yearValuesRange, colorScale) {
       vis.select(".verticalLine").attr("visibility", "hidden");
     });
 
-
-
-    // Legend
+    /* START OF GRAPH LEGEND */
     // appends line graph indicator heading
     vis.insert('g')
       .append('text')
-      .attr('class','legend_text')
+      .attr('class','legendText')
       .attr("x", width + 30)
       .attr("y", 10)
       .text(legendText);
@@ -468,16 +469,15 @@ function drawHistogram (yearValuesRange, colorScale) {
     // appends key labels 
     vis.insert('g')
       .selectAll('text')
-      // .data(legendData)
       .data(legendData)
       .enter()
       .append('text')
-      .attr('class','legend_text')
+      .attr('class','legendText')
       .attr("x", width + 70)
-      .attr("y", function(d, i){
+      .attr("y", function (d, i) {
         return i * 20 + 50;
       })
-      .text(function(d){
+      .text(function (d){
         return d;
       });
    
@@ -488,20 +488,21 @@ function drawHistogram (yearValuesRange, colorScale) {
       .enter()
       .append("rect")
       .attr("x", width + 30)
-      .attr("y", function(d, i){
+      .attr("y", function (d, i) {
         return i * 20 + 42;
       })
       .attr("width", 30)
       .attr("height", 5)
-      .style("fill", function(d){
+      .style("fill", function (d) {
         if (d == "United States") {
-          return "#D3D0C1";
+          return graphColors.usColor;
         } else if ((d == "Hawaii" && geoAreaCategory !== "County") || d == "Honolulu") {
-          return "#4F5050";
+          return graphColors.hiColor;
         } else {
-          return viewColors[colorScheme][2];
+          return graphColors.selectedColor;
         }
       });
+    /* END OF GRAPH LEGEND */
   }
 
   // Draw Slider
