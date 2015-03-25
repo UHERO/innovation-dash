@@ -44,6 +44,22 @@ h3{
   border-radius: 5px;
 }
 
+.education {
+  @include arrow_box($edu_med_dark);
+}
+
+.research {
+  @include arrow_box($rnd_med_dark);
+}
+
+.entrepreneurship {
+  @include arrow_box($ent_med_dark);
+}
+
+.economic {
+  @include arrow_box($econ_med_dark); 
+}
+
 .nav_rnd,
 .research .title{
   background-color: $rnd_med_light;
@@ -283,6 +299,29 @@ section:last-child{
       float: left;
       padding: 10px 20px;
     }
+}
+#uh-map {
+  position: relative;
+}
+
+#hover-tooltip, #fixed-tooltip {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  z-index: 100;
+  text-align: center;
+  margin-top: -80px;
+  margin-left: -70px;
+  pointer-events: none;
+}
+#hover-tooltip {
+  top: 0;
+  left: -9999px;
+}
+
+#fixed-tooltip {
+  top: 0;
+  left: -9999px;
 }
 
 .timeline_info{
