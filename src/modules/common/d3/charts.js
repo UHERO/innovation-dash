@@ -311,7 +311,9 @@ function drawHistogram (yearValuesRange, colorScale) {
     })
     .text(function(d,i){
       // may have to convert to percents depending on chart
+      // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
       return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+      // return d[0] + " - " + d[1];
     });
   }
 
@@ -482,6 +484,7 @@ function drawHistogram (yearValuesRange, colorScale) {
      vis.on("mousemove", function() {
         var mouseX = d3.mouse(this)[0];
         var mouseY = d3.mouse(this)[1];
+        var flipTextOverLine = (mouseX > width - width/3);
 
         if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
           var yearAtX = Math.round(xScale.invert(mouseX));
@@ -510,12 +513,24 @@ function drawHistogram (yearValuesRange, colorScale) {
             .attr('fill', function(d) {
               return d[2];
             })
-            .attr('x', mouseX + 20)
+            .attr('text-anchor', function() {
+              if (flipTextOverLine) {
+                return "end";
+              } else {
+                return "start";
+              }
+            })
+            .attr('x', function() {
+              if (flipTextOverLine) {
+                return mouseX - 20;
+              }
+              return mouseX + 20;
+            })
             .attr('y', function (d, i) {
               return mouseY + 10 + i * 30;
             })
             .html(function(d) {
-              if (d[1] === undefined) {
+              if (d[1] === undefined || d[1] === null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {
