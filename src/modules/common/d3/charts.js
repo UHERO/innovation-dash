@@ -670,6 +670,16 @@ function drawHistogram (yearValuesRange, colorScale) {
       savedExtent[0] = d3.round(savedExtent[0]);
       savedExtent[1] = d3.round(savedExtent[1]);
 
+      // snaps brush to odd years if even year is selected
+      // we want this behavior for fourth and eight grade datasets only
+      // savedExtent = savedExtent.map(function(c) {
+      //   if (c % 2 === 0) {
+      //     return c + 1;
+      //   } else {
+      //     return c;
+      //   }
+      // });
+
       d3.select(this).call(brush.extent(savedExtent));
 
       selectedMinYear = savedExtent[0];
@@ -687,8 +697,10 @@ function drawHistogram (yearValuesRange, colorScale) {
       .orient("bottom")
       .tickFormat(tickFormat)
       .innerTickSize(20)
-      // .tickValues(scale.ticks(0).concat(scale.domain())) // shows only start and end ticks
       .tickPadding(20);
+
+    // sets tick values to only odd years (steps of two), for the fourth and eight grade education datasets
+    // brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1]+1, 2));
 
     var axisG = brushSVG.append("g");
     brushAxis(axisG);
@@ -705,7 +717,6 @@ function drawHistogram (yearValuesRange, colorScale) {
       .selectAll("rect").attr("height", 10);
     brushG.selectAll(".background")
       .style({ fill: "#D3D0C1", visibility: "visible" });
-      // .style({ fill: "#D3D0C1", visibility: "visible" });
     brushG.selectAll(".extent")
       .style({ fill: viewColors[colorScheme][4], visibility: "visible" });
     brushG.selectAll(".resize rect")
