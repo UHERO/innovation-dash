@@ -8,7 +8,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
-    ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
+    ent:  ["#D3F4B5","#AADB83","#7FBB57","#537A31","#3E5B23"],
     edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
   var measurement_units = {
