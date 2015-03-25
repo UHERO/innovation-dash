@@ -310,7 +310,9 @@ function drawHistogram (yearValuesRange, colorScale) {
     })
     .text(function(d,i){
       // may have to convert to percents depending on chart
+      // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
       return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+      // return d[0] + " - " + d[1];
     });
   }
 
@@ -514,7 +516,7 @@ function drawHistogram (yearValuesRange, colorScale) {
               return mouseY + 10 + i * 30;
             })
             .html(function(d) {
-              if (d[1] === undefined) {
+              if (d[1] === undefined || d[1] === null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {
