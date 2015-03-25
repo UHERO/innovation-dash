@@ -4,3 +4,40 @@
   color : $font_color;
   font-weight: $font_weight;
 }
+
+@mixin arrow_box($color) {
+  .arrow_box {
+    position: relative;
+    background: #fff;
+    border: 2px solid $color;
+    min-height: 45px;
+    min-width: 45px;
+    padding: 6px;
+    border-radius: 4px;
+    display: inline-block;
+
+    &:after, &:before {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+    &:after {
+      border-color: rgba(136, 183, 213, 0);
+      border-top-color: #fff;
+      border-width: 14px;
+      margin-left: -14px;
+    }
+    &:before {
+      border-color: rgba(194, 225, 245, 0);
+      border-top-color: $color;
+      border-width: 17px;
+      margin-left: -17px;
+    }
+  }
+}
+

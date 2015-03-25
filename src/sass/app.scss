@@ -50,6 +50,22 @@ h3{
   }
 }
 
+.education {
+  @include arrow_box($edu_med_dark);
+}
+
+.research {
+  @include arrow_box($rnd_med_dark);
+}
+
+.entrepreneurship {
+  @include arrow_box($ent_med_dark);
+}
+
+.economic {
+  @include arrow_box($econ_med_dark); 
+}
+
 .nav_rnd,
 .research .title{
   background-color: $rnd_med_light;
@@ -342,12 +358,35 @@ section:last-child{
       width: 17%;
       height: 300px;
       float: left;
-      padding: 10px 20px;
+      padding: 10px 10px;
 
       .key_text{
         font-size: 10px;
       }
     }
+}
+#uh-map {
+  position: relative;
+}
+
+#hover-tooltip, #fixed-tooltip {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  z-index: 100;
+  text-align: center;
+  margin-top: -80px;
+  margin-left: -70px;
+  pointer-events: none;
+}
+#hover-tooltip {
+  top: 0;
+  left: -9999px;
+}
+
+#fixed-tooltip {
+  top: 0;
+  left: -9999px;
 }
 
 .timeline_info{
@@ -450,7 +489,7 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+    // fill: #AAA797;
   }
 }
 
@@ -463,7 +502,10 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+
+    &.label {
+      fill: #AAA797;
+    }
   }
 }
 
