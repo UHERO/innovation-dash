@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (scope, mapSource, dataSource, currentYearEl, currentPercentEl, summaryMeasurementEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
 
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
@@ -94,7 +94,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, currentP
     drawMap(sourceMap, data, true);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
-    mapSummary();
+    renderSummaryText();
     
   }
 
@@ -277,24 +277,30 @@ function drawHistogram (yearValuesRange, colorScale) {
     return result;
   }
 
+  // Renders summary text to Map and Line Graph
+  function renderSummaryText(){
   // Appends summary text above US map
-  // need to call function when values on brush changes
-  function mapSummary(){
-    // current selected year
-    d3.select(currentYearEl).html("");
-    var currentYear = d3.select(currentYearEl)
+    // current selected year for map and line graph
+    d3.selectAll(currentYearEl).html("")
       .insert('text')
       .text(selectedMaxYear);
     // percent change
-    d3.select(currentPercentEl).html("");
-    var currentPercent = d3.select(currentPercentEl)
+    d3.select(currentPercentEl).html("")
       .insert('text')
-      .text("insert %"); 
-    //unit of measure - taken from legendText variable
-    d3.select(summaryMeasurementEl).html("");
-    var summaryMeasurement = d3.select(summaryMeasurementEl)
+      .text("{{ insert % }}"); 
+    // unit of measure - taken from legendText variable
+    d3.select(summaryMeasurementEl).html("")
       .insert('text')
       .text(legendText);
+
+    // change in value - from previous to current years
+    d3.select(valueChangeEl).html("")
+      .insert('text')
+      .text("{{ increase / decrease in value }}"); 
+    // previous year
+    d3.select(previousYearEl).html("")
+      .insert('text')
+      .text(selectedMinYear);
   }
 
   // Draw Line Graph
@@ -490,7 +496,7 @@ function drawHistogram (yearValuesRange, colorScale) {
 
       drawMap(sourceMap, data, false);
       drawGraph();
-      mapSummary(); 
+      renderSummaryText(); 
     }
 
     var brushSVG = d3.select("#uh-brush-test");
