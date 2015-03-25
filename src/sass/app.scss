@@ -43,6 +43,11 @@ h3{
     border: 2px solid $edu_medium;
     border-radius: 5px;
   }
+  .references{
+    a{
+      color: $edu_med_light;
+    }
+  }
 }
 
 .education {
@@ -74,6 +79,12 @@ h3{
     border: 2px solid $rnd_medium;
     border-radius: 5px;
   }
+
+  .references{
+    a{
+      color: $rnd_med_light;
+    }
+  }
 }
 
 .nav_ent,
@@ -81,9 +92,16 @@ h3{
   background-color: $ent_medium;
 }
 
-.entrepreneurship .info_legend_container .legend, .entrepreneurship .key, .entrepreneurship .map_toggle, .entrepreneurship .key{
-  border: 2px solid $ent_medium;
-  border-radius: 5px;
+.entrepreneurship{
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $ent_medium;
+    border-radius: 5px;
+  }
+  .references{
+    a{
+      color: $ent_med_light;
+    }
+  }
 }
 
 
@@ -92,11 +110,18 @@ h3{
   background-color: $econ_medium;
 }
 
-.economic .info_legend_container .legend, .economic .key, .economic .map_toggle, .economic .key{
-  border: 2px solid $econ_medium;
-  border-radius: 5px;
-}
+.economic{ 
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $econ_medium;
+    border-radius: 5px;
+  }
 
+  .references{
+    a{
+      color: $econ_med_light;
+    }
+  }
+}
 
 
 /* Layouts */
@@ -375,6 +400,15 @@ section:last-child{
   // width: 60%;
   // height: 40px;
 
+}
+
+.references{
+  height: 50px;
+  padding: 0 30px 10px;
+  h3{
+    margin-left: 0px;
+    padding-bottom: 10px;
+  }
 }
 
 
