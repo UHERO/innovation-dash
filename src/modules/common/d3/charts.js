@@ -36,6 +36,10 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var selectedMaxYear;
   var geoAreaCategory;
   var geoAreaNames;
+  var fixedXYs = {
+        Hawaii: {top:'454px', left:'250px' },
+        Honolulu: {top:'114px', left:'340px' }
+      };
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -163,20 +167,36 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
+      console.log('color.quantiles()',color.quantiles());
+      console.log('color.quantiles().length',color.quantiles().length);
+      console.log('viewColors[colorScheme]',viewColors[colorScheme]);
+
+      var middleRanges = color.quantiles();
+      var mapRanges = [];
+      mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+      mapRanges[1] = [middleRanges[0], middleRanges[1]];
+      mapRanges[2] = [middleRanges[1], middleRanges[2]];
+      mapRanges[3] = [middleRanges[2], middleRanges[3]];
+      mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+
+    resetMapTooltips();
+    setHoverTooltipColor(colorScheme);
+
     // Draws the histogram for the main graph
     drawHistogram(yearValuesRange, color);
 
     if (isSVGMap) {
       for (var key in valuesByArea) {
-        var countySvg = d3.select('#'+key)
-          .on('click', function () {
-            if (this.id !== 'Honolulu') {
-              return passMapClickTarget(this.id);
-            }
-          });
+        var countySvg = d3.select('#'+key);
+        console.log('key',key);
+          if (key !== 'Honolulu') {
+            countySvg.on('click', function () { return passMapClickTarget(this.id);});
+            countySvg.on('mousemove', function () { return drawMapTooltip(this.id, 'hover');});
+          }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
+      drawMapTooltip('Honolulu', 'fixed', fixedXYs);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
       g.selectAll(".states")
@@ -192,9 +212,57 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
           if (d.properties.name !== 'Hawaii') {
             return passMapClickTarget(d.properties.name);
           }
+        })
+        .on('mousemove', function (d) {  
+          if (d.properties.name !== 'Hawaii') {
+            return drawMapTooltip(d.properties.name, 'hover');
+          }
         });
+        drawMapTooltip('Hawaii', 'fixed', fixedXYs);
     }
   }
+
+  function drawMapTooltip (name, type, fixedXYs) {
+    
+    var tooltip = d3.select('#' + type + '-tooltip');
+    if (type === 'fixed') {
+      tooltip.style('top', function () {
+        return fixedXYs[name].top;
+      });
+      tooltip.style('left', function () {
+        return fixedXYs[name].left;
+      }); 
+      tooltip.select('.arrow_box').text(name);
+    } else {
+      tooltip.style('top', function () {
+        window.myd3event = d3.event;
+        return d3.event.pageY +'px';
+      });
+      tooltip.style('left', function () {
+        return d3.event.pageX +'px';
+      }); 
+      tooltip.select('.arrow_box').text(name);
+    }
+  }
+
+  function resetMapTooltips () {
+    var tooltips = d3.selectAll('#fixed-tooltip, #hover-tooltip');
+    tooltips.style('left', '-9999px');
+  }
+
+  function setHoverTooltipColor (colorKey) {
+    console.log('colorKey',colorKey);
+    var colorKeyMap = {
+      econ: 'economic',
+      rnd:  'research',
+      ent:  'entrepreneurship',
+      edu:  'education'
+    };
+    var bodyEl = d3.select('body');
+    bodyEl.classed('economic research entrepreneurship education', false);
+    bodyEl.classed(colorKeyMap[colorKey], true);
+  }
+
 
 function drawHistogram (yearValuesRange, colorScale) {
 
