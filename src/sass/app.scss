@@ -413,7 +413,7 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+    // fill: #AAA797;
   }
 }
 
@@ -426,7 +426,10 @@ footer{
   text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    fill: #AAA797;
+
+    &.label {
+      fill: #AAA797;
+    }
   }
 }
 
