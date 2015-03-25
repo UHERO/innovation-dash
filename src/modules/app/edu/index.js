@@ -27,22 +27,6 @@ module.exports =
       templateUrl: 'app/edu/views/stem-majors.html',
       controller: 'StemMajorsController'
     })
-    .state('edu.education-attainment', {
-      url: '/education-attainment',
-      abstract: true,
-      templateUrl: 'app/edu/views/education-attainment.html',
-      // controller: 'EducationAttainmentController'
-    })
-    .state('edu.education-attainment.us', {
-      url: '/us',
-      templateUrl: 'app/edu/views/education-attainment.us.html',
-      controller: 'EducationAttainmentController'
-    })
-    .state('edu.education-attainment.hawaii', {
-      url: '/hawaii',
-      templateUrl: 'app/edu/views/education-attainment.hawaii.html',
-      controller: 'EducationAttainmentHawaiiController'
-    })
     .state('edu.post-sec-degree', {
       url: '/post-sec-degree',
       templateUrl: 'app/edu/views/post-sec-degree.html',
@@ -77,6 +61,38 @@ module.exports =
       url: '/eight-grade-reading',
       templateUrl: 'app/edu/views/eight-grade-reading.html',
       controller: 'EightGradeReadingController'
+    })
+    .state('edu.education-attainment', {
+      url: '/education-attainment',
+      abstract: true,
+      templateUrl: 'app/edu/views/education-attainment.html',
+      // controller: 'EducationAttainmentController'
+    })
+    .state('edu.education-attainment.us', {
+      url: '/us',
+      templateUrl: 'app/edu/views/education-attainment.us.html',
+      controller: 'EducationAttainmentController'
+    })
+    .state('edu.education-attainment.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/edu/views/education-attainment.hawaii.html',
+      controller: 'EducationAttainmentHawaiiController'
+    })
+    .state('edu.attainment-highschool', {
+      url: '/education-attainment-highschool',
+      abstract: true,
+      templateUrl: 'app/edu/views/attainment-highschool.html',
+      // controller: 'EducationAttainmentController'
+    })
+    .state('edu.attainment-highschool.us', {
+      url: '/us',
+      templateUrl: 'app/edu/views/attainment-highschool.us.html',
+      controller: 'EduAttainmentHSController'
+    })
+    .state('edu.attainment-highschool.hawaii', {
+      url: '/hawaii',
+      templateUrl: 'app/edu/views/attainment-highschool.hawaii.html',
+      controller: 'EduAttainmentHSHawaiiController'
     });
   })
 
@@ -85,6 +101,9 @@ module.exports =
   .controller('SnEGradStudentFundingController', require('./SnEGradStudentFundingController'))
   .controller('StemMajorsController', require('./StemMajorsController'))
   .controller('EducationAttainmentController', require('./EducationAttainmentController'))
+  .controller('EducationAttainmentHawaiiController', require('./EducationAttainmentHawaiiController'))
+  .controller('EduAttainmentHSHawaiiController', require('./EduAttainmentHSHawaiiController'))
+  .controller('EduAttainmentHSController', require('./EduAttainmentHSController'))
   .controller('PostSecDegreeController', require('./PostSecDegreeController'))
   .controller('SnEGradStudentsController', require('./SnEGradStudentsController'))
   .controller('PostDocsController', require('./PostDocsController'))

@@ -27,10 +27,15 @@ module.exports =
       templateUrl: 'app/econ/views/state-and-local-tax-burden.html',
       controller: 'StateLocalTaxController'
     })
+    .state('econ.lf-part-empl', {
+      url: '/lf-part-empl',
+      templateUrl: 'app/econ/views/lf-part-empl.html',
+      controller: 'LFPartEmplController'
+    })
     .state('econ.lf-part-empl-rate', {
       url: '/lf-part-empl-rate',
       templateUrl: 'app/econ/views/lf-part-empl-rate.html',
-      controller: 'LFPartEmplController'
+      controller: 'LFPartRateController'
     })
     .state('econ.per-capita-personal-income', {
       url: '/per-capita-personal-income',
@@ -106,6 +111,7 @@ module.exports =
   .controller('UnemploymentRateController', require('./UnemploymentRateController'))
   .controller('StateLocalTaxController', require('./StateLocalTaxController'))
   .controller('LFPartEmplController', require('./LFPartEmplController'))
+  .controller('LFPartRateController', require('./LFPartRateController'))
   .controller('AverageEarningsController', require('./AverageEarningsController'))
   .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'))
   .controller('NonFarmHawaiiController', require('./NonFarmHawaiiController'))
