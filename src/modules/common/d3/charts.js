@@ -91,7 +91,7 @@ module.exports = function (mapSource, dataSource, mapEl, graphEl, histogramEl, b
     selectedMinYear = setMinVals.minYear;
     selectedMaxYear = setMaxVals.maxYear;
 
-    drawMap(sourceMap, data, true);
+    drawMap(sourceMap, data);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
   }
@@ -308,7 +308,6 @@ function drawHistogram (yearValuesRange, colorScale) {
 
     // based on our svg width, when there's 7 or fewer ticks, duplicate year labels are shown
     if (numXAxisTicks < 8) {
-      console.log('hey!');
       xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
     }
 
@@ -346,6 +345,7 @@ function drawHistogram (yearValuesRange, colorScale) {
         return d.value >= 0;
       })
       .x(function(d) {
+        console.log('[xScale(d.year), yScale(d.value)]',[xScale(d.year), yScale(d.value)]);
         return xScale(d.year);
       })
       .y(function(d) {
@@ -353,9 +353,11 @@ function drawHistogram (yearValuesRange, colorScale) {
       })
       .interpolate("linear");
 
+
+
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      var usAvgData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
+      var usAvgData = window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
   
       vis.append("svg:path")
          .attr("d", lineGen(usAvgData))
@@ -364,8 +366,9 @@ function drawHistogram (yearValuesRange, colorScale) {
          .attr("fill", "none");
     }
 
-    var hiStateData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
-    var selectedStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+    var hiStateData = window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    var selectedStateData = window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+
     vis.append("svg:path")
      .attr("d", lineGen(hiStateData))
      .attr("stroke", "#4F5050")
@@ -379,13 +382,66 @@ function drawHistogram (yearValuesRange, colorScale) {
      .attr("stroke-width", 3)
      .attr("fill", "none");
 
-    // Legend
-    drawLegend(vis);
-  }
 
-  function drawLegend(graphSVG) {
+     var verticalLine = vis.append('line')
+      .attr({
+        'x1': 0,
+        'y1': 0,
+        'x2' : 0,
+        'y2': height
+      })
+      .attr("stroke", "gray")
+      .attr("class", "verticalLine")
+      .attr("visibility", "hidden");
+
+     vis.on("mousemove", function() {
+        console.log("d3.mouse(this)", d3.mouse(this));
+        var mouseX = d3.mouse(this)[0];
+        var mouseY = d3.mouse(this)[1];
+
+        if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
+
+          var yearAtX = Math.round(xScale.invert(mouseX));
+          console.log('yearAtX',yearAtX);
+          var hiValAtYear = findGeoValueAtYear(hiStateData, yearAtX);
+          var selectedValAtYear = findGeoValueAtYear(selectedStateData, yearAtX);
+          var usValAtYear = findGeoValueAtYear(usAvgData, yearAtX);
+
+          vis.selectAll('.tooltip').remove();
+
+          vis.insert('g')
+            .append('text')
+            .attr('class', 'tooltip')
+            .attr('x', mouseX + 10)
+            .attr('y', mouseY)
+            .text(function() {
+
+              return yearAtX + " | " + knownSummaryRecords[0] + ': ' + usValAtYear + " | " +
+              geoAreaNames[0] + ": " + hiValAtYear + " | " + 
+              geoAreaNames[1] + ": " + usValAtYear ;
+
+            });
+          vis.select(".verticalLine")
+            .attr("visibility", "visible")
+            .attr("transform", function() {
+              return "translate(" + mouseX + ", 0)";
+            });
+        }
+
+      });
+    vis.on("mouseout", function() {
+      vis.selectAll('.tooltip').remove();
+      vis.select(".verticalLine").attr("visibility", "hidden");
+    });
+
+    function findGeoValueAtYear (lineData, year) {
+      return _.result(_.find(lineData, { 'year': year}), 'value');
+    }
+
+
+    // Legend
     // appends line graph indicator heading
-    graphSVG.insert('g')
+    vis.insert('g')
       .append('text')
       .attr('class','legend_text')
       .attr("x", width + 30)
@@ -399,7 +455,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     }
 
     // appends key labels 
-    graphSVG.insert('g')
+    vis.insert('g')
       .selectAll('text')
       // .data(legendData)
       .data(legendData)
@@ -415,7 +471,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       });
    
    // adds colors to keys
-    graphSVG.insert('g')
+    vis.insert('g')
       .selectAll('rect')
       .data(legendData)
       .enter()
@@ -464,7 +520,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data, false);
+      drawMap(sourceMap, data);
       drawGraph(); 
     }
 
