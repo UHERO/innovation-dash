@@ -50,7 +50,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   // Formatting functions:
   var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
-  // brandon's number converter for histogram
+  // brandon's number converter for histogram/graphs
   function numberFormatConverter (num){
     var dolDol = d3.format('$.2f');
     var intInt = d3.format('.0f');
@@ -58,6 +58,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     var perPer = d3.format('.1%');
     var extExt = d3.format('.2%');
 
+    // if (num !== NaN || num === null || num === Infinity){
+    //   return "none";
+    // }
     if(measurementUnit === 'dollars'){
       if(num > 999999){
         return dolDol(num/1000000) +'M'; // 69000000 => 69M
@@ -281,7 +284,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(lateValue);
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text(fmtPercent(valueDiff));
+      .text( fmtPercent(valueDiff));
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
@@ -426,7 +429,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text( numberFormatConverter(lateValue) ); 
+      .text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
@@ -438,9 +441,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(function() {
         var change = lateValue - earlyValue;
         if (change > 0) {
-          return "increase of " + change + " ";
+          return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
         } else {
-          return "decrease of " + change + " ";
+          return "a decrease of " + numberFormatConverter( change ) + " ";
         }
       }); 
     // previous year
@@ -626,7 +629,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
               if (d[0] === "Year") {
                 return d[1];
               } else {
-                return d[0] + ": " + d[1];
+                return d[0] + ": " + numberFormatConverter( d[1] ); // blamebrandontag
               }
             });
 
