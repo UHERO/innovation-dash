@@ -8,7 +8,7 @@ module.exports =
   .config(function ($stateProvider) {
     $stateProvider
     .state('splash', {
-      url: '/splash',
+      url: '/',
       templateUrl: 'app/splash/views/splash.html',
       controller: 'SplashController'
     });

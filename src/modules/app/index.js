@@ -22,5 +22,5 @@ module.exports =
   ])
 
 .config(function($urlRouterProvider) {
-    $urlRouterProvider.otherwise("/edu");
+    $urlRouterProvider.otherwise("/");
 });
