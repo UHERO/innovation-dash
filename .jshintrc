@@ -1,0 +1,8 @@
+{
+  "node": true,
+  "browser": true,
+  "globals": {
+      "angular": false
+  },
+  "predef": [ "d3", "_", "topojson", "queue" ]
+}

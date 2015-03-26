@@ -1,4 +1,8 @@
-bower_components/
-build
+.idea
+.sass-cache
 node_modules
+build
+release
 tmp
+bower_components
+.DS_Store

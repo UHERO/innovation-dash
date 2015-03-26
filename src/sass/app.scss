@@ -1,0 +1,553 @@
+@import "partials/settings";
+@import "partials/resets";
+@import "partials/mixins";
+
+/* Globals */
+
+body{
+  background-color: $oil;
+  font-family: $montserrat;
+  @include uHero_font($base, 1.2, $body_color, 400);
+  letter-spacing: 0.03em;
+}
+
+header{
+  padding-top: 40px;
+}
+
+h1{
+  @include uHero_font(1.4em, 1, $white, 400);
+}
+
+h2{
+  font-size: 0.95em;
+  margin: 8px 0 3px;
+}
+
+h3{
+  margin: 10px 25px 0;
+  line-height: 1.2;
+}
+
+/* Common Color Schemes */
+.nav_edu,
+.education .title{
+  background-color: $edu_med_dark;
+} 
+
+.education {
+    .numbers, aside ul li:hover, .item.active {
+    background-color: $edu_medium;
+  } 
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $edu_medium;
+    border-radius: 5px;
+  }
+  .references{
+    a{
+      color: $edu_med_light;
+    }
+  }
+}
+
+.education {
+  @include arrow_box($edu_med_dark);
+}
+
+.research {
+  @include arrow_box($rnd_med_dark);
+}
+
+.entrepreneurship {
+  @include arrow_box($ent_med_dark);
+}
+
+.economic {
+  @include arrow_box($econ_med_dark); 
+}
+
+.nav_rnd,
+.research .title{
+  background-color: $rnd_med_light;
+} 
+
+.research {
+    .numbers, aside ul li:hover, .item.active{
+    background-color: $rnd_medium;
+  }
+   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
+    border: 2px solid $rnd_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $rnd_med_light;
+    }
+  }
+}
+
+.nav_ent,
+.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
+  background-color: $ent_medium;
+}
+
+.entrepreneurship{
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $ent_medium;
+    border-radius: 5px;
+  }
+  .references{
+    a{
+      color: $ent_med_light;
+    }
+  }
+}
+
+
+.nav_econ,
+.economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
+  background-color: $econ_medium;
+}
+
+.economic{ 
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $econ_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $econ_med_light;
+    }
+  }
+}
+
+
+/* Layouts */
+.wrapper{
+  margin: auto;
+  max-width: 1200px;
+}
+
+.logo{
+  width: 20%;
+  display: inline;
+  float: left;
+}
+
+nav{
+  width: 77%;
+  display: inline-block; 
+  height: 50px;
+  position: relative;
+  z-index: 1;
+  text-align: right;
+  float: right;
+
+  ul{
+    list-style-type: none;
+    margin-right: -2px;
+    padding: 0;
+  
+    li{
+      display: inline-block;
+      border-radius: 5px;
+      margin: 0 2px;
+      vertical-align: top;
+      text-align: center;
+
+      a{
+        @include uHero_font( 0.75em, 1, $white, 400);
+        box-sizing: border-box;
+        height: 70px;
+        width: 200px;
+        padding: 12px 30px 20px;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        text-transform: uppercase;
+        display: block;
+      }
+    }
+  }
+}
+
+.nav_edu,.nav_ent{
+  padding-top: 8px; 
+}
+
+.nav_ent{
+  a{
+    padding: 12px 16px 20px;
+  }
+}
+
+.container{
+  background-color: $light_grey;
+  margin: auto;
+  margin-top: 5px;
+  position: relative;
+  z-index: 2;
+  border-top-left-radius: 5px;
+}
+
+.title{
+  background-color: $econ_medium;
+  height: 43px; 
+  text-align: center;
+  padding: 30px 0 10px;
+  border-top-left-radius: 5px; 
+}
+
+aside{
+  width: 20%;
+  background-color: $light_grey;
+  float:left;
+  padding: 20px;
+  height: 100%;
+
+  ul{
+    margin-top: 20px;
+
+    li{
+      background-color: $white;
+      margin: 5px auto;
+      border-radius: 3px;
+  
+      a{
+        @include uHero_font(0.82em, 1.3, $body_color, 400);
+        width: 85%;
+        text-decoration: none;
+        padding: 15px;
+        display: block;
+      }
+
+      &:hover a, &.item.active a{
+        color: $white;
+      }
+    }
+  }
+}
+
+.map_toggle{
+  width: 300px;
+  height: 100px;
+  position: absolute;
+  z-index: 3;
+  margin-top: 135px;
+  margin-left: 230px;
+
+  h3{
+    text-align: center;
+  }
+
+  ul{
+    li{
+      display: inline;
+      a{
+        width: 48%;
+        display: inline-block;
+        // background-color: salmon;
+        height: 70px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .mini_us{
+        float: right;
+        background-image: url(/assets/images/united_states.svg);
+      }
+      .mini_hi{
+        float: left;
+        background-image: url(/assets/images/hawaii.svg);
+      }
+    }
+  }
+}
+
+.numbers{
+  width: 20px;
+  height: 10px;
+  border-radius: 50%;
+  color: $white;
+  padding: 3px 9px;
+}
+
+.graphs{
+  background-color: $white;
+  overflow: hidden;
+}
+
+/* Views Container
+ Map and Line graphs */
+
+section{
+  display: block;
+  margin-bottom: 20px;
+  border-bottom: 2px solid $light_grey; 
+  padding: 20px 40px 30px;
+
+  p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
+
+  &:last-child {
+    padding: 20px 40px 10px;
+  }
+}
+
+section:last-child{
+  border: none;
+}
+.info_legend_container{
+  display: block;
+  margin-bottom: 20px;
+
+  .map_info{
+    width: 60%;
+    float: left;
+  }
+
+  .legend{
+    padding: 10px 20px 20px;
+    width: 30%;
+    color: $body_color;
+    font-size: $base*0.8;
+    float: left;
+
+    h4{
+      margin-bottom: 5px;
+      font-size: 0.75em;
+    }
+
+    ul{
+      li{
+        span{
+          width: 20px;
+          height: 12px;
+          background-color: $edu_med_dark;
+          display: inline-block;
+          border-radius: 2px;
+          margin-right: 3px;
+        }
+      }
+    }
+  }
+}
+.default-map{
+  display: block;
+  background-image: url('../assets/images/united_states.svg');
+  height: 530px;
+  width: auto;
+}
+
+.line_graph_info{
+  margin-bottom: 20px;
+}
+
+.line_graph_container{
+  
+    .graph{
+      float: left;
+      margin-right: 20px;
+    }
+
+    .key{
+      width: 17%;
+      height: 300px;
+      float: left;
+      padding: 10px 10px;
+
+      .key_text{
+        font-size: 10px;
+      }
+    }
+}
+#uh-map {
+  position: relative;
+}
+
+#hover-tooltip, #fixed-tooltip {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  z-index: 100;
+  text-align: center;
+  margin-top: -80px;
+  margin-left: -70px;
+  pointer-events: none;
+}
+#hover-tooltip {
+  top: 0;
+  left: -9999px;
+}
+
+#fixed-tooltip {
+  top: 0;
+  left: -9999px;
+}
+
+.timeline_info{
+  // float: left;
+  // width: 35%;
+}
+
+.time_span{
+  // background-color: yellow;
+  // float: left;
+  // width: 60%;
+  // height: 40px;
+
+}
+
+.references{
+  height: 50px;
+  padding: 0 30px 10px;
+  h3{
+    margin-left: 0px;
+    padding-bottom: 10px;
+  }
+}
+
+
+/* Footer */
+footer{
+  padding: 15px 0;
+
+  p{
+    width: 50%;
+    font-size: 10px;
+    float: left;
+    padding-top: 0;
+  }
+
+  h5{
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+.footer_links{
+  width: 30%;
+  padding: 10px;
+  height: 68px;
+  float: left;
+}
+
+.additional{
+  padding-top: 30px;
+  height: 50px;
+}
+
+.logos{
+  border-radius: 5px;
+  border: 1px solid $body_color;
+  background-repeat: no-repeat;
+  background-size: 200px;
+  float: right;
+
+  p{
+    width: 50%;
+    padding: 25px 0 0;
+  }
+}
+.dl{
+  margin-right: 20px; 
+  
+  .devleague{
+    width: 47%;
+    float: left;
+  }
+
+}
+
+.uhero{
+  background-image: url('/assets/images/uhero_logo.svg');
+  background-position: 170px 10px;
+}
+
+.axis {
+  path {
+      fill: none;
+      stroke: #AAA797;
+      stroke-width: 3;
+      shape-rendering: crispEdges;
+  }
+
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+}
+
+#line-graph {
+  padding-left: 20px;
+  
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    // fill: #AAA797;
+  }
+}
+
+#uh-graph {
+  svg {
+    padding-left: 20px;
+    padding-bottom: 30px;
+  }
+
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+
+    &.label {
+      fill: #AAA797;
+    }
+  }
+}
+
+// the little helper text that show minYear, maxYear
+// FOR DEBUGGING PURPOSES
+#uh-brush {
+
+  span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #AAA797;
+  }
+
+  text {
+    fill: #AAA797;
+  }
+}
+
+/* Tweaks to D3 SLIDER styles (in _d3.slider.scss) */
+.d3-slider {
+  background-color: #D3D0C1;
+  border: none;
+}
+
+.d3-slider-range {
+  background-color: #F27D14;
+}
+
+.d3-slider-handle {
+  background: #FF9933;
+  border: none;
+  border-radius: 0;
+  width: 1em;
+  height: 1.38em;
+}
+
+.d3-slider-axis {
+  top: -3px;
+
+  text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+}
