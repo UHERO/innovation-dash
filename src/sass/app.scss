@@ -259,9 +259,9 @@ aside{
 }
 
 .map_toggle{
-  padding: 0 5px;
+  padding: 10 5px;
   width: 31%;
-  height: 184px;
+  height: 230px;
   margin-right: 3px;
   display: block;
   float: left;
@@ -283,6 +283,7 @@ aside{
         height: 70px;
         background-repeat: no-repeat;
         background-position: center;
+        padding: 10px 0;
       }
       .mini_us{
         display: block;
@@ -350,7 +351,7 @@ section:last-child, section:first-child{
   }
 
   .legend{
-    padding: 10px 10px 20px;
+    padding: 10px 10px 10px;
     width: 55%;
     color: $body_color;
     font-size: $base*0.8;
