@@ -283,7 +283,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(areaName);
     arrow.append('p')
       .classed('tooltip-val', true)
-      .text(lateValue);
+      .text(numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
       .text( fmtPercent(percentChange));
