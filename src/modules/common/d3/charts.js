@@ -50,6 +50,42 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   // Formatting functions:
   var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
+  // brandon's number converter for histogram/graphs
+  function numberFormatConverter (num){
+    var intInt = d3.format('.0f');
+    var numNum = d3.format('.2f');
+    var perPer = d3.format('.1%');
+    var extExt = d3.format('.2%');
+    var result = 0;
+
+    if (num == NaN || num == null){
+      return "NA";
+    }
+    if(measurementUnit === 'number' || measurementUnit === 'dollars'){
+      if(num > 999999){
+        result = numNum(num/1000000) +'M'; // 69000000 => 69M
+      }
+      if(num > 24999){
+        result = numNum(num/1000) +'K'; // 69000 => 69K
+      }      
+      result =  numNum(num); // 69.6969 => 69.70
+    }
+    if(measurementUnit === 'integer'){
+      return intInt(num); // 69
+    }
+    if(measurementUnit === 'percent'){
+      return perPer(num); // 0.69 => 69%
+    }
+    if(measurementUnit === 'extended_percent'){
+      return extExt(num); // 0.00069 => 0.069%
+    }
+    if(measurementUnit === 'dollars'){
+      return "$" + result;
+    } else {
+      return result;
+    }
+  }  
+
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
     if (isHawaii) {
@@ -162,14 +198,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-    var middleRanges = color.quantiles();
-    var mapRanges = [];
-    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-    mapRanges[1] = [middleRanges[0], middleRanges[1]];
-    mapRanges[2] = [middleRanges[1], middleRanges[2]];
-    mapRanges[3] = [middleRanges[2], middleRanges[3]];
-    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
-
 
     resetMapTooltips(fixedMapTooltip);
     resetMapTooltips(hoverMapTooltip);
@@ -240,8 +268,8 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
       lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
     }
- 
-    var valueDiff = lateValue / earlyValue;
+    
+    var percentChange = (lateValue - earlyValue) / earlyValue;
 
     var arrow;
     if (type === 'fixed') {
@@ -258,7 +286,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(lateValue);
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text(fmtPercent(valueDiff));
+      .text( fmtPercent(percentChange));
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
@@ -300,10 +328,12 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     var middleRanges = colorScale.quantiles();
     // mapRange array generation now within the drawHistogram func, using the yearValuesRange
     var mapRanges = [];
-    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    // mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    mapRanges[0] = [0, middleRanges[0]];
     mapRanges[1] = [middleRanges[0], middleRanges[1]];
     mapRanges[2] = [middleRanges[1], middleRanges[2]];
     mapRanges[3] = [middleRanges[2], middleRanges[3]];
+    // mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
     mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
     d3.select(histogramEl).html("");
@@ -350,10 +380,15 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         return i * 26 + numHistoLabelLines * 11 + 52;
       })
       .text(function(d,i){
-        // may have to convert to percents depending on chart
-        // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-        return d[0].toFixed(4) + " - " + d[1].toFixed(4);
-        // return d[0] + " - " + d[1];
+        if (i < 1){
+          return d[0] + " - " + numberFormatConverter(d[1]);
+        }
+        if (i < 4){
+          return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
+        }
+        if (i = 4){
+          return numberFormatConverter(d[0]) + "+";
+        }
       });
   }
 
@@ -396,7 +431,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text(lateValue); 
+      .text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
@@ -408,9 +443,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(function() {
         var change = lateValue - earlyValue;
         if (change > 0) {
-          return "increase of " + change + " ";
+          return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
         } else {
-          return "decrease of " + change + " ";
+          return "a decrease of " + numberFormatConverter( change ) + " ";
         }
       }); 
     // previous year
@@ -596,7 +631,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
               if (d[0] === "Year") {
                 return d[1];
               } else {
-                return d[0] + ": " + d[1];
+                return d[0] + ": " + numberFormatConverter( d[1] ); // blamebrandontag
               }
             });
 
