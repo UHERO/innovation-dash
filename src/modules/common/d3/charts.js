@@ -44,8 +44,10 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var fixedMapTooltip = d3.select('#fixed-tooltip');
   var hoverMapTooltip = d3.select('#hover-tooltip');
   var selectedMapTooltip = d3.select('#selected-tooltip');
+  var earlyValue;
+  var lateValue;
 
-  // Formatting functions;
+  // Formatting functions:
   var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
@@ -229,8 +231,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
   function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
     
-    var earlyValue;
-    var lateValue;
     var targetType = isHawaii ? 'County' : 'State';
 
     if (isHawaii) {
@@ -295,66 +295,66 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
 
-function drawHistogram (yearValuesRange, colorScale) {
+  function drawHistogram (yearValuesRange, colorScale) {
 
-  var middleRanges = colorScale.quantiles();
-  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
-  var mapRanges = [];
-  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-  mapRanges[1] = [middleRanges[0], middleRanges[1]];
-  mapRanges[2] = [middleRanges[1], middleRanges[2]];
-  mapRanges[3] = [middleRanges[2], middleRanges[3]];
-  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    var middleRanges = colorScale.quantiles();
+    // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+    var mapRanges = [];
+    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    mapRanges[1] = [middleRanges[0], middleRanges[1]];
+    mapRanges[2] = [middleRanges[1], middleRanges[2]];
+    mapRanges[3] = [middleRanges[2], middleRanges[3]];
+    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
-  d3.select(histogramEl).html("");
+    d3.select(histogramEl).html("");
 
-  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 207}).append('g');
-  var histogramKeys = mapRanges.slice(0);
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 207}).append('g');
+    var histogramKeys = mapRanges.slice(0);
 
-  svgHistogram.append('text')
-    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
-    // below line is hardcoded. need to fix to dynamic with $scope or other
-    .text(legendText)
-    .style("fill", graphColors.text)
-    .call(wrap,170);
+    svgHistogram.append('text')
+      .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+      // below line is hardcoded. need to fix to dynamic with $scope or other
+      .text(legendText)
+      .style("fill", graphColors.text)
+      .call(wrap,170);
 
-  // Histogram color blocks
-  svgHistogram.insert('g')
-    .selectAll('rect')
-    .data(viewColors[colorScheme])
-    .enter()
-    .append("rect")
-    .attr("x", 5)
-    .attr("y", function(d, i){
-      return i * 26 + numHistoLabelLines * 11 + 40;
-    })
-    .attr("rx", 2)
-    .attr("ry", 2)
-    .attr("width", 25)
-    .attr("height", 15)
-    .style({     
-      "fill": function(d){ return d;},
-      "display" : "inline-block",
-    });
+    // Histogram color blocks
+    svgHistogram.insert('g')
+      .selectAll('rect')
+      .data(viewColors[colorScheme])
+      .enter()
+      .append("rect")
+      .attr("x", 5)
+      .attr("y", function(d, i){
+        return i * 26 + numHistoLabelLines * 11 + 40;
+      })
+      .attr("rx", 2)
+      .attr("ry", 2)
+      .attr("width", 25)
+      .attr("height", 15)
+      .style({     
+        "fill": function(d){ return d;},
+        "display" : "inline-block",
+      });
 
-  // Histogram number ranges
-  svgHistogram.insert('g')
-    .selectAll('text')
-    .data(histogramKeys)
-    .enter()
-    .append('text')
-    .attr('class','histogram_text')
-    .attr("fill", graphColors.text)
-    .attr("x", 45)
-    .attr("y", function(d, i){
-      return i * 26 + numHistoLabelLines * 11 + 52;
-    })
-    .text(function(d,i){
-      // may have to convert to percents depending on chart
-      // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
-      // return d[0] + " - " + d[1];
-    });
+    // Histogram number ranges
+    svgHistogram.insert('g')
+      .selectAll('text')
+      .data(histogramKeys)
+      .enter()
+      .append('text')
+      .attr('class','histogram_text')
+      .attr("fill", graphColors.text)
+      .attr("x", 45)
+      .attr("y", function(d, i){
+        return i * 26 + numHistoLabelLines * 11 + 52;
+      })
+      .text(function(d,i){
+        // may have to convert to percents depending on chart
+        // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
+        return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+        // return d[0] + " - " + d[1];
+      });
   }
 
   function dataByState(data, geoAreaName, geoAreaCategory) {
@@ -396,7 +396,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text("{{ insert % }}"); 
+      .text(lateValue); 
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
@@ -405,7 +405,14 @@ function drawHistogram (yearValuesRange, colorScale) {
     // change in value - from previous to current years
     d3.select(valueChangeEl).html("")
       .insert('text')
-      .text("{{ increase / decrease in value }}"); 
+      .text(function() {
+        var change = lateValue - earlyValue;
+        if (change > 0) {
+          return "increase of " + change + " ";
+        } else {
+          return "decrease of " + change + " ";
+        }
+      }); 
     // previous year
     d3.select(previousYearEl).html("")
       .insert('text')
