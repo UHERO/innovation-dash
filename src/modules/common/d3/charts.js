@@ -268,8 +268,8 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
       lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
     }
- 
-    var valueDiff = lateValue / earlyValue;
+    
+    var percentChange = (lateValue - earlyValue) / earlyValue;
 
     var arrow;
     if (type === 'fixed') {
@@ -286,7 +286,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(lateValue);
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text( fmtPercent(valueDiff));
+      .text( fmtPercent(percentChange));
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
