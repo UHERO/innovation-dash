@@ -7,9 +7,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var lineGen;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
-    rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
+    rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#D3F4B5","#AADB83","#7FBB57","#537A31","#3E5B23"],
-    edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+    edu:  ["#b0e5ed","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
   var measurement_units = {
     percent : '%',
@@ -23,6 +23,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
+  var extraWideGraphLabels = (yUnitMeasure === "# of technology licenses and options executed");
 
   width = 800;
   height = 600;
@@ -405,7 +406,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
     var yMinVal = findGraphMinMax(filteredStates).minVal;
 
-    var width = 600;
+    var width = 592;
     var height = 370;
 
     d3.select(graphEl).html("");
@@ -418,6 +419,10 @@ function drawHistogram (yearValuesRange, colorScale) {
         bottom: 20,
         left: 70
       };
+
+    if (extraWideGraphLabels) { 
+      margins.left = 100; 
+    }
 
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
     var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
@@ -519,6 +524,10 @@ function drawHistogram (yearValuesRange, colorScale) {
               [geoAreaNames[1], selectedStateData, graphColors.selectedColor]
             ]
             .filter(function (item) {
+              // case for missing US avg
+              if ((item[0] === knownSummaryRecords[0]) && (!item[1])) {
+                return false;
+              }
               return item[0] !== undefined;
             })
             .map(function (item) {
