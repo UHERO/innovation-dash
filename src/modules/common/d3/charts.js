@@ -564,7 +564,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     /* START OF LINE HOVER */
 
      var verticalLine = vis.append('line')
-      .attr({ 'x1': 0, 'y1': 0, 'x2' : 0, 'y2': height })
+      .attr({ 'x1': 0, 'y1': margins.top, 'x2' : 0, 'y2': height - margins.bottom })
       .attr("stroke", "#AAA797")
       .attr("class", "verticalLine")
       .attr("visibility", "hidden");
