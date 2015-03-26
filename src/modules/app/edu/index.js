@@ -9,18 +9,8 @@ module.exports =
     $stateProvider
     .state('edu', {
       url: '/edu',
-      views: {
-        'top-nav' : {
-          templateUrl: 'common/partials/top-nav.html'
-        },
-        'footer' : {
-          templateUrl: 'common/partials/footer.html'
-        },
-        '@' : {
-          templateUrl: 'app/edu/views/layout.html',
-          controller: 'EduController'
-        }
-      }
+      templateUrl: 'app/edu/views/layout.html',
+      controller: 'EduController'
     })
     .state('edu.sne-grad-student-profile', {
       url: '/sne-grad-student-profile',
