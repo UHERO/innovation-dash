@@ -191,14 +191,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-    var middleRanges = color.quantiles();
-    var mapRanges = [];
-    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-    mapRanges[1] = [middleRanges[0], middleRanges[1]];
-    mapRanges[2] = [middleRanges[1], middleRanges[2]];
-    mapRanges[3] = [middleRanges[2], middleRanges[3]];
-    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
-
 
     resetMapTooltips(fixedMapTooltip);
     resetMapTooltips(hoverMapTooltip);
