@@ -1,6 +1,7 @@
 @import "partials/settings";
 @import "partials/resets";
 @import "partials/mixins";
+@import "partials/splash";
 
 /* Globals */
 
@@ -30,13 +31,12 @@ h3{
 }
 
 /* Common Color Schemes */
-.nav_edu,
-.education .title{
+.nav_edu, .splash .edu{
   background-color: $edu_med_dark;
 } 
 
 .education {
-    .numbers, aside ul li:hover, .item.active {
+    .title, .numbers, aside ul li:hover, .item.active {
     background-color: $edu_medium;
   } 
   .info_legend_container .legend, .key, .map_toggle, .key{
@@ -66,13 +66,12 @@ h3{
   @include arrow_box($econ_med_dark); 
 }
 
-.nav_rnd,
-.research .title{
+.nav_rnd,.splash .rnd{
   background-color: $rnd_med_light;
 } 
 
 .research {
-    .numbers, aside ul li:hover, .item.active{
+    .title, .numbers, aside ul li:hover, .item.active{
     background-color: $rnd_medium;
   }
    .info_legend_container .legend,.key, .research .map_toggle, .research .key{
@@ -87,12 +86,14 @@ h3{
   }
 }
 
-.nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
+.nav_ent, .splash .ent{
   background-color: $ent_medium;
 }
 
-.entrepreneurship{
+.entrepreneurship{ 
+  .title .numbers, aside ul li:hover, .item.active{
+    background-color: $ent_medium;
+  }
   .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $ent_medium;
     border-radius: 5px;
@@ -105,12 +106,14 @@ h3{
 }
 
 
-.nav_econ,
-.economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
+.nav_econ, .splash .econ {
   background-color: $econ_medium;
 }
 
 .economic{ 
+  .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $econ_medium;
+  }
   .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $econ_medium;
     border-radius: 5px;
