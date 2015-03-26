@@ -1,0 +1,87 @@
+/* Styles for Splash Page */
+
+.splash{
+  background-color: $white;
+  h1{
+    color: $dark_grey;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 3px;
+  }
+
+  .group{
+    p{
+      padding: 15px;
+      font-size: 0.8em;
+    }
+
+    h2{
+      text-transform: uppercase;
+      @include uHero_font(1em, 1, $white, 400);
+      text-align: center;
+    }
+
+    .edu{
+      .value{
+        color: $edu_medium;
+      }
+    }
+
+    .rnd{
+      .value{
+        color: $rnd_medium;
+      }
+    }
+
+    .ent{
+      .value{
+        color: $ent_medium;
+      }
+    }
+
+    .econ{
+      .value{
+        color: $econ_medium;
+      }
+    }
+  }
+}
+
+
+.col{
+  width: 24%;
+  float: left;
+  padding: 3px;
+}
+
+.intro{
+  height: 230px;
+  color: $white;
+  border-radius: 5px;
+  padding: 10px 0;
+}
+
+.value{
+  font-size: 3em;
+  text-align: center;
+}
+
+.splash-graph{
+  border-radius: 5px;
+  background-color: $light-grey;
+  margin: 10px 0;
+}
+
+.sponsors{
+  width: 100%;
+  display: block;
+  height: 50px;
+  background-color: red;
+  .rogos{
+    display: inline-block;
+    height: 50px;
+    width: 22%;
+    margin: 10px;
+    background-color: blue;
+  }
+}

@@ -1,6 +1,7 @@
 @import "partials/settings";
 @import "partials/resets";
 @import "partials/mixins";
+@import "partials/splash";
 
 /* Globals */
 
@@ -13,6 +14,9 @@ body{
 
 header{
   padding-top: 40px;
+  @media #{$medium-down}{
+    padding: 0;
+  }
 }
 
 h1{
@@ -30,13 +34,12 @@ h3{
 }
 
 /* Common Color Schemes */
-.nav_edu,
-.education .title{
+.nav_edu, .splash .edu .intro{
   background-color: $edu_med_dark;
 } 
 
 .education {
-    .numbers, aside ul li:hover, .item.active {
+    .title, .numbers, aside ul li:hover, .item.active {
     background-color: $edu_medium;
   } 
   .info_legend_container .legend, .key, .map_toggle, .key{
@@ -46,6 +49,67 @@ h3{
   .references{
     a{
       color: $edu_med_light;
+    }
+  }
+}
+
+
+.nav_rnd,.splash .rnd .intro{
+  background-color: $rnd_med_light;
+} 
+
+.research {
+    .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $rnd_medium;
+  }
+   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
+    border: 2px solid $rnd_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $rnd_med_light;
+    }
+  }
+}
+
+.nav_ent, .splash .ent .intro{
+  background-color: $ent_medium;
+}
+
+.entrepreneurship{ 
+  .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $ent_medium;
+  }
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $ent_medium;
+    border-radius: 5px;
+  }
+  .references{
+    a{
+      color: $ent_medium;
+    }
+  }
+}
+
+
+.nav_econ, .splash .econ .intro{
+  background-color: $econ_medium;
+}
+
+.economic{ 
+  .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $econ_medium;
+  }
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $econ_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $econ_medium;
     }
   }
 }
@@ -66,74 +130,28 @@ h3{
   @include arrow_box($econ_med_dark); 
 }
 
-.nav_rnd,
-.research .title{
-  background-color: $rnd_med_light;
-} 
-
-.research {
-    .numbers, aside ul li:hover, .item.active{
-    background-color: $rnd_medium;
-  }
-   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
-    border: 2px solid $rnd_medium;
-    border-radius: 5px;
-  }
-
-  .references{
-    a{
-      color: $rnd_med_light;
-    }
-  }
-}
-
-.nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
-  background-color: $ent_medium;
-}
-
-.entrepreneurship{
-  .info_legend_container .legend, .key, .map_toggle, .key{
-    border: 2px solid $ent_medium;
-    border-radius: 5px;
-  }
-  .references{
-    a{
-      color: $ent_medium;
-    }
-  }
-}
-
-
-.nav_econ,
-.economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
-  background-color: $econ_medium;
-}
-
-.economic{ 
-  .info_legend_container .legend, .key, .map_toggle, .key{
-    border: 2px solid $econ_medium;
-    border-radius: 5px;
-  }
-
-  .references{
-    a{
-      color: $econ_medium;
-    }
-  }
-}
-
-
 /* Layouts */
 .wrapper{
   margin: auto;
   max-width: 1200px;
+  width: 98%;
 }
 
 .logo{
   width: 20%;
   display: inline;
   float: left;
+
+  @media #{$medium-down}{
+    display: block;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+  }
+
+  a{
+    text-decoration: none;
+  }
 }
 
 nav{
@@ -144,6 +162,12 @@ nav{
   z-index: 1;
   text-align: right;
   float: right;
+
+  @media #{$medium-down}{
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 
   ul{
     list-style-type: none;
@@ -189,6 +213,11 @@ nav{
   position: relative;
   z-index: 2;
   border-top-left-radius: 5px;
+
+  @media #{$medium-down}{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
 }
 
 .title{
@@ -290,12 +319,12 @@ section{
   border-bottom: 2px solid $light_grey; 
   padding: 20px 40px 30px;
 
-  p{
-    padding-left: 30px;
-    font-family: $bitter;
-    font-style: italic;
-    @include uHero_font(0.85em, 1, $body_color, 400);
-  }
+  // p{
+  //   padding-left: 30px;
+  //   font-family: $bitter;
+  //   font-style: italic;
+  //   @include uHero_font(0.85em, 1, $body_color, 400);
+  // }
 
   &:last-child {
     padding: 20px 40px 10px;
@@ -393,6 +422,7 @@ section:last-child, section:first-child{
   margin-top: -80px;
   margin-left: -70px;
   pointer-events: none;
+  font-size: 12px;
 }
 #hover-tooltip {
   top: 0;
@@ -481,7 +511,12 @@ footer{
 .uhero{
   background-image: url('/assets/images/uhero_logo.svg');
   background-position: 170px 10px;
+  @media #{$medium-down}{
+    background-position: 130px 10px;
+  }
 }
+
+/* D3 stuff */
 
 .axis {
   path {
