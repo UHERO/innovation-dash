@@ -335,24 +335,32 @@ function drawHistogram (yearValuesRange, colorScale) {
       return i * 26 + 40;
     })
     .text(function(d,i){
-      if(measurementUnit === 'percent'){
-        console.log('percent')
-        return d[0].toFixed(2) + "% - " + d[1].toFixed(2)+"%";
-      }
-      if(measurementUnit === 'dollars'){
-        console.log('dollars')
-        return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      }
-      if(measurementUnit === 'number'){
-        console.log('number')
-        return d[0].toFixed(2) + " - " + d[1].toFixed(2);
-      }
+      // if(measurementUnit === 'percent'){
+      //   console.log('percent')
+      //   return (1*d[0]).toFixed(2) + "% - " + (1*d[1]).toFixed(2)+"%";
+      // }
+      // if(measurementUnit === 'dollars'){
+      //   console.log('dollars')
+      //   return d[0].toFixed(0) + " - " + d[1].toFixed(0);
+      // }
+      // if(measurementUnit === 'number'){
+      //   console.log('number')
+      //   return d[0].toFixed(2) + " - " + d[1].toFixed(2);
+      // }
       // may have to convert to percents depending on chart
       // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
       // return d[0] + " - " + d[1];
+      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
     });
   }
 
+  function numberFormatConverter (number){
+    var perper = d3.format('4d');
+    var numnum = d3.format('4d');
+    var doldol = d3.format('$2d');
+  }
+  // current work brandon
+  
   function dataByState(data, geoAreaName, geoAreaCategory) {
     var result = [];
 
