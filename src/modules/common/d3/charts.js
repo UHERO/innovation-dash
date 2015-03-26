@@ -52,10 +52,11 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
   // brandon's number converter for histogram
   function numberFormatConverter (num){
-    var dolDol = d3.format('$.1f');
+    var dolDol = d3.format('$.2f');
+    var intInt = d3.format('.0f');
     var numNum = d3.format('.1f');
     var perPer = d3.format('.1%');
-    var extExt = d3.format('.3%');
+    var extExt = d3.format('.2%');
 
     if(measurementUnit === 'dollars'){
       if(num > 999999){
@@ -65,6 +66,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         return dolDol(num/1000) +'K'; // 69000 => 69K
       }      
       return dolDol(num); // 69.6969 => $69.7
+    }
+    if(measurementUnit === 'integer'){
+      return intInt(num); // 69
     }
     if(measurementUnit === 'number'){
       return numNum(num); // 69 => 69.0
@@ -422,7 +426,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text(lateValue); 
+      .text( numberFormatConverter(lateValue) ); 
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
