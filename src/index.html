@@ -14,27 +14,25 @@
     <div class="wrapper">
       <header class="clearfix">
         <div class="logo">
-          <h1>Hawaii Innovation Matters</h1>
+          <a ui-sref="splash">
+            <h1>Hawaii Innovation Matters</h1>
+          </a>
         </div>
         <nav>
           <ul>
-            <li class="nav_edu"><a ui-sref="edu">education</a></li>
-            <li class="nav_rnd"><a ui-sref="rnd">research &amp; development</a></li>
-            <li class="nav_ent"><a ui-sref="ent">entrepreneurship</a></li>
-            <li class="nav_econ"><a ui-sref="econ">economic prosperity</a></li>
+            <li class="nav_edu"><a ui-sref="edu.post-sec-degree">education</a></li>
+            <li class="nav_rnd"><a ui-sref="rnd.patents-per-occupation">research &amp; development</a></li>
+            <li class="nav_ent"><a ui-sref="ent.startup-employment-share">entrepreneurship</a></li>
+            <li class="nav_econ"><a ui-sref="econ.gdp-by-state">economic prosperity</a></li>
           </ul>
         </nav>
-      </header>
+    </header>
 
       <div class="container clearfix">
         <div ui-view></div>
       </div>
-
+  
       <footer class="clearfix">
-        <!-- <div class="additional footer_links">
-          <h5>Lorem Ipsum</h5>
-          <p>some links and references</p>
-        </div> -->
         <div class="footer_links logos uhero clearfix">
           <p>data presented by</p>
         </div>
@@ -43,6 +41,7 @@
           <img src="/assets/images/devleague_logo.svg" class="devleague" alt="Hawaii's first software development bootcamp" />
         </div>
       </footer>
+      
     </div><!--end of wrapper-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
