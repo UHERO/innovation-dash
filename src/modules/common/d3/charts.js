@@ -350,14 +350,29 @@ function drawHistogram (yearValuesRange, colorScale) {
       // may have to convert to percents depending on chart
       // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
       // return d[0] + " - " + d[1];
-      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
+      return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
     });
   }
 
-  function numberFormatConverter (number){
-    var perper = d3.format('4d');
-    var numnum = d3.format('4d');
-    var doldol = d3.format('$2d');
+  function numberFormatConverter (num){
+    var perper = d3.format('.2%');
+    var doldol = d3.format('$.0f');
+    var numnum = d3.format('2.2f');
+
+    console.log('adas',measurementUnit);
+
+    if(measurementUnit === 'percent'){
+      console.log('percent')
+      return perper(num);
+    }
+    if(measurementUnit === 'dollars'){
+      console.log('dollars')
+      return doldol(num);
+    }
+    if(measurementUnit === 'number'){
+      console.log('number')
+      return numnum(num);
+    }
   }
   // current work brandon
   
