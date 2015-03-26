@@ -1,6 +1,11 @@
 /* Styles for Splash Page */
 
 .splash{
+  border-top-left-radius: 5px;
+    @media #{$medium-down}{
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
   background-color: $white;
   h1{
     color: $dark_grey;
@@ -21,7 +26,7 @@
       @include uHero_font(1em, 1, $white, 400);
       text-align: center;
       height: 20px;
-      padding: 3px 0 0;
+      padding: 3px 3px 0;
     }
 
     .edu{
@@ -69,6 +74,7 @@
 .value{
   font-size: 3em;
   text-align: center;
+  margin: auto;
 }
 
 .splash-graph{

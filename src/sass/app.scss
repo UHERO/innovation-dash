@@ -228,12 +228,15 @@ nav{
   border-top-left-radius: 5px; 
 }
 
+/* Indicator Sidebar */
+
 aside{
   width: 20%;
   background-color: $light_grey;
   float:left;
   padding: 20px;
   height: 100%;
+  transition: width 0.3s ease;
 
   ul{
     margin-top: 20px;
@@ -255,6 +258,10 @@ aside{
         color: $white;
       }
     }
+  }
+
+  @media #{$medium-down}{
+    display: none;
   }
 }
 
@@ -319,13 +326,6 @@ section{
   margin-bottom: 20px;
   border-bottom: 2px solid $light_grey; 
   padding: 20px 40px 30px;
-
-  // p{
-  //   padding-left: 30px;
-  //   font-family: $bitter;
-  //   font-style: italic;
-  //   @include uHero_font(0.85em, 1, $body_color, 400);
-  // }
 
   &:last-child {
     padding: 20px 40px 10px;
@@ -436,8 +436,12 @@ section:last-child, section:first-child{
 }
 
 .timeline_info{
-  // float: left;
-  // width: 35%;
+ p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
 }
 
 .time_span{
@@ -461,6 +465,8 @@ section:last-child, section:first-child{
 /* Footer */
 footer{
   padding: 15px 0;
+  width: 67%;
+  margin: auto;
 
   p{
     width: 50%;
@@ -476,10 +482,9 @@ footer{
   }
 }
 .footer_links{
-  width: 30%;
-  padding: 10px;
+  width: 45%;
+  padding: 20px;
   height: 68px;
-  float: left;
 }
 
 .additional{
@@ -492,7 +497,7 @@ footer{
   border: 1px solid $body_color;
   background-repeat: no-repeat;
   background-size: 200px;
-  float: right;
+  // float: right;
 
   p{
     width: 50%;
