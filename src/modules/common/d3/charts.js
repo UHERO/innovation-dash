@@ -335,9 +335,20 @@ function drawHistogram (yearValuesRange, colorScale) {
       return i * 26 + 40;
     })
     .text(function(d,i){
+      if(measurementUnit === 'percent'){
+        console.log('percent')
+        return d[0].toFixed(2) + "% - " + d[1].toFixed(2)+"%";
+      }
+      if(measurementUnit === 'dollars'){
+        console.log('dollars')
+        return d[0].toFixed(0) + " - " + d[1].toFixed(0);
+      }
+      if(measurementUnit === 'number'){
+        console.log('number')
+        return d[0].toFixed(2) + " - " + d[1].toFixed(2);
+      }
       // may have to convert to percents depending on chart
       // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
       // return d[0] + " - " + d[1];
     });
   }
