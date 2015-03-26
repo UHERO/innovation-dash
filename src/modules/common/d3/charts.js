@@ -75,9 +75,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     if(measurementUnit === 'extended_percent'){
       return extExt(num); // 0.00069 => 0.069%
     }    
-  }
-  // current work brandon
-  
+  }  
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -374,7 +372,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       })
       .text(function(d,i){
         if (i < 1){
-          return 0 + " - " + numberFormatConverter(d[1]);
+          return d[0] + " - " + numberFormatConverter(d[1]);
         }
         if (i < 4){
           return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
