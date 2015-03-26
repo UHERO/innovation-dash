@@ -3,7 +3,7 @@
 module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
-  var lineGen, numHistoLabelLines;
+  var lineGen, numLegendLines;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -339,7 +339,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
     d3.select(histogramEl).html("");
 
-    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 207}).append('g');
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 194, "height": 207}).append('g');
     var histogramKeys = mapRanges.slice(0);
 
     svgHistogram.append('text')
@@ -347,7 +347,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       // below line is hardcoded. need to fix to dynamic with $scope or other
       .text(legendText)
       .style("fill", graphColors.text)
-      .call(wrap,170);
+      .call(wrap,184);
 
     // Histogram color blocks
     svgHistogram.insert('g')
@@ -355,9 +355,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .data(viewColors[colorScheme])
       .enter()
       .append("rect")
-      .attr("x", 5)
+      .attr("x", 0)
       .attr("y", function(d, i){
-        return i * 26 + numHistoLabelLines * 11 + 40;
+        return i * 26 + numLegendLines * 11 + 40;
       })
       .attr("rx", 2)
       .attr("ry", 2)
@@ -378,7 +378,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr("fill", graphColors.text)
       .attr("x", 45)
       .attr("y", function(d, i){
-        return i * 26 + numHistoLabelLines * 11 + 52;
+        return i * 26 + numLegendLines * 11 + 52;
       })
       .text(function(d,i){
         if (i < 1){
@@ -666,7 +666,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr("y", 10)
       .attr('fill', graphColors.text)
       .text(legendText)
-      .call(wrap,130);
+      .call(wrap,128);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -685,7 +685,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr('fill', graphColors.text)
       .attr("x", 40)
       .attr("y", function(d, i){
-        return i * 20 + 70;
+        return i * 20 + numLegendLines * 11 + 46;
       })
       .text(function (d){
         return d;
@@ -700,7 +700,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .append("rect")
       .attr("x", 0)
       .attr("y", function(d, i){
-        return i * 20 + 64;
+        return i * 20 + numLegendLines * 11 + 40;
       })
       .attr("width", 30)
       .attr("height", 5)
@@ -744,7 +744,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
             .text(word);
         }
       }
-      numHistoLabelLines = lineNumber;
+      numLegendLines = lineNumber;
     });
   }
 
