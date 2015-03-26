@@ -7,9 +7,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var lineGen;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
-    rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
+    rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#D3F4B5","#AADB83","#7FBB57","#537A31","#3E5B23"],
-    edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+    edu:  ["#b0e5ed","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
   var measurement_units = {
     percent : '%',
