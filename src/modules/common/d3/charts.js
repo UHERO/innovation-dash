@@ -527,14 +527,15 @@ function drawHistogram (yearValuesRange, colorScale) {
 
           hoverData.unshift(["Year", yearAtX, graphColors.text]);
 
-          vis.selectAll('.tooltip').remove();
+          d3.selectAll('.tooltip').remove();
 
-          vis.insert('g')
-            .selectAll('text')
+          var tooltipGroup = vis.insert('g')
+            .classed('tooltip', true);
+
+          tooltipGroup.selectAll('text')
             .data(hoverData)
             .enter()
             .append('text')
-            .attr('class', 'tooltip')
             .attr('fill', function(d) {
               return d[2];
             })
@@ -555,9 +556,9 @@ function drawHistogram (yearValuesRange, colorScale) {
               if (flipTextAboveCursor) {
                 return mouseY - 100 + i * 30;
               }
-              return mouseY + 10 + i * 30;
+              return mouseY + 30 + i * 30;
             })
-            .html(function(d) {
+            .text(function(d) {
               if (d[1] === undefined || d[1] === null) {
                 d[1] = "N/A"; // may need to remove this
               }
@@ -577,7 +578,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     });
 
     vis.on("mouseout", function() {
-      vis.selectAll('.tooltip').remove();
+      d3.selectAll('.tooltip').remove();
       vis.select(".verticalLine").attr("visibility", "hidden");
     });
 
