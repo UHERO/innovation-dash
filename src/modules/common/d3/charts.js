@@ -366,18 +366,28 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
   console.log('MEASUREMENT?',measurementUnit);
   function numberFormatConverter (num){
-    var perper = d3.format('.1%');
-    var doldol = d3.format('$.2f');
-    var numnum = d3.format('2.1f');
+    var perPer = d3.format('.1%');
+    var dolDol = d3.format('$.1f');
+    var numNum = d3.format('.1f');
+    var extExt = d3.format('.3%');
 
+    if(measurementUnit === 'extended_percent'){
+      return extExt(num); // 0.00069 => 0.069%
+    }    
+    if(measurementUnit === 'million_dollars'){
+      return dolDol(num/1000000) +'M'; // 69000000 => 69M
+    }    
+    if(measurementUnit === '1000_dollars'){
+      return dolDol(num/1000) +'K'; // 69000 => 69K
+    }
     if(measurementUnit === 'percent'){
-      return perper(num);
+      return perPer(num); // 0.69 => 69%
     }
     if(measurementUnit === 'dollars'){
-      return doldol(num);
+      return dolDol(num); // 69 => $69.0
     }
     if(measurementUnit === 'number'){
-      return numnum(num);
+      return numNum(num); // 69.6969 => 69.7
     }
   }
   // current work brandon
