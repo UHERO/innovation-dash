@@ -230,9 +230,10 @@ aside{
 }
 
 .map_toggle{
-  width: 29%;
+  padding: 0 5px;
+  width: 31%;
   height: 184px;
-  margin: 0 3px;
+  margin-right: 3px;
   display: block;
   float: left;
   z-index: 4;
@@ -321,7 +322,7 @@ section:last-child, section:first-child{
 
   .legend{
     padding: 10px 10px 20px;
-    width: 59%;
+    width: 55%;
     color: $body_color;
     font-size: $base*0.8;
     display: block;
