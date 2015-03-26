@@ -3,7 +3,7 @@
 module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
-  var lineGen;
+  var lineGen, numHistoLabelLines;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -308,14 +308,15 @@ function drawHistogram (yearValuesRange, colorScale) {
 
   d3.select(histogramEl).html("");
 
-  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
+  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 207}).append('g');
   var histogramKeys = mapRanges.slice(0);
 
   svgHistogram.append('text')
     .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
     // below line is hardcoded. need to fix to dynamic with $scope or other
     .text(legendText)
-    .style("fill", "black");
+    .style("fill", graphColors.text)
+    .call(wrap,170);
 
   // Histogram color blocks
   svgHistogram.insert('g')
@@ -325,13 +326,13 @@ function drawHistogram (yearValuesRange, colorScale) {
     .append("rect")
     .attr("x", 5)
     .attr("y", function(d, i){
-      return i * 26 + 29;
+      return i * 26 + numHistoLabelLines * 11 + 40;
     })
     .attr("rx", 2)
     .attr("ry", 2)
     .attr("width", 25)
     .attr("height", 15)
-    .style({
+    .style({     
       "fill": function(d){ return d;},
       "display" : "inline-block",
     });
@@ -343,9 +344,10 @@ function drawHistogram (yearValuesRange, colorScale) {
     .enter()
     .append('text')
     .attr('class','histogram_text')
+    .attr("fill", graphColors.text)
     .attr("x", 45)
     .attr("y", function(d, i){
-      return i * 26 + 40;
+      return i * 26 + numHistoLabelLines * 11 + 52;
     })
     .text(function(d,i){
       // may have to convert to percents depending on chart
@@ -618,6 +620,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
+      .attr('fill', graphColors.text)
       .text(legendText)
       .call(wrap,130);
 
@@ -635,6 +638,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .enter()
       .append('text')
       .attr('class','key_text')
+      .attr('fill', graphColors.text)
       .attr("x", 40)
       .attr("y", function(d, i){
         return i * 20 + 70;
@@ -665,38 +669,39 @@ function drawHistogram (yearValuesRange, colorScale) {
           return graphColors.selectedColor;
         }
       });
-
-    function wrap(text, width) {
-      text.each(function() {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = 0,
-            tspan = text.text(null)
-              .append("tspan")
-              .attr("x", 0)
-              .attr("y", y)
-              .attr("dy", dy + "em");
-        while (words.length > 0) {
-          var word = words.pop();
-          line.push(word);
-          tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", 0)
-              .attr("y", y)
-              .attr("dy", ++lineNumber * lineHeight + dy + "em")
-              .text(word);
-          }
-        }
-      });
-    }   
     /* END OF GRAPH LEGEND */
+  }
+
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = 0,
+          tspan = text.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em");
+      while (words.length > 0) {
+        var word = words.pop();
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0)
+            .attr("y", y)
+            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+            .text(word);
+        }
+      }
+      numHistoLabelLines = lineNumber;
+    });
   }
 
   // Draw Slider
@@ -738,7 +743,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data, false);
+      drawMap(sourceMap, data);
       drawGraph();
       renderSummaryText(); 
     }
