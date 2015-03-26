@@ -230,12 +230,14 @@ aside{
 }
 
 .map_toggle{
-  width: 300px;
-  height: 100px;
-  position: absolute;
+  width: 30%;
+  // height: 100px;
+  // position: absolute;
   z-index: 3;
-  margin-top: 135px;
-  margin-left: 230px;
+  // margin-top: 135px;
+  // margin-left: 230px;
+  display: block;
+  float: left;
 
   h3{
     text-align: center;
@@ -245,7 +247,7 @@ aside{
     li{
       display: inline;
       a{
-        width: 48%;
+        width: 100%;
         display: inline-block;
         // background-color: salmon;
         height: 70px;
@@ -253,6 +255,7 @@ aside{
         background-position: center;
       }
       .mini_us{
+        display: block;
         float: right;
         background-image: url(/assets/images/united_states.svg);
       }
@@ -307,14 +310,21 @@ section:last-child{
 
   .map_info{
     width: 60%;
+    display: block;
     float: left;
   }
 
+  .map_toggle_container{
+    width: 40%;
+    float: right;
+  }
+
   .legend{
-    padding: 10px 20px 20px;
-    width: 30%;
+    padding: 10px 10px 20px;
+    width: 60%;
     color: $body_color;
     font-size: $base*0.8;
+    display: block;
     float: left;
 
     h4{
