@@ -230,14 +230,17 @@ aside{
 }
 
 .map_toggle{
-  width: 300px;
-  height: 100px;
-  position: absolute;
-  z-index: 3;
-  margin-top: 135px;
-  margin-left: 230px;
+  width: 29%;
+  height: 184px;
+  margin: 0 3px;
+  display: block;
+  float: left;
+  z-index: 4;
+  position: relative;
 
   h3{
+    font-size: 13px;
+    margin: 11px;
     text-align: center;
   }
 
@@ -245,14 +248,14 @@ aside{
     li{
       display: inline;
       a{
-        width: 48%;
+        width: 100%;
         display: inline-block;
-        // background-color: salmon;
         height: 70px;
         background-repeat: no-repeat;
         background-position: center;
       }
       .mini_us{
+        display: block;
         float: right;
         background-image: url(/assets/images/united_states.svg);
       }
@@ -298,7 +301,7 @@ section{
   }
 }
 
-section:last-child{
+section:last-child, section:first-child{
   border: none;
 }
 .info_legend_container{
@@ -307,14 +310,21 @@ section:last-child{
 
   .map_info{
     width: 60%;
+    display: block;
     float: left;
   }
 
+  .map_toggle_container{
+    width: 40%;
+    float: right;
+  }
+
   .legend{
-    padding: 10px 20px 20px;
-    width: 30%;
+    padding: 10px 10px 20px;
+    width: 59%;
     color: $body_color;
     font-size: $base*0.8;
+    display: block;
     float: left;
 
     h4{
@@ -367,6 +377,10 @@ section:last-child{
 }
 #uh-map {
   position: relative;
+
+  svg{
+    margin-top: -190px;
+  }
 }
 
 #hover-tooltip, #fixed-tooltip {
