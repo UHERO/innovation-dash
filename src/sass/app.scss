@@ -327,6 +327,10 @@ section{
   //   @include uHero_font(0.85em, 1, $body_color, 400);
   // }
 
+  &:first-child {
+    padding: 20px 40px 10px;
+  }
+
   &:last-child {
     padding: 20px 40px 10px;
   }
