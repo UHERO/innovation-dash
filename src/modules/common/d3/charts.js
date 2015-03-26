@@ -500,6 +500,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
     var yAxis = d3.svg.axis()
         .scale(yScale)
+        .tickFormat(numberFormatConverter)
         .orient("left");
 
     vis.append("svg:g")
