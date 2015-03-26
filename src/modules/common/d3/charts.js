@@ -52,36 +52,38 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
   // brandon's number converter for histogram/graphs
   function numberFormatConverter (num){
-    var dolDol = d3.format('$.2f');
     var intInt = d3.format('.0f');
-    var numNum = d3.format('.1f');
+    var numNum = d3.format('.2f');
     var perPer = d3.format('.1%');
     var extExt = d3.format('.2%');
+    var result = 0;
 
     if (num == NaN || num == null){
       return "NA";
     }
-    if(measurementUnit === 'dollars'){
+    if(measurementUnit === 'number' || measurementUnit === 'dollars'){
       if(num > 999999){
-        return dolDol(num/1000000) +'M'; // 69000000 => 69M
+        result = numNum(num/1000000) +'M'; // 69000000 => 69M
       }
       if(num > 24999){
-        return dolDol(num/1000) +'K'; // 69000 => 69K
+        result = numNum(num/1000) +'K'; // 69000 => 69K
       }      
-      return dolDol(num); // 69.6969 => $69.7
+      result =  numNum(num); // 69.6969 => 69.70
     }
     if(measurementUnit === 'integer'){
       return intInt(num); // 69
-    }
-    if(measurementUnit === 'number'){
-      return numNum(num); // 69 => 69.0
     }
     if(measurementUnit === 'percent'){
       return perPer(num); // 0.69 => 69%
     }
     if(measurementUnit === 'extended_percent'){
       return extExt(num); // 0.00069 => 0.069%
-    }    
+    }
+    if(measurementUnit === 'dollars'){
+      return "$" + result;
+    } else {
+      return result;
+    }
   }  
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
