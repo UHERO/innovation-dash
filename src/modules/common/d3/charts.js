@@ -58,14 +58,14 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     var perPer = d3.format('.1%');
     var extExt = d3.format('.2%');
 
-    // if (num !== NaN || num === null || num === Infinity){
-    //   return "none";
-    // }
+    if (num == NaN || num == null){
+      return "NA";
+    }
     if(measurementUnit === 'dollars'){
       if(num > 999999){
         return dolDol(num/1000000) +'M'; // 69000000 => 69M
       }
-      if(num > 9999){
+      if(num > 24999){
         return dolDol(num/1000) +'K'; // 69000 => 69K
       }      
       return dolDol(num); // 69.6969 => $69.7
