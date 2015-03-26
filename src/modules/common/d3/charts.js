@@ -23,6 +23,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
+  var extraWideGraphLabels = (yUnitMeasure === "# of technology licenses and options executed");
 
   width = 800;
   height = 600;
@@ -379,7 +380,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     var yMaxVal = findGraphMinMax(filteredStates).maxVal;
     var yMinVal = findGraphMinMax(filteredStates).minVal;
 
-    var width = 600;
+    var width = 592;
     var height = 370;
 
     d3.select(graphEl).html("");
@@ -392,6 +393,10 @@ function drawHistogram (yearValuesRange, colorScale) {
         bottom: 20,
         left: 70
       };
+
+    if (extraWideGraphLabels) { 
+      margins.left = 100; 
+    }
 
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
     var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
@@ -493,6 +498,10 @@ function drawHistogram (yearValuesRange, colorScale) {
               [geoAreaNames[1], selectedStateData, graphColors.selectedColor]
             ]
             .filter(function (item) {
+              // case for missing US avg
+              if ((item[0] === knownSummaryRecords[0]) && (!item[1])) {
+                return false;
+              }
               return item[0] !== undefined;
             })
             .map(function (item) {
