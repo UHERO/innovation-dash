@@ -62,5 +62,13 @@ global.config = {
   ports: {
     staticServer: 8080,
     livereloadServer: 35729
+  },
+  apiEndpoint: {
+    build: {
+      url: 'localhost:4567'
+    },
+    release: {
+      url: 'uhero-api.devleague.com'
+    }
   }
 };
