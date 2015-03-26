@@ -8,7 +8,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#C2F1F2","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
-    ent:  ["#EDEBDF","#D3D0C1","#AAA797","#878476","#605D51"],
+    ent:  ["#D3F4B5","#AADB83","#7FBB57","#537A31","#3E5B23"],
     edu:  ["#C2EDF2","#69D0E8","#47ABC6","#087F9B","#03627F"] 
   };
   var measurement_units = {
@@ -22,6 +22,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     selectedColor: viewColors[colorScheme][2],
     text: "#6E7070"
   };
+  var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
 
   width = 800;
   height = 600;
@@ -29,7 +30,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   // Check if map source is JSON or SVG
   var isSVGMap = false;
   var svgRE = /svg$/;
-  
   isSVGMap = svgRE.test(mapSource) ? true : false;
 
   var selectedMinYear;
@@ -55,7 +55,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       geoAreaNames[0] = 'Hawaii';
     }
     if (selectedGeoArea) geoAreaNames.push(selectedGeoArea);
-  
   }
 
   buildGeoNameList(isSVGMap);
@@ -85,7 +84,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
   function ready (err, sourceData, sourceMap, isSVGMap) {
-
     setupMap(sourceMap, width, height);
     
     data = window.transData = transformFIPSData(sourceData); // DEV ONLY
@@ -511,6 +509,7 @@ function drawHistogram (yearValuesRange, colorScale) {
         var mouseX = d3.mouse(this)[0];
         var mouseY = d3.mouse(this)[1];
         var flipTextOverLine = (mouseX > width - width/3);
+        var flipTextAboveCursor = (mouseY > height - height/3);
 
         if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
           var yearAtX = Math.round(xScale.invert(mouseX));
@@ -553,6 +552,9 @@ function drawHistogram (yearValuesRange, colorScale) {
               return mouseX + 20;
             })
             .attr('y', function (d, i) {
+              if (flipTextAboveCursor) {
+                return mouseY - 100 + i * 30;
+              }
               return mouseY + 10 + i * 30;
             })
             .html(function(d) {
@@ -696,6 +698,18 @@ function drawHistogram (yearValuesRange, colorScale) {
       savedExtent[0] = d3.round(savedExtent[0]);
       savedExtent[1] = d3.round(savedExtent[1]);
 
+      // snaps brush to odd years if even year is selected
+      // we want this behavior for fourth and eight grade datasets only
+      if (oddDataSetWithGaps) {
+        savedExtent = savedExtent.map(function(c) {
+          if (c % 2 === 0) {
+            return c + 1;
+          } else {
+            return c;
+          }
+        });
+      }
+
       d3.select(this).call(brush.extent(savedExtent));
 
       selectedMinYear = savedExtent[0];
@@ -713,8 +727,12 @@ function drawHistogram (yearValuesRange, colorScale) {
       .orient("bottom")
       .tickFormat(tickFormat)
       .innerTickSize(20)
-      // .tickValues(scale.ticks(0).concat(scale.domain())) // shows only start and end ticks
       .tickPadding(20);
+
+    // sets tick values to only odd years (steps of two), for the fourth and eight grade education datasets
+    if (oddDataSetWithGaps) {
+      brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1]+1, 2));
+    }
 
     var axisG = brushSVG.append("g");
     brushAxis(axisG);
@@ -731,7 +749,6 @@ function drawHistogram (yearValuesRange, colorScale) {
       .selectAll("rect").attr("height", 10);
     brushG.selectAll(".background")
       .style({ fill: "#D3D0C1", visibility: "visible" });
-      // .style({ fill: "#D3D0C1", visibility: "visible" });
     brushG.selectAll(".extent")
       .style({ fill: viewColors[colorScheme][4], visibility: "visible" });
     brushG.selectAll(".resize rect")
