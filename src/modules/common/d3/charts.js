@@ -1,10 +1,9 @@
 'use strict';
 
 module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
-
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
-  var lineGen;
+  var lineGen, numHistoLabelLines;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -45,6 +44,11 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var fixedMapTooltip = d3.select('#fixed-tooltip');
   var hoverMapTooltip = d3.select('#hover-tooltip');
   var selectedMapTooltip = d3.select('#selected-tooltip');
+  var earlyValue;
+  var lateValue;
+
+  // Formatting functions:
+  var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -141,15 +145,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr('height', height);
   }
 
-  function setupGraph (width, height) {
-    // body...
-  }
-
-  function setupBrush (width, height) {
-    // body...
-  }
-
-
   // Draw Graph Components
    // This drawMap will only work with FIPS structured data on US map
   function drawMap (map, data) {
@@ -192,7 +187,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
                 return passMapClickTarget(this.id);
               })
               .on('mouseover', function () {
-                return populateMapTooltip('hover', this.id);
+                return populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
               })
               .on('mousemove', function () {
                 return positionMapTooltip('hover');
@@ -201,7 +196,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
-      populateMapTooltip('fixed', 'Honolulu')
+      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true)
       positionMapTooltip('fixed', fixedXYs.Honolulu);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -221,7 +216,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         })
         .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return populateMapTooltip('hover', d.properties.name);
+            return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
         })
         .on('mousemove', function (d) {  
@@ -229,26 +224,44 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
             return positionMapTooltip('hover');
           }
         });
-        populateMapTooltip('fixed', 'Hawaii');
+        populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
         positionMapTooltip('fixed', fixedXYs.Hawaii);
     }
   }
 
-  function populateMapTooltip (type, areaName) {
+  function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
+    
+    var targetType = isHawaii ? 'County' : 'State';
+
+    if (isHawaii) {
+      earlyValue = _.result(_.find(data, { 'County': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'County': areaName}), 'Years')[maxYear];
+    } else {
+      earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
+    }
+ 
+    var valueDiff = lateValue / earlyValue;
+
     var arrow;
     if (type === 'fixed') {
       arrow = fixedMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     }
+    arrow.html(function () {return null;})
+      .append('h3')
+      .classed('tooltip-title', true)
+      .text(areaName);
+    arrow.append('p')
+      .classed('tooltip-val', true)
+      .text(lateValue);
+    arrow.append('p')
+      .classed('tooltip-diff', true)
+      .text(fmtPercent(valueDiff));
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
-
     if (type === 'fixed') {
       fixedMapTooltip.style({
         top: function () {return fixedXYsObj.top;},
@@ -282,95 +295,88 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
 
-function drawHistogram (yearValuesRange, colorScale) {
+  function drawHistogram (yearValuesRange, colorScale) {
 
-  var middleRanges = colorScale.quantiles();
-  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
-  var mapRanges = [];
-  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-  mapRanges[1] = [middleRanges[0], middleRanges[1]];
-  mapRanges[2] = [middleRanges[1], middleRanges[2]];
-  mapRanges[3] = [middleRanges[2], middleRanges[3]];
-  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    var middleRanges = colorScale.quantiles();
+    // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+    var mapRanges = [];
+    // mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    mapRanges[0] = [0, middleRanges[0]];
+    mapRanges[1] = [middleRanges[0], middleRanges[1]];
+    mapRanges[2] = [middleRanges[1], middleRanges[2]];
+    mapRanges[3] = [middleRanges[2], middleRanges[3]];
+    // mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
-  d3.select(histogramEl).html("");
+    d3.select(histogramEl).html("");
 
-  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
-  var histogramKeys = mapRanges.slice(0);
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 207}).append('g');
+    var histogramKeys = mapRanges.slice(0);
 
-  svgHistogram.append('text')
-    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
-    // below line is hardcoded. need to fix to dynamic with $scope or other
-    .text(legendText)
-    .style("fill", "black");
+    svgHistogram.append('text')
+      .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+      // below line is hardcoded. need to fix to dynamic with $scope or other
+      .text(legendText)
+      .style("fill", graphColors.text)
+      .call(wrap,170);
 
-  // Histogram color blocks
-  svgHistogram.insert('g')
-    .selectAll('rect')
-    .data(viewColors[colorScheme])
-    .enter()
-    .append("rect")
-    .attr("x", 5)
-    .attr("y", function(d, i){
-      return i * 26 + 29;
-    })
-    .attr("rx", 2)
-    .attr("ry", 2)
-    .attr("width", 25)
-    .attr("height", 15)
-    .style({
-      "fill": function(d){ return d;},
-      "display" : "inline-block",
-    });
+    // Histogram color blocks
+    svgHistogram.insert('g')
+      .selectAll('rect')
+      .data(viewColors[colorScheme])
+      .enter()
+      .append("rect")
+      .attr("x", 5)
+      .attr("y", function(d, i){
+        return i * 26 + numHistoLabelLines * 11 + 40;
+      })
+      .attr("rx", 2)
+      .attr("ry", 2)
+      .attr("width", 25)
+      .attr("height", 15)
+      .style({     
+        "fill": function(d){ return d;},
+        "display" : "inline-block",
+      });
 
-  // Histogram number ranges
-  svgHistogram.insert('g')
-    .selectAll('text')
-    .data(histogramKeys)
-    .enter()
-    .append('text')
-    .attr('class','histogram_text')
-    .attr("x", 45)
-    .attr("y", function(d, i){
-      return i * 26 + 40;
-    })
-    .text(function(d,i){
-      // if(measurementUnit === 'percent'){
-      //   console.log('percent')
-      //   return (1*d[0]).toFixed(2) + "% - " + (1*d[1]).toFixed(2)+"%";
-      // }
-      // if(measurementUnit === 'dollars'){
-      //   console.log('dollars')
-      //   return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      // }
-      // if(measurementUnit === 'number'){
-      //   console.log('number')
-      //   return d[0].toFixed(2) + " - " + d[1].toFixed(2);
-      // }
-      // may have to convert to percents depending on chart
-      // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      // return d[0] + " - " + d[1];
-      return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
-    });
+    // Histogram number ranges
+    svgHistogram.insert('g')
+      .selectAll('text')
+      .data(histogramKeys)
+      .enter()
+      .append('text')
+      .attr('class','histogram_text')
+      .attr("fill", graphColors.text)
+      .attr("x", 45)
+      .attr("y", function(d, i){
+        return i * 26 + numHistoLabelLines * 11 + 52;
+      })
+      .text(function(d,i){
+        if (i < 1){
+          return 0 + " - " + numberFormatConverter(d[1]);
+        }
+        if (i < 4){
+          return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
+        }
+        if (i = 4){
+          return numberFormatConverter(d[0]) + "+";
+        }
+      });
   }
 
+  console.log('MEASUREMENT?',measurementUnit);
   function numberFormatConverter (num){
-    var perper = d3.format('.2%');
-    var doldol = d3.format('$.0f');
-    var numnum = d3.format('2.2f');
-
-    console.log('adas',measurementUnit);
+    var perper = d3.format('.1%');
+    var doldol = d3.format('$.2f');
+    var numnum = d3.format('2.1f');
 
     if(measurementUnit === 'percent'){
-      console.log('percent')
       return perper(num);
     }
     if(measurementUnit === 'dollars'){
-      console.log('dollars')
       return doldol(num);
     }
     if(measurementUnit === 'number'){
-      console.log('number')
       return numnum(num);
     }
   }
@@ -415,7 +421,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text("{{ insert % }}"); 
+      .text(lateValue); 
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
@@ -424,7 +430,14 @@ function drawHistogram (yearValuesRange, colorScale) {
     // change in value - from previous to current years
     d3.select(valueChangeEl).html("")
       .insert('text')
-      .text("{{ increase / decrease in value }}"); 
+      .text(function() {
+        var change = lateValue - earlyValue;
+        if (change > 0) {
+          return "increase of " + change + " ";
+        } else {
+          return "decrease of " + change + " ";
+        }
+      }); 
     // previous year
     d3.select(previousYearEl).html("")
       .insert('text')
@@ -639,6 +652,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
+      .attr('fill', graphColors.text)
       .text(legendText)
       .call(wrap,130);
 
@@ -656,6 +670,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .enter()
       .append('text')
       .attr('class','key_text')
+      .attr('fill', graphColors.text)
       .attr("x", 40)
       .attr("y", function(d, i){
         return i * 20 + 70;
@@ -686,38 +701,39 @@ function drawHistogram (yearValuesRange, colorScale) {
           return graphColors.selectedColor;
         }
       });
-
-    function wrap(text, width) {
-      text.each(function() {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = 0,
-            tspan = text.text(null)
-              .append("tspan")
-              .attr("x", 0)
-              .attr("y", y)
-              .attr("dy", dy + "em");
-        while (words.length > 0) {
-          var word = words.pop();
-          line.push(word);
-          tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", 0)
-              .attr("y", y)
-              .attr("dy", ++lineNumber * lineHeight + dy + "em")
-              .text(word);
-          }
-        }
-      });
-    }   
     /* END OF GRAPH LEGEND */
+  }
+
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = 0,
+          tspan = text.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em");
+      while (words.length > 0) {
+        var word = words.pop();
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0)
+            .attr("y", y)
+            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+            .text(word);
+        }
+      }
+      numHistoLabelLines = lineNumber;
+    });
   }
 
   // Draw Slider
@@ -759,7 +775,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data, false);
+      drawMap(sourceMap, data);
       drawGraph();
       renderSummaryText(); 
     }
