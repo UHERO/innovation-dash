@@ -9,8 +9,18 @@ module.exports =
     $stateProvider
     .state('edu', {
       url: '/edu',
-      templateUrl: 'app/edu/views/layout.html',
-      controller: 'EduController'
+      views: {
+        'top-nav' : {
+          templateUrl: 'common/partials/top-nav.html'
+        },
+        'footer' : {
+          templateUrl: 'common/partials/footer.html'
+        },
+        '@' : {
+          templateUrl: 'app/edu/views/layout.html',
+          controller: 'EduController'
+        }
+      }
     })
     .state('edu.sne-grad-student-profile', {
       url: '/sne-grad-student-profile',
@@ -65,7 +75,17 @@ module.exports =
     .state('edu.education-attainment', {
       url: '/education-attainment',
       abstract: true,
-      templateUrl: 'app/edu/views/education-attainment.html',
+      views : {
+        'top-nav' : {
+          templateUrl: 'common/partials/top-nav.html'
+        },
+        'footer' : {
+          templateUrl: 'common/partials/footer.html'
+        },
+        '@' : {
+          templateUrl: 'app/edu/views/education-attainment.html',
+        }
+      }
       // controller: 'EducationAttainmentController'
     })
     .state('edu.education-attainment.us', {
@@ -75,8 +95,12 @@ module.exports =
     })
     .state('edu.education-attainment.hawaii', {
       url: '/hawaii',
-      templateUrl: 'app/edu/views/education-attainment.hawaii.html',
-      controller: 'EducationAttainmentHawaiiController'
+      views : {
+        '@' : {
+          templateUrl: 'app/edu/views/education-attainment.hawaii.html',
+          controller: 'EducationAttainmentHawaiiController'
+        }
+      }
     })
     .state('edu.attainment-highschool', {
       url: '/education-attainment-highschool',
