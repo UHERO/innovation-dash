@@ -62,13 +62,13 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       return "NA";
     }
     if(measurementUnit === 'number' || measurementUnit === 'dollars'){
+      result =  numNum(num); // 69.6969 => 69.70
+      if(num > 9999){
+        result = numNum(num/1000) +'K'; // 69000 => 69K
+      }   
       if(num > 999999){
         result = numNum(num/1000000) +'M'; // 69000000 => 69M
       }
-      if(num > 24999){
-        result = numNum(num/1000) +'K'; // 69000 => 69K
-      }      
-      result =  numNum(num); // 69.6969 => 69.70
     }
     if(measurementUnit === 'integer'){
       return intInt(num); // 69
