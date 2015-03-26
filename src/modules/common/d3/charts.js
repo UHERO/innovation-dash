@@ -58,7 +58,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     var extExt = d3.format('.2%');
     var result = 0;
 
-    if (num == NaN || num == null){
+    if (num === NaN || num === null){
       return "NA";
     }
     if(measurementUnit === 'number' || measurementUnit === 'dollars'){
