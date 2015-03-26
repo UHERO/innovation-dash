@@ -9,3 +9,4 @@ Enjoy!
 
 ##Change Log
 0.1.0 Initial release onto server. 
+0.1.1 Added gulp task to replace dev api endpoint with release endpoint
