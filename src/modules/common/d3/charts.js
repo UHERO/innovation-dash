@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
-
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen;
@@ -44,6 +43,9 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var fixedMapTooltip = d3.select('#fixed-tooltip');
   var hoverMapTooltip = d3.select('#hover-tooltip');
   var selectedMapTooltip = d3.select('#selected-tooltip');
+
+  // Formatting functions;
+  var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -140,15 +142,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr('height', height);
   }
 
-  function setupGraph (width, height) {
-    // body...
-  }
-
-  function setupBrush (width, height) {
-    // body...
-  }
-
-
   // Draw Graph Components
    // This drawMap will only work with FIPS structured data on US map
   function drawMap (map, data) {
@@ -191,7 +184,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
                 return passMapClickTarget(this.id);
               })
               .on('mouseover', function () {
-                return populateMapTooltip('hover', this.id);
+                return populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
               })
               .on('mousemove', function () {
                 return positionMapTooltip('hover');
@@ -200,7 +193,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
-      populateMapTooltip('fixed', 'Honolulu')
+      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true)
       positionMapTooltip('fixed', fixedXYs.Honolulu);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -220,7 +213,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         })
         .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return populateMapTooltip('hover', d.properties.name);
+            return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
         })
         .on('mousemove', function (d) {  
@@ -228,26 +221,46 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
             return positionMapTooltip('hover');
           }
         });
-        populateMapTooltip('fixed', 'Hawaii');
+        populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
         positionMapTooltip('fixed', fixedXYs.Hawaii);
     }
   }
 
-  function populateMapTooltip (type, areaName) {
+  function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
+    
+    var earlyValue;
+    var lateValue;
+    var targetType = isHawaii ? 'County' : 'State';
+
+    if (isHawaii) {
+      earlyValue = _.result(_.find(data, { 'County': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'County': areaName}), 'Years')[maxYear];
+    } else {
+      earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
+    }
+ 
+    var valueDiff = lateValue / earlyValue;
+
     var arrow;
     if (type === 'fixed') {
       arrow = fixedMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     }
+    arrow.html(function () {return null;})
+      .append('h3')
+      .classed('tooltip-title', true)
+      .text(areaName);
+    arrow.append('p')
+      .classed('tooltip-val', true)
+      .text(lateValue);
+    arrow.append('p')
+      .classed('tooltip-diff', true)
+      .text(fmtPercent(valueDiff));
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
-
     if (type === 'fixed') {
       fixedMapTooltip.style({
         top: function () {return fixedXYsObj.top;},
