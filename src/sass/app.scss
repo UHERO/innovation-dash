@@ -491,10 +491,10 @@ section:last-child, section.ng-scope {
 
 /* Footer */
 footer{
-  padding: 15px 0;
+  text-align: center;
+  padding: 20px 0 15px;
 
   p{
-    width: 50%;
     font-size: 10px;
     float: left;
     padding-top: 0;
@@ -507,10 +507,10 @@ footer{
   }
 }
 .footer_links{
-  width: 30%;
-  padding: 10px;
+  width: 290px;
+  padding: 10px 20px;
   height: 68px;
-  float: left;
+  // float: left;
 }
 
 .additional{
@@ -522,30 +522,25 @@ footer{
   border-radius: 5px;
   border: 1px solid $body_color;
   background-repeat: no-repeat;
-  background-size: 200px;
-  float: right;
+  background-size: 190px;
+  // float: right;
+  display: inline-block;
 
   p{
-    width: 50%;
+    // width: 50%;
     padding: 25px 0 0;
   }
 }
 .dl{
-  margin-right: 20px; 
-  
-  .devleague{
-    width: 47%;
-    float: left;
-  }
-
+  margin-right: 15px; 
+  background-image: url('/assets/images/devleague_logo.svg');
+  background-size: 168px;
+  background-position: 143px 12px;
 }
 
 .uhero{
   background-image: url('/assets/images/uhero_logo.svg');
-  background-position: 170px 10px;
-  @media #{$medium-down}{
-    background-position: 130px 10px;
-  }
+  background-position: 125px 12px;
 }
 
 /* D3 stuff */
