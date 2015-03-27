@@ -12,7 +12,6 @@ module.exports = /*@ngInject*/
         // scope.yUnitMeasure = "Link Scaled Measueremet";
         // console.log('scope.yUnitMeasure',scope.yUnitMeasure);
         var d3Splash = require('../d3/splash');
-        console.log('".d3-graph"',".d3-graph");
       
         d3Splash('.d3-graph-edu','.d3-graph-rnd', '.d3-graph-ent', '.d3-graph-econ');
 
