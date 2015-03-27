@@ -15,6 +15,9 @@ module.exports = /*@ngInject*/
         console.log('".d3-graph"',".d3-graph");
       
         d3Splash('.d3-graph-edu','.d3-graph-rnd', '.d3-graph-ent', '.d3-graph-econ');
+
+        d3.selectAll('#hover-tooltip')
+          .classed('hidden', true);
       }
     };
   };
