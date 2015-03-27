@@ -338,6 +338,11 @@ section{
   border-bottom: 2px solid $light_grey; 
   padding: 0 40px 20px;
 
+  .splash & {
+    border: none;
+  }
+
+
   // p{
   //   padding-left: 30px;
   //   font-family: $bitter;
@@ -628,10 +633,22 @@ footer{
     fill: #AAA797;
   }
 }
-  .d3-graph svg g{
+  text{
+        font-size: 14px;
 
-    text{
-      font-size: 14px;
-      fill: $edu_med_dark; 
+    .d3-graph-edu & {
+        fill: $edu_med_dark; 
     }
+    .d3-graph-econ & {
+        fill: $econ_med_dark; 
+    }
+    .d3-graph-rnd & {
+        fill: $rnd_med_dark; 
+    }
+    .d3-graph-ent & {
+        fill: $ent_medium; 
+    }
+
+
+  
   }

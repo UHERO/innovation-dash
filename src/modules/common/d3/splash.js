@@ -1,21 +1,46 @@
 'use strict';
 
-module.exports = function (donutChartEl) {
+module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
 
-  // function renderDonutChart(){
-    var width = 250,
-    height = 250,
-    radius = Math.min(width, height)/2;
+  var width = 250,
+  height = 250,
+  radius = Math.min(width, height)/2;
 
-    var dataset = {
-      US: [50245, 40000],
-      HI: [50245, 28479]
-    };
-    // var color = d3.scale.category20();
-    var viewColors = {
-    hi:  ["#AAA797","#087F9B"],
-    us:  ["#AAA797","#087F9B"] 
+  var eduDataset = {
+    US: [1000, 296],
+    HI: [1000, 312]
   };
+
+  var rndDataset = {
+    US: [500, 500],
+    HI: [1000, 312]
+  };
+
+  var entDataset = {
+    US: [1000, 296],
+    HI: [1000, 312]
+  };
+
+  var econDataset = {
+    US: [1000, 296],
+    HI: [1000, 312]
+  };
+
+
+  // var color = d3.scale.category20();
+  var eduColors = ["#AAA797","#087F9B"];
+  var econColors = ["#AAA797","#F27D14"];
+  var entColors = ["#AAA797","#7FBB57"];
+  var rndColors = ["#AAA797","#5E9999"];
+
+  drawDonut(eduDiagram, eduDataset, eduColors);
+  drawDonut(rndDiagram, rndDataset, rndColors);
+  drawDonut(entDiagram, entDataset, entColors);
+  drawDonut(econDiagram, econDataset, econColors);
+
+  var percent = d3.format("%");
+
+  function drawDonut (diagramContainer, dataset, viewColors){
     var pie = d3.layout.pie()
         .sort(null);
 
@@ -26,51 +51,54 @@ module.exports = function (donutChartEl) {
         .innerRadius(radius - 80)
         .outerRadius(radius - 65);
 
-    d3.select(donutChartEl).html("");
-    var svgDonutChart = d3.select(donutChartEl).append("svg")
+    d3.select(diagramContainer).html("");
+    var svg = d3.select(diagramContainer).append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    svgDonutChart.selectAll("g")
+    svg.selectAll("g")
         .data(pie(dataset.US))
         .enter().append("path")
-        .attr("fill", function(d, i) { return viewColors.us[i]; })
+        .attr("fill", function(d, i) { return viewColors[i]; })
         .attr("d", arcUS);
 
-    svgDonutChart.selectAll("g")
+    svg.selectAll("g")
         .data(pie(dataset.HI))
         .enter().append("path")
-        .attr("fill", function(d, i) { return viewColors.hi[i]; })
+        .attr("fill", function(d, i) { return viewColors[i]; })
         .attr("d", arcHI);
-
-    d3.select("g")
+    // HI Key
+    
+    d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_text_hi")
         .attr("x", -75)
         .attr("y", -65)
         .text("HI");
-
-    d3.select("g")
+    // US Key
+    d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_text_us")
         .attr("x", 10)
         .attr("y", 20)
         .text("US");
-
-    d3.select("g")
+    // HI Value
+    d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_value_hi")
         .attr("x", -75)
         .attr("y", -80)
-        .text("31.2%");
-
-    d3.select("g")
+        .text((dataset.HI[1]/(dataset.HI[0] + dataset.HI[1]) * 100).toFixed(1) + "%");
+    // US Value
+    d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_value_us")
         .attr("x", -14)
         .attr("y", 4)
-        .text("29.6%");
+        .text((dataset.US[1]/(dataset.US[0] + dataset.US[1]) * 100).toFixed(1) + "%");
+  }
+
   };
  // end of module.exports
