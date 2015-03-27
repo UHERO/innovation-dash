@@ -276,6 +276,11 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     }
     
     var percentChange = (lateValue - earlyValue) / earlyValue;
+    if ( isNaN(percentChange) || percentChange === Infinity || percentChange === -Infinity) {
+      percentChange = 'N/A';
+    } else { 
+      percentChange = fmtPercent(percentChange);
+    }
 
     var arrow;
     if (type === 'fixed') {
@@ -292,7 +297,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text( fmtPercent(percentChange));
+      .text( percentChange );
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
