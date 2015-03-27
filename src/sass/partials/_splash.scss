@@ -2,10 +2,16 @@
 
 .splash{
   border-top-left-radius: 5px;
+    
     @media #{$medium-down}{
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
     }
+
+  section:first-child {
+    padding-bottom: 40px;
+  }
+
   background-color: $white;
   h1{
     color: $dark_grey;
