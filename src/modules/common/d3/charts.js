@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen, numLegendLines;
@@ -155,7 +155,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
     renderSummaryText();
-    
   }
 
   // Setup Graph Components

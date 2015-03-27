@@ -628,3 +628,10 @@ footer{
     fill: #AAA797;
   }
 }
+  .d3-graph svg g{
+
+    text{
+      font-size: 14px;
+      fill: $edu_med_dark; 
+    }
+  }
