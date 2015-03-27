@@ -1,6 +1,7 @@
 /* Styles for Splash Page */
 
 .splash{
+  padding-bottom: 10px;
   border-top-left-radius: 5px;
     
     @media #{$medium-down}{
@@ -9,63 +10,57 @@
     }
 
   section:first-child {
-    padding-bottom: 40px;
+    padding: 40px 40px 20px;
+
+    p{
+      font-size: 0.8em;
+      line-height: 1.4;
+      max-width: 75%;
+      margin: auto;
+      text-align: center;
+    }
   }
 
   background-color: $white;
+
   h1{
-    color: $dark_grey;
+    color: $edu_medium;
     text-align: center;
     margin-bottom: 20px;
     padding: 0 3px;
+    letter-spacing: 0;
   }
 
   .group{
     p{
       padding: 15px;
-      font-size: 0.8em;
+      font-size: 0.25em;
       line-height: 1.5;
+      overflow: hidden;
+      max-height: 141px; 
     }
 
     h2{
       text-transform: uppercase;
-      @include uHero_font(1em, 1, $white, 400);
+      @include uHero_font(0.9em, 1.2, $white, 400);
       text-align: center;
       height: 20px;
-      padding: 3px 3px 0;
+      padding: 3px 15px 0;
     }
 
-    .edu{
-      .value{
-        color: $edu_medium;
-      }
-    }
-
-    .rnd{
-      .value{
-        color: $rnd_medium;
-      }
-    }
-
-    .ent{
-      .value{
-        color: $ent_medium;
-      }
-    }
-
-    .econ{
-      .value{
-        color: $econ_medium;
-      }
+  .econ{
+    h2{
+      padding: 3px 17px 0;
     }
   }
 }
 
 
 .col{
-  width: 24%;
+  width: 25%;
   float: left;
   padding: 3px;
+  box-sizing: border-box;
 }
 
 .intro{
@@ -74,19 +69,60 @@
   border-radius: 5px;
   padding: 10px 0;
   box-sizing: border-box;
-  overflow: hidden;
+
+  .econ & {
+    p{
+      color: $econ_dark;
+    }
+  }
+  .edu & {
+    p{
+      color: $edu_med_light;
+    }
+  }
+  .ent & {
+    p{
+      color: $ent_med_dark;
+    }
+  }
+  .rnd & {
+    p{
+      color: $rnd_dark;
+    }
+  }
 }
 
 .value{
   font-size: 3em;
   text-align: center;
   margin: auto;
+
+  .edu & {
+    color: $edu_medium;
+  }
+
+  .rnd & {
+    color: $rnd_medium;
+  }
+
+  .ent{
+    color: $ent_medium;
+  }
+
+  .econ & {
+      color: $econ_medium;
+  }
 }
 
 .splash-graph{
   border-radius: 5px;
   background-color: $light_grey;
-  margin: 10px 0;
+  margin: 6px 0;
+  
+  svg{
+    margin: auto;
+    display: block;
+  }
 }
 
 .sponsors{

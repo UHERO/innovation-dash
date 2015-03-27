@@ -182,11 +182,11 @@ nav{
       text-align: center;
 
       a{
-        @include uHero_font( 0.75em, 1, $white, 400);
+        @include uHero_font( 0.75em, 1.1, $white, 400);
         box-sizing: border-box;
         height: 70px;
         width: 200px;
-        padding: 12px 30px 20px;
+        padding: 14px 30px 20px;
         letter-spacing: 0.15em;
         text-decoration: none;
         text-transform: uppercase;
@@ -197,12 +197,13 @@ nav{
 }
 
 .nav_edu,.nav_ent{
-  padding-top: 8px; 
+  padding-top: 8px;
+  height: 62px; 
 }
 
 .nav_ent{
   a{
-    padding: 12px 16px 20px;
+    padding: 14px 16px 20px;
   }
 }
 
