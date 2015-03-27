@@ -10,7 +10,7 @@
     position: relative;
     background: #fff;
     border: 2px solid $color;
-    min-height: 45px;
+    min-height: 40px;
     min-width: 45px;
     padding: 6px;
     border-radius: 4px;
@@ -37,6 +37,17 @@
       border-top-color: $color;
       border-width: 17px;
       margin-left: -17px;
+    }
+
+    h3.tooltip-title {
+      padding: 0;
+      margin: 0;
+    }
+
+    .tooltip-val {
+    }
+
+    .tooltip-diff {
     }
   }
 }

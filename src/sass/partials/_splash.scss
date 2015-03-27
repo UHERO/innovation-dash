@@ -1,0 +1,146 @@
+/* Styles for Splash Page */
+
+.splash{
+  padding-bottom: 10px;
+  border-top-left-radius: 5px;
+    
+  @media #{$medium-down}{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  section:first-child {
+    padding: 40px 40px 20px;
+
+    p{
+      font-size: 0.8em;
+      line-height: 1.4;
+      max-width: 75%;
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  background-color: $white;
+
+  h1{
+    color: $edu_medium;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 3px;
+    letter-spacing: 0;
+  }
+
+  .group{
+    p{
+      padding: 15px 25px;
+      font-size: 0.8125em;
+      line-height: 1.5;
+      overflow: hidden;
+      max-height: 141px; 
+    }
+
+    h2{
+      text-transform: uppercase;
+      @include uHero_font(0.9em, 1.2, $white, 400);
+      text-align: center;
+      height: 20px;
+      padding: 3px 15px 0;
+    }
+
+    .econ{
+      h2{
+        padding: 3px 17px 0;
+      }
+    }
+  }
+}
+
+
+.col{
+  width: 25%;
+  float: left;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.intro{
+  height: 230px;
+  color: $white;
+  border-radius: 5px;
+  padding: 10px 0;
+  box-sizing: border-box;
+
+  .econ & {
+    p{
+      color: $econ_dark;
+    }
+  }
+  .edu & {
+    p{
+      color: $edu_med_light;
+    }
+  }
+  .ent & {
+    p{
+      color: $ent_med_dark;
+    }
+  }
+  .rnd & {
+    p{
+      color: $rnd_dark;
+    }
+  }
+}
+
+.value{
+  font-size: 3em;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 15px;
+
+  .edu & {
+    color: $edu_medium;
+  }
+
+  .rnd & {
+    color: $rnd_medium;
+  }
+
+  .ent & {
+    color: $ent_medium;
+  }
+
+  .econ & {
+      color: $econ_medium;
+  }
+}
+
+.splash .group .value + p {
+  padding-top: 0;
+}
+
+.splash-graph{
+  border-radius: 5px;
+  background-color: $light_grey;
+  margin: 6px 0;
+  
+  svg{
+    margin: auto;
+    display: block;
+  }
+}
+
+.sponsors{
+  width: 100%;
+  display: block;
+  height: 50px;
+  background-color: red;
+  .rogos{
+    display: inline-block;
+    height: 50px;
+    width: 22%;
+    margin: 10px;
+    background-color: blue;
+  }
+}

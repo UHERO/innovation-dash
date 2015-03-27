@@ -1,10 +1,9 @@
 'use strict';
 
-module.exports = function (scope, mapSource, dataSource, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
-
+module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
-  var lineGen;
+  var lineGen, numLegendLines;
   var viewColors = {
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
@@ -23,7 +22,12 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
-  var extraWideGraphLabels = (yUnitMeasure === "# of technology licenses and options executed");
+  var wideYLabels = [
+    "Per thousand($)",
+    "($) Per Employed Worker",
+    "$ from technology licenses and options executed"
+  ];
+  var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
   width = 800;
   height = 600;
@@ -38,13 +42,55 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   var geoAreaCategory;
   var geoAreaNames;
   var fixedXYs = {
-        Hawaii: {top:'454px', left:'250px' },
-        Honolulu: {top:'114px', left:'340px' }
+        Hawaii: {top:'360px', left:'250px' },
+        Honolulu: {top:'25px', left:'340px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
   var hoverMapTooltip = d3.select('#hover-tooltip');
   var selectedMapTooltip = d3.select('#selected-tooltip');
+  var earlyValue;
+  var lateValue;
+
+  // Formatting functions:
+  var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
+
+  // brandon's number converter for histogram/graphs
+  function numberFormatConverter (num){
+    var intInt = d3.format('.0f');
+    var numNum = d3.format('.2f');
+    var perPer = d3.format('.1%');
+    var extExt = d3.format('.2%');
+    var result = 0;
+
+    if ( isNaN(num) || num === null){
+      return "N/A";
+    }
+
+    if(measurementUnit === 'number' || measurementUnit === 'dollars'){
+      result =  numNum(num); // 69.6969 => 69.70
+      if(num > 9999){
+        result = numNum(num/1000) +'K'; // 69000 => 69K
+      }   
+      if(num > 999999){
+        result = numNum(num/1000000) +'M'; // 69000000 => 69M
+      }
+    }
+    if(measurementUnit === 'integer'){
+      return intInt(num); // 69
+    }
+    if(measurementUnit === 'percent'){
+      return perPer(num); // 0.69 => 69%
+    }
+    if(measurementUnit === 'extended_percent'){
+      return extExt(num); // 0.00069 => 0.069%
+    }
+    if(measurementUnit === 'dollars'){
+      return "$" + result;
+    } else {
+      return result;
+    }
+  }  
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -109,7 +155,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
     renderSummaryText();
-    
   }
 
   // Setup Graph Components
@@ -141,15 +186,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .attr('height', height);
   }
 
-  function setupGraph (width, height) {
-    // body...
-  }
-
-  function setupBrush (width, height) {
-    // body...
-  }
-
-
   // Draw Graph Components
    // This drawMap will only work with FIPS structured data on US map
   function drawMap (map, data) {
@@ -167,14 +203,6 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // Create an array containing the min and max values 
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
-    var middleRanges = color.quantiles();
-    var mapRanges = [];
-    mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-    mapRanges[1] = [middleRanges[0], middleRanges[1]];
-    mapRanges[2] = [middleRanges[1], middleRanges[2]];
-    mapRanges[3] = [middleRanges[2], middleRanges[3]];
-    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
-
 
     resetMapTooltips(fixedMapTooltip);
     resetMapTooltips(hoverMapTooltip);
@@ -192,7 +220,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
                 return passMapClickTarget(this.id);
               })
               .on('mouseover', function () {
-                return populateMapTooltip('hover', this.id);
+                return populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
               })
               .on('mousemove', function () {
                 return positionMapTooltip('hover');
@@ -201,7 +229,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
-      populateMapTooltip('fixed', 'Honolulu')
+      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true)
       positionMapTooltip('fixed', fixedXYs.Honolulu);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -221,7 +249,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
         })
         .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return populateMapTooltip('hover', d.properties.name);
+            return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
         })
         .on('mousemove', function (d) {  
@@ -229,26 +257,49 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
             return positionMapTooltip('hover');
           }
         });
-        populateMapTooltip('fixed', 'Hawaii');
+        populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
         positionMapTooltip('fixed', fixedXYs.Hawaii);
     }
   }
 
-  function populateMapTooltip (type, areaName) {
+  function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
+    
+    var targetType = isHawaii ? 'County' : 'State';
+
+    if (isHawaii) {
+      earlyValue = _.result(_.find(data, { 'County': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'County': areaName}), 'Years')[maxYear];
+    } else {
+      earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
+      lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
+    }
+    
+    var percentChange = (lateValue - earlyValue) / earlyValue;
+    if ( isNaN(percentChange) || percentChange === Infinity || percentChange === -Infinity) {
+      percentChange = 'N/A';
+    } else { 
+      percentChange = fmtPercent(percentChange);
+    }
+
     var arrow;
     if (type === 'fixed') {
       arrow = fixedMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
-      arrow.text('');
-      arrow.text(areaName);
     }
+    arrow.html(function () {return null;})
+      .append('h3')
+      .classed('tooltip-title', true)
+      .text(areaName);
+    arrow.append('p')
+      .classed('tooltip-val', true)
+      .text(numberFormatConverter(lateValue)); // blamebrandontag
+    arrow.append('p')
+      .classed('tooltip-diff', true)
+      .text( percentChange );
   }
   
   function positionMapTooltip (type, fixedXYsObj) {
-
     if (type === 'fixed') {
       fixedMapTooltip.style({
         top: function () {return fixedXYsObj.top;},
@@ -282,64 +333,73 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
   }
 
 
-function drawHistogram (yearValuesRange, colorScale) {
+  function drawHistogram (yearValuesRange, colorScale) {
 
-  var middleRanges = colorScale.quantiles();
-  // mapRange array generation now within the drawHistogram func, using the yearValuesRange
-  var mapRanges = [];
-  mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
-  mapRanges[1] = [middleRanges[0], middleRanges[1]];
-  mapRanges[2] = [middleRanges[1], middleRanges[2]];
-  mapRanges[3] = [middleRanges[2], middleRanges[3]];
-  mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    var middleRanges = colorScale.quantiles();
+    // mapRange array generation now within the drawHistogram func, using the yearValuesRange
+    var mapRanges = [];
+    // mapRanges[0] = [yearValuesRange[0], middleRanges[0]];
+    mapRanges[0] = [0, middleRanges[0]];
+    mapRanges[1] = [middleRanges[0], middleRanges[1]];
+    mapRanges[2] = [middleRanges[1], middleRanges[2]];
+    mapRanges[3] = [middleRanges[2], middleRanges[3]];
+    // mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
+    mapRanges[4] = [middleRanges[3], yearValuesRange[1]];
 
-  d3.select(histogramEl).html("");
+    d3.select(histogramEl).html("");
 
-  var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": "100%", "height": 150}).append('g');
-  var histogramKeys = mapRanges.slice(0);
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 194, "height": 207}).append('g');
+    var histogramKeys = mapRanges.slice(0);
 
-  svgHistogram.append('text')
-    .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
-    // below line is hardcoded. need to fix to dynamic with $scope or other
-    .text(legendText)
-    .style("fill", "black");
+    svgHistogram.append('text')
+      .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
+      // below line is hardcoded. need to fix to dynamic with $scope or other
+      .text(legendText)
+      .style("fill", graphColors.text)
+      .call(wrap,184);
 
-  // Histogram color blocks
-  svgHistogram.insert('g')
-    .selectAll('rect')
-    .data(viewColors[colorScheme])
-    .enter()
-    .append("rect")
-    .attr("x", 5)
-    .attr("y", function(d, i){
-      return i * 26 + 29;
-    })
-    .attr("rx", 2)
-    .attr("ry", 2)
-    .attr("width", 25)
-    .attr("height", 15)
-    .style({
-      "fill": function(d){ return d;},
-      "display" : "inline-block",
-    });
+    // Histogram color blocks
+    svgHistogram.insert('g')
+      .selectAll('rect')
+      .data(viewColors[colorScheme])
+      .enter()
+      .append("rect")
+      .attr("x", 0)
+      .attr("y", function(d, i){
+        return i * 26 + numLegendLines * 11 + 40;
+      })
+      .attr("rx", 2)
+      .attr("ry", 2)
+      .attr("width", 25)
+      .attr("height", 15)
+      .style({     
+        "fill": function(d){ return d;},
+        "display" : "inline-block",
+      });
 
-  // Histogram number ranges
-  svgHistogram.insert('g')
-    .selectAll('text')
-    .data(histogramKeys)
-    .enter()
-    .append('text')
-    .attr('class','histogram_text')
-    .attr("x", 45)
-    .attr("y", function(d, i){
-      return i * 26 + 40;
-    })
-    .text(function(d,i){
-      // may have to convert to percents depending on chart
-      // return d[0].toFixed(0) + " - " + d[1].toFixed(0);
-      return d[0].toFixed(4) + " - " + d[1].toFixed(4);
-      // return d[0] + " - " + d[1];
-    });
+    // Histogram number ranges
+    svgHistogram.insert('g')
+      .selectAll('text')
+      .data(histogramKeys)
+      .enter()
+      .append('text')
+      .attr('class','histogram_text')
+      .attr("fill", graphColors.text)
+      .attr("x", 45)
+      .attr("y", function(d, i){
+        return i * 26 + numLegendLines * 11 + 52;
+      })
+      .text(function(d,i){
+        if (i < 1){
+          return d[0] + " - " + numberFormatConverter(d[1]);
+        }
+        if (i < 4){
+          return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
+        }
+        if (i = 4){
+          return numberFormatConverter(d[0]) + "+";
+        }
+      });
   }
 
   function dataByState(data, geoAreaName, geoAreaCategory) {
@@ -381,7 +441,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     // percent change
     d3.select(currentPercentEl).html("")
       .insert('text')
-      .text("{{ insert % }}"); 
+      .text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
@@ -390,7 +450,14 @@ function drawHistogram (yearValuesRange, colorScale) {
     // change in value - from previous to current years
     d3.select(valueChangeEl).html("")
       .insert('text')
-      .text("{{ increase / decrease in value }}"); 
+      .text(function() {
+        var change = lateValue - earlyValue;
+        if (change >= 0) {
+          return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
+        } else {
+          return "a decrease of " + numberFormatConverter( Math.abs(change) ) + " ";
+        }
+      }); 
     // previous year
     d3.select(previousYearEl).html("")
       .insert('text')
@@ -443,6 +510,7 @@ function drawHistogram (yearValuesRange, colorScale) {
 
     var yAxis = d3.svg.axis()
         .scale(yScale)
+        .tickFormat(numberFormatConverter)
         .orient("left");
 
     vis.append("svg:g")
@@ -475,7 +543,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     // .defined insures that only non-negative values are graphed
     lineGen = d3.svg.line()
       .defined(function(d) {
-        return d.value >= 0;
+        return !(d.value === null);
       })
       .x(function(d) {
         return xScale(d.year);
@@ -505,7 +573,7 @@ function drawHistogram (yearValuesRange, colorScale) {
     /* START OF LINE HOVER */
 
      var verticalLine = vis.append('line')
-      .attr({ 'x1': 0, 'y1': 0, 'x2' : 0, 'y2': height })
+      .attr({ 'x1': 0, 'y1': margins.top, 'x2' : 0, 'y2': height - margins.bottom })
       .attr("stroke", "#AAA797")
       .attr("class", "verticalLine")
       .attr("visibility", "hidden");
@@ -568,13 +636,13 @@ function drawHistogram (yearValuesRange, colorScale) {
               return mouseY + 30 + i * 30;
             })
             .text(function(d) {
-              if (d[1] === undefined || d[1] === null) {
+              if (d[1] === undefined || d[1] == null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {
                 return d[1];
               } else {
-                return d[0] + ": " + d[1];
+                return d[0] + ": " + numberFormatConverter( d[1] ); // blamebrandontag
               }
             });
 
@@ -605,8 +673,9 @@ function drawHistogram (yearValuesRange, colorScale) {
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
+      .attr('fill', graphColors.text)
       .text(legendText)
-      .call(wrap,130);
+      .call(wrap,128);
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -622,9 +691,10 @@ function drawHistogram (yearValuesRange, colorScale) {
       .enter()
       .append('text')
       .attr('class','key_text')
+      .attr('fill', graphColors.text)
       .attr("x", 40)
       .attr("y", function(d, i){
-        return i * 20 + 70;
+        return i * 20 + numLegendLines * 11 + 46;
       })
       .text(function (d){
         return d;
@@ -639,7 +709,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       .append("rect")
       .attr("x", 0)
       .attr("y", function(d, i){
-        return i * 20 + 64;
+        return i * 20 + numLegendLines * 11 + 40;
       })
       .attr("width", 30)
       .attr("height", 5)
@@ -652,38 +722,39 @@ function drawHistogram (yearValuesRange, colorScale) {
           return graphColors.selectedColor;
         }
       });
-
-    function wrap(text, width) {
-      text.each(function() {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = 0,
-            tspan = text.text(null)
-              .append("tspan")
-              .attr("x", 0)
-              .attr("y", y)
-              .attr("dy", dy + "em");
-        while (words.length > 0) {
-          var word = words.pop();
-          line.push(word);
-          tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", 0)
-              .attr("y", y)
-              .attr("dy", ++lineNumber * lineHeight + dy + "em")
-              .text(word);
-          }
-        }
-      });
-    }   
     /* END OF GRAPH LEGEND */
+  }
+
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = 0,
+          tspan = text.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em");
+      while (words.length > 0) {
+        var word = words.pop();
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0)
+            .attr("y", y)
+            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+            .text(word);
+        }
+      }
+      numLegendLines = lineNumber;
+    });
   }
 
   // Draw Slider
@@ -725,7 +796,7 @@ function drawHistogram (yearValuesRange, colorScale) {
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
-      drawMap(sourceMap, data, false);
+      drawMap(sourceMap, data);
       drawGraph();
       renderSummaryText(); 
     }
@@ -739,9 +810,13 @@ function drawHistogram (yearValuesRange, colorScale) {
       .innerTickSize(20)
       .tickPadding(20);
 
+    var numBrushTicks = d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1] + 1).length;
+
     // sets tick values to only odd years (steps of two), for the fourth and eight grade education datasets
     if (oddDataSetWithGaps) {
       brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1]+1, 2));
+    } else if (numBrushTicks < 7) {
+      brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1] + 1));
     }
 
     var axisG = brushSVG.append("g");

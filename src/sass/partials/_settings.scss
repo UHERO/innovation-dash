@@ -1,9 +1,20 @@
 /* Basic Settings for uHero */
 /* Fonts */
 $base: 16px;
-$bitter: 'Bitter', serif;
+$bitter: 'Bitter', sans-serif;
 $montserrat: 'Montserrat', sans-serif;
+/*Inline Media Queries*/
+/* Media Queries 
+small : max-width: 640px
+medium : min-width: 641px, max-width: 960px
+large : min-width: 961px
+*/
 
+$small-only : "only screen and (max-width:760px)";
+$medium-down : "only screen and (max-width:1177px)";
+$medium-only : "only screen and (min-width:760px) and (max-width:1118px)";
+$medium-up : "only screen and (min-width:760px)";
+$large-only : "only screen and (min-width:1177px)";
 
 /* Colors */
 $body_color: #6E7070;

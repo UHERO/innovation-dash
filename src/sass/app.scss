@@ -1,6 +1,7 @@
 @import "partials/settings";
 @import "partials/resets";
 @import "partials/mixins";
+@import "partials/splash";
 
 /* Globals */
 
@@ -13,6 +14,9 @@ body{
 
 header{
   padding-top: 40px;
+  @media #{$medium-down}{
+    padding: 0;
+  }
 }
 
 h1{
@@ -30,13 +34,12 @@ h3{
 }
 
 /* Common Color Schemes */
-.nav_edu,
-.education .title{
+.nav_edu, .splash .edu .intro{
   background-color: $edu_med_dark;
 } 
 
 .education {
-    .numbers, aside ul li:hover, .item.active {
+    .title, .numbers, aside ul li:hover, .item.active {
     background-color: $edu_medium;
   } 
   .info_legend_container .legend, .key, .map_toggle, .key{
@@ -46,6 +49,67 @@ h3{
   .references{
     a{
       color: $edu_med_light;
+    }
+  }
+}
+
+
+.nav_rnd,.splash .rnd .intro{
+  background-color: $rnd_med_light;
+} 
+
+.research {
+    .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $rnd_medium;
+  }
+   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
+    border: 2px solid $rnd_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $rnd_med_light;
+    }
+  }
+}
+
+.nav_ent, .splash .ent .intro{
+  background-color: $ent_medium;
+}
+
+.entrepreneurship{ 
+  .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $ent_medium;
+  }
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $ent_medium;
+    border-radius: 5px;
+  }
+  .references{
+    a{
+      color: $ent_medium;
+    }
+  }
+}
+
+
+.nav_econ, .splash .econ .intro{
+  background-color: $econ_medium;
+}
+
+.economic{ 
+  .title, .numbers, aside ul li:hover, .item.active{
+    background-color: $econ_medium;
+  }
+  .info_legend_container .legend, .key, .map_toggle, .key{
+    border: 2px solid $econ_medium;
+    border-radius: 5px;
+  }
+
+  .references{
+    a{
+      color: $econ_medium;
     }
   }
 }
@@ -66,74 +130,28 @@ h3{
   @include arrow_box($econ_med_dark); 
 }
 
-.nav_rnd,
-.research .title{
-  background-color: $rnd_med_light;
-} 
-
-.research {
-    .numbers, aside ul li:hover, .item.active{
-    background-color: $rnd_medium;
-  }
-   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
-    border: 2px solid $rnd_medium;
-    border-radius: 5px;
-  }
-
-  .references{
-    a{
-      color: $rnd_med_light;
-    }
-  }
-}
-
-.nav_ent,
-.entrepreneurship .title,.entrepreneurship .numbers, .entrepreneurship aside ul li:hover, .entrepreneurship .item.active{
-  background-color: $ent_medium;
-}
-
-.entrepreneurship{
-  .info_legend_container .legend, .key, .map_toggle, .key{
-    border: 2px solid $ent_medium;
-    border-radius: 5px;
-  }
-  .references{
-    a{
-      color: $ent_medium;
-    }
-  }
-}
-
-
-.nav_econ,
-.economic .title, .economic .numbers, .economic aside ul li:hover, .economic .item.active{
-  background-color: $econ_medium;
-}
-
-.economic{ 
-  .info_legend_container .legend, .key, .map_toggle, .key{
-    border: 2px solid $econ_medium;
-    border-radius: 5px;
-  }
-
-  .references{
-    a{
-      color: $econ_medium;
-    }
-  }
-}
-
-
 /* Layouts */
 .wrapper{
   margin: auto;
   max-width: 1200px;
+  width: 98%;
 }
 
 .logo{
   width: 20%;
   display: inline;
   float: left;
+
+  @media #{$medium-down}{
+    display: block;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+  }
+
+  a{
+    text-decoration: none;
+  }
 }
 
 nav{
@@ -144,6 +162,12 @@ nav{
   z-index: 1;
   text-align: right;
   float: right;
+
+  @media #{$medium-down}{
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 
   ul{
     list-style-type: none;
@@ -158,11 +182,11 @@ nav{
       text-align: center;
 
       a{
-        @include uHero_font( 0.75em, 1, $white, 400);
+        @include uHero_font( 0.75em, 1.1, $white, 400);
         box-sizing: border-box;
         height: 70px;
         width: 200px;
-        padding: 12px 30px 20px;
+        padding: 14px 30px 20px;
         letter-spacing: 0.15em;
         text-decoration: none;
         text-transform: uppercase;
@@ -173,12 +197,13 @@ nav{
 }
 
 .nav_edu,.nav_ent{
-  padding-top: 8px; 
+  padding-top: 8px;
+  height: 62px; 
 }
 
 .nav_ent{
   a{
-    padding: 12px 16px 20px;
+    padding: 14px 16px 20px;
   }
 }
 
@@ -189,6 +214,11 @@ nav{
   position: relative;
   z-index: 2;
   border-top-left-radius: 5px;
+
+  @media #{$medium-down}{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
 }
 
 .title{
@@ -230,10 +260,10 @@ aside{
 }
 
 .map_toggle{
-  padding: 0 5px;
-  width: 31%;
-  height: 184px;
-  margin-right: 3px;
+  padding: 10 5px;
+  width: 30%;
+  height: 230px;
+  margin-right: 20px;
   display: block;
   float: left;
   z-index: 4;
@@ -241,34 +271,53 @@ aside{
 
   h3{
     font-size: 13px;
-    margin: 11px;
+    margin: 12px;
     text-align: center;
   }
 
-  ul{
-    li{
+  ul {
+    li {
       display: inline;
-      a{
+      a {
         width: 100%;
         display: inline-block;
         height: 70px;
         background-repeat: no-repeat;
         background-position: center;
+        padding: 14px 0;
       }
-      .mini_us{
-        display: block;
+      .mini_us {
         float: right;
-        background-image: url(/assets/images/united_states.svg);
+        background-size: 96px;
+        background-position: center;
+
+
+        &.econ {
+          background-image: url(/assets/images/us_grey.png);
+
+          &:hover, &.active {
+            background-image: url(/assets/images/us_orange.png);
+          }
+        }
       }
-      .mini_hi{
+      .mini_hi {
         float: left;
-        background-image: url(/assets/images/hawaii.svg);
+        background-size: 96px;
+        background-position: center;
+
+        &.econ {
+          background-image: url(/assets/images/hi_grey.png);
+
+          &:hover, &.active {
+            background-image: url(/assets/images/hi_orange.png);
+          }
+        }
       }
     }
   }
 }
 
-.numbers{
+.numbers {
   width: 20px;
   height: 10px;
   border-radius: 50%;
@@ -286,43 +335,51 @@ aside{
 
 section{
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   border-bottom: 2px solid $light_grey; 
-  padding: 20px 40px 30px;
+  padding: 0 40px 20px;
 
-  p{
-    padding-left: 30px;
-    font-family: $bitter;
-    font-style: italic;
-    @include uHero_font(0.85em, 1, $body_color, 400);
+  .splash & {
+    border: none;
+  }
+
+  &:first-child {
+    padding: 20px 40px 0;
+  }
+  
+  &:nth-child(2) {
+    padding: 20px 40px 20px;
   }
 
   &:last-child {
-    padding: 20px 40px 10px;
+    padding: 20px 40px 0;
+    border: none;
+  }
+  &.ng-scope {
+    border: none;
   }
 }
 
-section:last-child, section:first-child{
-  border: none;
-}
+section:last-child, section 
+
 .info_legend_container{
   display: block;
   margin-bottom: 20px;
 
   .map_info{
-    width: 60%;
+    width: 58%;
     display: block;
     float: left;
   }
 
   .map_toggle_container{
-    width: 40%;
+    width: 42%;
     float: right;
   }
 
   .legend{
-    padding: 10px 10px 20px;
-    width: 55%;
+    padding: 10px 10px 10px;
+    // width: 55%;
     color: $body_color;
     font-size: $base*0.8;
     display: block;
@@ -366,13 +423,14 @@ section:last-child, section:first-child{
     }
 
     .key{
+      margin-top: 18px;
       width: 17%;
-      height: 300px;
+      height: 308px;
       float: left;
       padding: 10px 10px;
 
       .key_text{
-        font-size: 10px;
+        font-size: 12px;
       }
     }
 }
@@ -380,7 +438,8 @@ section:last-child, section:first-child{
   position: relative;
 
   svg{
-    margin-top: -190px;
+    margin-top: -160px;
+    height: 565px;
   }
 }
 
@@ -393,6 +452,7 @@ section:last-child, section:first-child{
   margin-top: -80px;
   margin-left: -70px;
   pointer-events: none;
+  font-size: 12px;
 }
 #hover-tooltip {
   top: 0;
@@ -405,8 +465,12 @@ section:last-child, section:first-child{
 }
 
 .timeline_info{
-  // float: left;
-  // width: 35%;
+ p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
 }
 
 .time_span{
@@ -420,6 +484,8 @@ section:last-child, section:first-child{
 .references{
   height: 50px;
   padding: 0 30px 10px;
+  margin-bottom: 20px;
+
   h3{
     margin-left: 0px;
     padding-bottom: 10px;
@@ -429,10 +495,10 @@ section:last-child, section:first-child{
 
 /* Footer */
 footer{
-  padding: 15px 0;
+  text-align: center;
+  padding: 20px 0 15px;
 
   p{
-    width: 50%;
     font-size: 10px;
     float: left;
     padding-top: 0;
@@ -445,10 +511,10 @@ footer{
   }
 }
 .footer_links{
-  width: 30%;
-  padding: 10px;
+  width: 290px;
+  padding: 10px 20px;
   height: 68px;
-  float: left;
+  // float: left;
 }
 
 .additional{
@@ -460,28 +526,28 @@ footer{
   border-radius: 5px;
   border: 1px solid $body_color;
   background-repeat: no-repeat;
-  background-size: 200px;
-  float: right;
+  background-size: 190px;
+  // float: right;
+  display: inline-block;
 
   p{
-    width: 50%;
+    // width: 50%;
     padding: 25px 0 0;
   }
 }
 .dl{
-  margin-right: 20px; 
-  
-  .devleague{
-    width: 47%;
-    float: left;
-  }
-
+  margin-right: 15px; 
+  background-image: url('/assets/images/devleague_logo.svg');
+  background-size: 168px;
+  background-position: 143px 12px;
 }
 
 .uhero{
   background-image: url('/assets/images/uhero_logo.svg');
-  background-position: 170px 10px;
+  background-position: 125px 12px;
 }
+
+/* D3 stuff */
 
 .axis {
   path {
@@ -565,4 +631,26 @@ footer{
     font-size: 13px;
     fill: #AAA797;
   }
+}
+
+// Donut Diagrams
+text{
+      font-size: 14px;
+
+  .d3-graph-edu & {
+      fill: $edu_med_dark; 
+  }
+  .d3-graph-econ & {
+      fill: $econ_med_dark; 
+  }
+  .d3-graph-rnd & {
+      fill: $rnd_med_dark; 
+  }
+  .d3-graph-ent & {
+      fill: $ent_medium; 
+  }  
+}
+
+.hidden {
+  display: none;
 }
