@@ -448,10 +448,10 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .insert('text')
       .text(function() {
         var change = lateValue - earlyValue;
-        if (change > 0) {
+        if (change >= 0) {
           return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
         } else {
-          return "a decrease of " + numberFormatConverter( change ) + " ";
+          return "a decrease of " + numberFormatConverter( Math.abs(change) ) + " ";
         }
       }); 
     // previous year
