@@ -22,7 +22,12 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
-  var extraWideGraphLabels = (yUnitMeasure === "# of technology licenses and options executed");
+  var wideYLabels = [
+    "Per thousand($)",
+    "($) Per Employed Worker",
+    "$ from technology licenses and options executed"
+  ];
+  var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
   width = 800;
   height = 600;
@@ -801,9 +806,13 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .innerTickSize(20)
       .tickPadding(20);
 
+    var numBrushTicks = d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1] + 1).length;
+
     // sets tick values to only odd years (steps of two), for the fourth and eight grade education datasets
     if (oddDataSetWithGaps) {
       brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1]+1, 2));
+    } else if (numBrushTicks < 7) {
+      brushAxis.tickValues(d3.range(brushAxis.scale().domain()[0], brushAxis.scale().domain()[1] + 1));
     }
 
     var axisG = brushSVG.append("g");
