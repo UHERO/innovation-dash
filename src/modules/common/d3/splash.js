@@ -100,5 +100,5 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
         .text((dataset.US[1]/(dataset.US[0] + dataset.US[1]) * 100).toFixed(1) + "%");
   }
 
-  };
+};
  // end of module.exports
