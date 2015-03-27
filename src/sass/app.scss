@@ -338,13 +338,6 @@ section{
   border-bottom: 2px solid $light_grey; 
   padding: 0 40px 20px;
 
-  // p{
-  //   padding-left: 30px;
-  //   font-family: $bitter;
-  //   font-style: italic;
-  //   @include uHero_font(0.85em, 1, $body_color, 400);
-  // }
-
   &:first-child {
     padding: 20px 40px 0;
   }
@@ -355,12 +348,14 @@ section{
 
   &:last-child {
     padding: 20px 40px 0;
+    border: none;
+  }
+  &.ng-scope {
+    border: none;
   }
 }
 
-section:last-child, section.ng-scope {
-  border: none;
-}
+section:last-child, section 
 
 .info_legend_container{
   display: block;
@@ -465,8 +460,12 @@ section:last-child, section.ng-scope {
 }
 
 .timeline_info{
-  // float: left;
-  // width: 35%;
+ p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
 }
 
 .time_span{
