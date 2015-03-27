@@ -342,14 +342,6 @@ section{
     border: none;
   }
 
-
-  // p{
-  //   padding-left: 30px;
-  //   font-family: $bitter;
-  //   font-style: italic;
-  //   @include uHero_font(0.85em, 1, $body_color, 400);
-  // }
-
   &:first-child {
     padding: 20px 40px 0;
   }
@@ -360,12 +352,14 @@ section{
 
   &:last-child {
     padding: 20px 40px 0;
+    border: none;
+  }
+  &.ng-scope {
+    border: none;
   }
 }
 
-section:last-child, section.ng-scope {
-  border: none;
-}
+section:last-child, section 
 
 .info_legend_container{
   display: block;
@@ -470,8 +464,12 @@ section:last-child, section.ng-scope {
 }
 
 .timeline_info{
-  // float: left;
-  // width: 35%;
+ p{
+    padding-left: 30px;
+    font-family: $bitter;
+    font-style: italic;
+    @include uHero_font(0.85em, 1, $body_color, 400);
+  }
 }
 
 .time_span{
@@ -633,22 +631,21 @@ footer{
     fill: #AAA797;
   }
 }
-  text{
-        font-size: 14px;
 
-    .d3-graph-edu & {
-        fill: $edu_med_dark; 
-    }
-    .d3-graph-econ & {
-        fill: $econ_med_dark; 
-    }
-    .d3-graph-rnd & {
-        fill: $rnd_med_dark; 
-    }
-    .d3-graph-ent & {
-        fill: $ent_medium; 
-    }
+// Donut Diagrams
+text{
+      font-size: 14px;
 
-
-  
+  .d3-graph-edu & {
+      fill: $edu_med_dark; 
   }
+  .d3-graph-econ & {
+      fill: $econ_med_dark; 
+  }
+  .d3-graph-rnd & {
+      fill: $rnd_med_dark; 
+  }
+  .d3-graph-ent & {
+      fill: $ent_medium; 
+  }  
+}

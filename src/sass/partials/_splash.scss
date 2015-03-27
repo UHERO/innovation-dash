@@ -1,6 +1,17 @@
 /* Styles for Splash Page */
 
 .splash{
+  border-top-left-radius: 5px;
+    
+    @media #{$medium-down}{
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+  section:first-child {
+    padding-bottom: 40px;
+  }
+
   background-color: $white;
   h1{
     color: $dark_grey;
@@ -13,12 +24,15 @@
     p{
       padding: 15px;
       font-size: 0.8em;
+      line-height: 1.5;
     }
 
     h2{
       text-transform: uppercase;
       @include uHero_font(1em, 1, $white, 400);
       text-align: center;
+      height: 20px;
+      padding: 3px 3px 0;
     }
 
     .edu{
@@ -59,16 +73,19 @@
   color: $white;
   border-radius: 5px;
   padding: 10px 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .value{
   font-size: 3em;
   text-align: center;
+  margin: auto;
 }
 
 .splash-graph{
   border-radius: 5px;
-  background-color: $light-grey;
+  background-color: $light_grey;
   margin: 10px 0;
 }
 
