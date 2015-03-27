@@ -58,17 +58,18 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     var extExt = d3.format('.2%');
     var result = 0;
 
-    if (num == NaN || num == null){
-      return "NA";
+    if ( isNaN(num) || num === null){
+      return "N/A";
     }
+
     if(measurementUnit === 'number' || measurementUnit === 'dollars'){
+      result =  numNum(num); // 69.6969 => 69.70
+      if(num > 9999){
+        result = numNum(num/1000) +'K'; // 69000 => 69K
+      }   
       if(num > 999999){
         result = numNum(num/1000000) +'M'; // 69000000 => 69M
       }
-      if(num > 24999){
-        result = numNum(num/1000) +'K'; // 69000 => 69K
-      }      
-      result =  numNum(num); // 69.6969 => 69.70
     }
     if(measurementUnit === 'integer'){
       return intInt(num); // 69
@@ -283,7 +284,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
       .text(areaName);
     arrow.append('p')
       .classed('tooltip-val', true)
-      .text(lateValue);
+      .text(numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
       .text( fmtPercent(percentChange));
@@ -500,6 +501,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
 
     var yAxis = d3.svg.axis()
         .scale(yScale)
+        .tickFormat(numberFormatConverter)
         .orient("left");
 
     vis.append("svg:g")
@@ -532,7 +534,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
     // .defined insures that only non-negative values are graphed
     lineGen = d3.svg.line()
       .defined(function(d) {
-        return d.value >= 0;
+        return !(d.value === null);
       })
       .x(function(d) {
         return xScale(d.year);
@@ -625,7 +627,7 @@ module.exports = function (scope, mapSource, dataSource, currentYearEl, previous
               return mouseY + 30 + i * 30;
             })
             .text(function(d) {
-              if (d[1] === undefined || d[1] === null) {
+              if (d[1] === undefined || d[1] == null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {

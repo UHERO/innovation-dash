@@ -228,15 +228,12 @@ nav{
   border-top-left-radius: 5px; 
 }
 
-/* Indicator Sidebar */
-
 aside{
   width: 20%;
   background-color: $light_grey;
   float:left;
   padding: 20px;
   height: 100%;
-  transition: width 0.3s ease;
 
   ul{
     margin-top: 20px;
@@ -259,17 +256,13 @@ aside{
       }
     }
   }
-
-  @media #{$medium-down}{
-    display: none;
-  }
 }
 
 .map_toggle{
   padding: 10 5px;
-  width: 31%;
+  width: 30%;
   height: 230px;
-  margin-right: 3px;
+  margin-right: 20px;
   display: block;
   float: left;
   z-index: 4;
@@ -277,35 +270,53 @@ aside{
 
   h3{
     font-size: 13px;
-    margin: 11px;
+    margin: 12px;
     text-align: center;
   }
 
-  ul{
-    li{
+  ul {
+    li {
       display: inline;
-      a{
+      a {
         width: 100%;
         display: inline-block;
         height: 70px;
         background-repeat: no-repeat;
         background-position: center;
-        padding: 10px 0;
+        padding: 14px 0;
       }
-      .mini_us{
-        display: block;
+      .mini_us {
         float: right;
-        background-image: url(/assets/images/united_states.svg);
+        background-size: 96px;
+        background-position: center;
+
+
+        &.econ {
+          background-image: url(/assets/images/us_grey.png);
+
+          &:hover, &.active {
+            background-image: url(/assets/images/us_orange.png);
+          }
+        }
       }
-      .mini_hi{
+      .mini_hi {
         float: left;
-        background-image: url(/assets/images/hawaii.svg);
+        background-size: 96px;
+        background-position: center;
+
+        &.econ {
+          background-image: url(/assets/images/hi_grey.png);
+
+          &:hover, &.active {
+            background-image: url(/assets/images/hi_orange.png);
+          }
+        }
       }
     }
   }
 }
 
-.numbers{
+.numbers {
   width: 20px;
   height: 10px;
   border-radius: 50%;
@@ -340,13 +351,13 @@ section:last-child, section:first-child{
   margin-bottom: 20px;
 
   .map_info{
-    width: 60%;
+    width: 58%;
     display: block;
     float: left;
   }
 
   .map_toggle_container{
-    width: 40%;
+    width: 42%;
     float: right;
   }
 
@@ -402,7 +413,7 @@ section:last-child, section:first-child{
       padding: 10px 10px;
 
       .key_text{
-        font-size: 10px;
+        font-size: 12px;
       }
     }
 }
@@ -465,8 +476,6 @@ section:last-child, section:first-child{
 /* Footer */
 footer{
   padding: 15px 0;
-  width: 67%;
-  margin: auto;
 
   p{
     width: 50%;
@@ -482,9 +491,10 @@ footer{
   }
 }
 .footer_links{
-  width: 45%;
-  padding: 20px;
+  width: 30%;
+  padding: 10px;
   height: 68px;
+  float: left;
 }
 
 .additional{
@@ -497,7 +507,7 @@ footer{
   border: 1px solid $body_color;
   background-repeat: no-repeat;
   background-size: 200px;
-  // float: right;
+  float: right;
 
   p{
     width: 50%;
