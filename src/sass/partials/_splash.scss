@@ -10,13 +10,16 @@
   }
 
   section:first-child {
-    padding: 40px 40px 20px;
+    padding: 40px 40px 30px;
+    background-color: $light_grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 
     p{
       font-size: 0.8em;
       line-height: 1.4;
       max-width: 75%;
-      margin: auto;
+      margin: 0 auto 10px;
       text-align: center;
     }
   }
@@ -24,7 +27,7 @@
   background-color: $white;
 
   h1{
-    color: $edu_medium;
+    color: $oil;
     text-align: center;
     margin-bottom: 20px;
     padding: 0 3px;
@@ -37,7 +40,7 @@
       font-size: 0.8125em;
       line-height: 1.5;
       overflow: hidden;
-      max-height: 141px; 
+      max-height: 162px; 
     }
 
     h2{
@@ -65,7 +68,7 @@
 }
 
 .intro{
-  height: 230px;
+  height: 248px;
   color: $white;
   border-radius: 5px;
   padding: 10px 0;
@@ -131,16 +134,23 @@
   }
 }
 
-.sponsors{
+.sponsors {
   width: 100%;
   display: block;
-  height: 50px;
-  background-color: red;
-  .rogos{
+  text-align: center;
+  // height: 50px;
+  // background-color: red;
+
+  .sponsor{
+    box-sizing: border-box;
     display: inline-block;
-    height: 50px;
-    width: 22%;
+    height: 100px;
+    width: 12%; /* might need to change depending on amount of sponsors*/
     margin: 10px;
-    background-color: blue;
+    // background-color: blue;
+
+    img {
+      height: 100%;
+    }
   }
 }
