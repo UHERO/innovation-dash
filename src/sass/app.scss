@@ -13,8 +13,9 @@ body{
   min-width: 1162px;
 }
 
-header{
+header {
   padding-top: 40px;
+
   @media #{$medium-down}{
     padding: 0;
   }
@@ -653,5 +654,5 @@ text{
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
