@@ -15,12 +15,32 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
+    @media #{$large-only}{
+      width: 17%;
+      float: left;
+    }
+
     p{
       font-size: 0.8em;
       line-height: 1.4;
       max-width: 75%;
       margin: 0 auto 10px;
       text-align: center;
+
+      @media #{$large-only}{
+        font-weight: 0.7em;
+        text-align: left;
+        max-width: 100%;
+        margin: 10px 0 20px;
+      }
+    }
+  }
+
+  section:last-child{
+    @media #{$large-only}{
+      width: 71%;
+      padding: 20px 30px;
+      float: left;
     }
   }
 
@@ -32,6 +52,11 @@
     margin-bottom: 20px;
     padding: 0 3px;
     letter-spacing: 0;
+
+    @media #{$large-only}{
+      text-align: left;
+      font-size: 1em;
+    }
   }
 
   .group{
@@ -40,7 +65,11 @@
       font-size: 0.8125em;
       line-height: 1.5;
       overflow: hidden;
-      max-height: 162px; 
+      max-height: 162px;
+
+      @media #{$large-only}{
+        max-height: 160px;
+      } 
     }
 
     h2{
@@ -134,23 +163,31 @@
   }
 }
 
+.d3-graph-edu, .d3-graph-ent{
+  @media #{$large-only}{
+    margin-left:  -18px;
+  }
+}
+
+
+
 .sponsors {
   width: 100%;
   display: block;
   text-align: center;
+  height: 100px;
   // height: 50px;
   // background-color: red;
 
-  .sponsor{
-    box-sizing: border-box;
-    display: inline-block;
-    height: 100px;
-    width: 12%; /* might need to change depending on amount of sponsors*/
-    margin: 10px;
-    // background-color: blue;
+  // .sponsor{
+  //   box-sizing: border-box;
+  //   display: inline-block;
+  //   width: 12%;  might need to change depending on amount of sponsors
+  //   margin: 10px;
+  //   // background-color: blue;
 
     img {
       height: 100%;
     }
-  }
+  // }
 }
