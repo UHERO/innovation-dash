@@ -10,11 +10,11 @@ medium : min-width: 641px, max-width: 960px
 large : min-width: 961px
 */
 
-$small-only : "only screen and (max-width:760px)";
-$medium-down : "only screen and (max-width:1177px)";
-$medium-only : "only screen and (min-width:760px) and (max-width:1118px)";
-$medium-up : "only screen and (min-width:760px)";
-$large-only : "only screen and (min-width:1177px)";
+$small-only : "only screen and (max-width:899px)";
+$medium-down : "only screen and (max-width:1321px)";
+$medium-only : "only screen and (min-width:900px) and (max-width:1320px)";
+$medium-up : "only screen and (min-width:900px)";
+$large-only : "only screen and (min-width:1321px)";
 
 /* Colors */
 $body_color: #6E7070;

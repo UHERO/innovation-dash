@@ -1,8 +1,9 @@
 /* Styles for Splash Page */
-
+ 
 .splash{
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
   border-top-left-radius: 5px;
+  background-color: $light_grey;
     
   @media #{$medium-down}{
     border-top-left-radius: 5px;
@@ -10,25 +11,59 @@
   }
 
   section:first-child {
-    padding: 40px 40px 20px;
+    padding: 30px 30px 25px;
+    background-color: $light_grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    @media #{$large-only}{
+      padding: 30px;
+      width: 17.5%;
+      float: left;
+      border-top-right-radius: none;
+    }
 
     p{
       font-size: 0.8em;
       line-height: 1.4;
       max-width: 75%;
-      margin: auto;
+      margin: 0 auto 10px;
       text-align: center;
+
+      @media #{$large-only}{
+        font-size: 13px;
+        text-align: left;
+        max-width: 100%;
+        margin: 10px 0 20px;
+      }
     }
   }
 
-  background-color: $white;
+  section:last-child{
+    background-color: $white;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+
+    @media #{$large-only}{
+      width: 73%;
+      padding: 30px 27px 20px;
+      float: right;
+    }
+  }
 
   h1{
-    color: $edu_medium;
+    color: $oil;
     text-align: center;
     margin-bottom: 20px;
     padding: 0 3px;
     letter-spacing: 0;
+
+    @media #{$large-only}{
+      // font-weight: 700;
+      text-align: left;
+      font-size: 1.04em;
+      line-height: 1.3em;
+    }
   }
 
   .group{
@@ -37,7 +72,11 @@
       font-size: 0.8125em;
       line-height: 1.5;
       overflow: hidden;
-      max-height: 141px; 
+      max-height: 162px;
+
+      @media #{$large-only}{
+        max-height: 160px;
+      } 
     }
 
     h2{
@@ -60,12 +99,12 @@
 .col{
   width: 25%;
   float: left;
-  padding: 3px;
+  padding: 0 3px 3px;
   box-sizing: border-box;
 }
 
 .intro{
-  height: 230px;
+  height: 248px;
   color: $white;
   border-radius: 5px;
   padding: 10px 0;
@@ -131,16 +170,38 @@
   }
 }
 
-.sponsors{
+.d3-graph-edu, .d3-graph-ent{
+  @media #{$large-only}{
+    margin-left:  -18px;
+  }
+}
+
+.sponsors {
   width: 100%;
   display: block;
-  height: 50px;
-  background-color: red;
-  .rogos{
-    display: inline-block;
-    height: 50px;
-    width: 22%;
-    margin: 10px;
-    background-color: blue;
+  text-align: center;
+
+  @media #{$large-only} {
+    text-align: left;
   }
+  // height: 100px;
+  // height: 50px;
+  // background-color: red;
+
+  // .sponsor{
+  //   box-sizing: border-box;
+  //   display: inline-block;
+  //   width: 12%;  might need to change depending on amount of sponsors
+  //   margin: 10px;
+  //   // background-color: blue;
+
+    img {
+      height: 97px;
+      padding: 10px 10px 0;
+
+      @media #{$large-only} {
+        padding: 0 5px 5px 0;
+      }
+    }
+  // }
 }

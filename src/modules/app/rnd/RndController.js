@@ -2,7 +2,7 @@
 
 module.exports = /*@ngInject*/
   function RndController($scope) {
-    $scope.welcome = 'Resesarch & Development?';
+    $scope.welcome = 'Research & Development?';
     $scope.currentyear = '2002';
     $scope.percent = '11.6%';
     $scope.major = 'Utility Patent Grants';

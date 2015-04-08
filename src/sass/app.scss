@@ -10,10 +10,12 @@ body{
   font-family: $montserrat;
   @include uHero_font($base, 1.2, $body_color, 400);
   letter-spacing: 0.03em;
+  min-width: 1162px;
 }
 
-header{
+header {
   padding-top: 40px;
+
   @media #{$medium-down}{
     padding: 0;
   }
@@ -652,5 +654,5 @@ text{
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
