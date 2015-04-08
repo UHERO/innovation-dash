@@ -75,7 +75,7 @@
       max-height: 162px;
 
       @media #{$large-only}{
-        max-height: 160px;
+        max-height: 258px;
       } 
     }
 
@@ -109,6 +109,10 @@
   border-radius: 5px;
   padding: 10px 0;
   box-sizing: border-box;
+
+  @media #{$large-only} {
+    height: 306px;
+  }
 
   .econ & {
     p{
