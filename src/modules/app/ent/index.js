@@ -63,4 +63,3 @@ module.exports =
   .controller('PercentSnEController', require('./PercentSnEController'))
   .controller('KauffmanIndexController', require('./KauffmanIndexController'))
   .controller('VcInvestmentController', require('./VcInvestmentController'));
-
