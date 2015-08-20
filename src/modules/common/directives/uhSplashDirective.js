@@ -8,7 +8,7 @@ module.exports = /*@ngInject*/
       template: '<div class="uh-splash">Data Data Goes Here!!!</div>',
     
       link: function (scope, element, attrs) {
-        // var mapSource = '/assets/images/USA.json';
+        // var mapSource = 'assets/images/USA.json';
         // scope.yUnitMeasure = "Link Scaled Measueremet";
         // console.log('scope.yUnitMeasure',scope.yUnitMeasure);
         var d3Splash = require('../d3/splash');
