@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (scope, mapSource, dataSource,
+  donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl,
+  mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen, numLegendLines;
@@ -56,11 +58,11 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
   var scaleNumber = function(number, formatter) {
-    if(number > 9999){
-      return formatter(number / Math.pow(10, 3)) + 'K'; // 69000 => 69K
-    }
     if(number > 999999){
       return formatter(number / Math.pow(10, 6)) +'M'; // 69000000 => 69M
+    }
+    if(number > 9999){
+      return formatter(number / Math.pow(10, 3)) + 'K'; // 69000 => 69K
     }
     return formatter(number);
   };
@@ -86,6 +88,9 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     }
     if(measurementUnit === 'dollars'){
       return "$" + scaleNumber(num, d3.format('.2f'));
+    }
+    if(measurementUnit === 'dollars_mill'){
+      return "$" + scaleNumber(num/1000, d3.format('.2f'));
     }
     if (measurementUnit === 'number') {
       return scaleNumber(num, d3.format('.1f'));
@@ -134,12 +139,15 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function ready (err, sourceData, sourceMap, isSVGMap) {
     setupMap(sourceMap, width, height);
 
-    data = window.transData = transformFIPSData(sourceData); // DEV ONLY
+    // DEV ONLY
+    window.transData = transformFIPSData(sourceData);
+    data = window.transData;
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
 
-    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
+    window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
+    filteredStates = window.fStates;
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
@@ -192,7 +200,8 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
-    var valuesByArea = window.vbs = {};
+    window.vbs = {};
+    var valuesByArea = window.vbs;
 
     var areaType = isSVGMap ? 'County' : 'State';
 
@@ -269,6 +278,21 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     }
   }
 
+  // returns a pretty string for secondValue - firstValue.
+  function getChangeString(firstValue, secondValue) {
+    var change = secondValue - firstValue;
+    if (isNaN(change)) {
+      return 'N/A';
+    }
+
+    change = numberFormatConverter(change);
+    if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
+      return change.slice(0,-1);
+    }
+
+    return change;
+  }
+
   function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
 
     var targetType = isHawaii ? 'County' : 'State';
@@ -281,20 +305,13 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
     }
 
-    var percentChange = (lateValue - earlyValue) / earlyValue;
-    if ( isNaN(percentChange) || percentChange === Infinity || percentChange === -Infinity) {
-      percentChange = 'N/A';
-    } else {
-      percentChange = fmtPercent(percentChange);
-    }
-
     var arrow;
     if (type === 'fixed') {
       arrow = fixedMapTooltip.select('.arrow_box');
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
     }
-    arrow.html(function () {return null;})
+    arrow.html(function () { return null; })
       .append('h3')
       .classed('tooltip-title', true)
       .text(areaName);
@@ -303,7 +320,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .text(numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text( percentChange );
+      .text(getChangeString(earlyValue, lateValue));
   }
 
   function positionMapTooltip (type, fixedXYsObj) {
@@ -446,7 +463,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .insert('text')
       .text(selectedMaxYear);
     // percent change
-    d3.select(currentPercentEl).html("")
+    d3.selectAll(currentPercentEl).html("")
       .insert('text')
       .text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
@@ -458,12 +475,23 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     d3.select(valueChangeEl).html("")
       .insert('text')
       .text(function() {
+        var postfix = '',
+            prefix, number;
         var change = lateValue - earlyValue;
         if (change >= 0) {
-          return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
+          prefix = 'an increase of ';
+          number = numberFormatConverter(change);
         } else {
-          return "a decrease of " + numberFormatConverter( Math.abs(change) ) + " ";
+          prefix = 'a decrease of ';
+          number = numberFormatConverter(Math.abs(change));
         }
+
+        if(measurementUnit === 'percent' || measurementUnit === 'extended_percent'){
+          number = number.slice(0, -1);
+          postfix = ' percentage points ';
+        }
+
+        return prefix + number + postfix;
       });
     // previous year
     d3.select(previousYearEl).html("")
@@ -562,15 +590,18 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      usAvgData = window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
+      window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
+      usAvgData = window.usData;
 
       drawLine(vis, usAvgData, graphColors.usColor);
     }
 
-    hiStateData = window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    hiStateData = window.hiData;
     drawLine(vis, hiStateData, graphColors.hiColor);
 
-    selectedStateData = window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+    window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+    selectedStateData =  window.selStateData;
 
     if (selectedStateData.length !== 0) {
       drawLine(vis, selectedStateData, graphColors.selectedColor);
@@ -593,7 +624,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
         if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
           var yearAtX = Math.round(xScale.invert(mouseX));
-          var hoverData = window.hData = [
+          window.hData = [
               [knownSummaryRecords[0], usAvgData, graphColors.usColor],
               [geoAreaNames[0], hiStateData, graphColors.hiColor],
               [geoAreaNames[1], selectedStateData, graphColors.selectedColor]
@@ -608,6 +639,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
             .map(function (item) {
               return [item[0], findGeoValueAtYear(item[1], yearAtX), item[2]];
             });
+          var hoverData = window.hData;
 
           hoverData.unshift(["Year", yearAtX, graphColors.text]);
 
@@ -643,7 +675,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
               return mouseY + 30 + i * 30;
             })
             .text(function(d) {
-              if (d[1] === undefined || d[1] === null) {
+              if (typeof d[1] === 'undefined' || d[1] === null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {
@@ -855,7 +887,6 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     buildGeoNameList(isSVGMap, targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
-
     // sometimes there won't be US Average data (datasetSumaryRecords)
     // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
     filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
@@ -877,13 +908,13 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
           var transformedVal = +n;
-          result.Years[key] = transformedVal ? transformedVal : null;
+          result.Years[key] = typeof transformedVal === 'number' ? transformedVal : null;
         } else {
           result[key] = n;
         }
       }, {Years: {}});
     });
-  } //end transformFIPSData
+  } //end
 
   // Takes data and an array of state names (strings) to find
   function filterStateObjects (data, geoAreaNamesArr, geoAreaCategory) {
