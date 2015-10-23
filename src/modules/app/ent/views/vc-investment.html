@@ -1,13 +1,15 @@
 <section>
   <div class="info_legend_container clearfix">
     <div class="map_info">
-      <!-- <h2><span class="numbers">2</span> In Hawaii...</h2> -->
-      <h2>In <span class="uh-current-year"></span>, there was an amount of <span class="uh-percent"></span> Venture Capital disbursed per thousand dollars of GDP.</h2>
+      <h2><span class="numbers">2</span> In Hawaii...</h2>
+      <h3>In <span class="uh-current-year"></span>, <span class="uh-percent"></span> in venture capital funds were distributed per $1000 of GDP.</h3>
     </div> <!-- .map_info -->
-
+    <div class="map_toggle_container clearfix"> <!-- map toggle container -->
+      <div class="legend" id="uh-histogram">
+    </div> <!-- .map_toggle container-->
 </section>
 
-<div uh-graphs map-url="/assets/maps/USA.json" d3-data-url="http://localhost:4567/entrepreneurship/ent_venture_capital_investment" color-scheme="ent" d3-y-unit-measure="per thousand($) of GDP" legend-text="Venture Capital Disbursed Per $1000 of GDP" measurement-unit="dollars"></div>
+<div uh-graphs map-url="assets/maps/USA.json" d3-data-url="http://localhost:4567/entrepreneurship/ent_venture_capital_investment" color-scheme="ent" d3-y-unit-measure="per thousand($) of GDP" legend-text="Venture Capital Disbursed Per $1000 of GDP" measurement-unit="dollars"></div>
 
 <div class="references">
 <h3>References</h3>
