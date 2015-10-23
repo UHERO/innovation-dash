@@ -40,7 +40,7 @@ module.exports =
     .state('econ.per-capita-personal-income', {
       url: '/per-capita-personal-income',
       abstract: true,
-      templateUrl: 'app/econ/views/per-capita-personal-income.html'
+      templateUrl: 'app/econ/views/per-capita-personal-income.html'      
       // controller: 'PerCapitaController'
     })
     .state('econ.per-capita-personal-income.us', {
@@ -117,3 +117,4 @@ module.exports =
   .controller('NonFarmHawaiiController', require('./NonFarmHawaiiController'))
   .controller('UnemploymentRateHawaiiController', require('./UnemploymentRateHawaiiController'))
   .controller('PerCapitaHawaiiController', require('./PerCapitaHawaiiController'));
+

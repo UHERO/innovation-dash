@@ -45,7 +45,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaNames;
   var fixedXYs = {
         Hawaii: {top:'360px', left:'250px' },
-        Honolulu: {top:'25px', left:'340px' }
+        Honolulu: {top:'50px', left:'300px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
@@ -375,7 +375,8 @@ module.exports = function (scope, mapSource, dataSource,
     var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 194, "height": 207}).append('g');
     var histogramKeys = mapRanges.slice(0);
 
-    svgHistogram.append('text')
+    svgHistogram
+      // .append('text')
       .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
       // below line is hardcoded. need to fix to dynamic with $scope or other
       .text(legendText)
@@ -708,7 +709,7 @@ module.exports = function (scope, mapSource, dataSource,
     var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
 
     svgKey.insert('g')
-      .append('text')
+      // .append('text')
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
