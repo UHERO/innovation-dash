@@ -44,10 +44,10 @@ h3{
     .title, .numbers, aside ul li:hover, .item.active {
     background-color: $edu_medium;
   }
-  .info_legend_container .legend, .key, .map_toggle, .key{
+  /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $edu_medium;
     border-radius: 5px;
-  }
+} */
   .references{
     a{
       color: $edu_med_light;
@@ -64,10 +64,10 @@ h3{
     .title, .numbers, aside ul li:hover, .item.active{
     background-color: $rnd_medium;
   }
-   .info_legend_container .legend,.key, .research .map_toggle, .research .key{
+   /* .info_legend_container .legend,.key, .research .map_toggle, .research .key{
     border: 2px solid $rnd_medium;
     border-radius: 5px;
-  }
+} */
 
   .references{
     a{
@@ -84,10 +84,10 @@ h3{
   .title, .numbers, aside ul li:hover, .item.active{
     background-color: $ent_medium;
   }
-  .info_legend_container .legend, .key, .map_toggle, .key{
+  /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $ent_medium;
     border-radius: 5px;
-  }
+} */
   .references{
     a{
       color: $ent_medium;
@@ -104,10 +104,10 @@ h3{
   .title, .numbers, aside ul li:hover, .item.active{
     background-color: $econ_medium;
   }
-  .info_legend_container .legend, .key, .map_toggle, .key{
+  /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $econ_medium;
     border-radius: 5px;
-  }
+} */
 
   .references{
     a{
@@ -263,11 +263,8 @@ aside{
 
 .map_toggle{
   padding: 10 5px;
-  width: 30%;
-  height: 230px;
-  margin-right: 20px;
-  display: block;
-  float: left;
+  width: 100%;
+  display: inline-block;
   z-index: 4;
   position: relative;
 
@@ -281,7 +278,7 @@ aside{
     li {
       display: inline;
       a {
-        width: 100%;
+        width: 50%;
         display: inline-block;
         height: 70px;
         background-repeat: no-repeat;
@@ -369,14 +366,15 @@ section:last-child, section
   margin-bottom: 20px;
 
   .map_info{
-    width: 58%;
+    width: 100%;
     display: block;
     float: left;
+    padding-bottom: 7%;
+    text-align: center;
   }
 
   .map_toggle_container{
-    width: 42%;
-    float: right;
+    width: 100%;
   }
 
   .legend{
@@ -426,8 +424,7 @@ section:last-child, section
 
     .key{
       margin-top: 18px;
-      width: 17%;
-      height: 308px;
+      width: 100%;
       float: left;
       padding: 10px 10px;
 
@@ -443,6 +440,12 @@ section:last-child, section
     margin-top: -160px;
     height: 565px;
   }
+}
+
+#uh-histogram {
+   float: right;
+   margin-top: -22%;
+   margin-right: -7%;
 }
 
 #hover-tooltip, #fixed-tooltip {
@@ -486,7 +489,6 @@ section:last-child, section
 .references{
   height: 50px;
   padding: 0 30px 10px;
-  margin-bottom: 20px;
 
   h3{
     margin-left: 0px;
@@ -577,6 +579,7 @@ footer{
 }
 
 #uh-graph {
+
   svg {
     overflow: visible;
     padding-left: 20px;
@@ -593,9 +596,20 @@ footer{
   }
 }
 
+#uh-key {
+   margin-top: -20%;
+   margin-left: 72%;
+
+   svg {
+      width: 20%;
+      height: 100px;
+   }
+}
+
 // the little helper text that show minYear, maxYear
 // FOR DEBUGGING PURPOSES
 #uh-brush {
+   margin-top: -9%;
 
   span {
     font-family: 'Montserrat', sans-serif;
