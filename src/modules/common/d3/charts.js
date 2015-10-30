@@ -44,7 +44,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaCategory;
   var geoAreaNames;
   var fixedXYs = {
-        Hawaii: {top:'315px', left:'240px' },
+        Hawaii: {top:'357px', left:'240px' },
         Honolulu: {top:'10px', left:'300px' }
       };
 
@@ -372,7 +372,7 @@ module.exports = function (scope, mapSource, dataSource,
 
     d3.select(histogramEl).html("");
 
-    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 194, "height": 207}).append('g');
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 210, "height": 207}).append('g');
     var histogramKeys = mapRanges.slice(0);
 
     svgHistogram

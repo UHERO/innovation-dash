@@ -365,10 +365,12 @@ section:last-child, section
   display: block;
   margin-bottom: 20px;
 
+
   .map_info{
     width: 100%;
+    white-space: normal;
     display: block;
-    float: left;
+    /* float: left; */
     padding-bottom: 7%;
     text-align: center;
   }
@@ -404,6 +406,16 @@ section:last-child, section
     }
   }
 }
+
+.graphs_container {
+   white-space: nowrap;
+   margin-left: -3%;
+
+   @media#{$small-only} {
+      margin-left: -8%;
+   }
+}
+
 .default-map{
   display: block;
   background-image: url('assets/images/united_states.svg');
@@ -435,17 +447,42 @@ section:last-child, section
 }
 #uh-map {
   position: relative;
+  width: 90%;
+  display: inline-block;
+  margin-left: -5%;
 
-  svg{
+  svg {
     margin-top: -160px;
     height: 565px;
   }
+
+  /* @media#{$small-only} {
+     margin-left: -5%;
+ } */
 }
 
 #uh-histogram {
+   width: 5%;
    float: right;
    margin-top: -22%;
-   margin-right: -7%;
+   margin-right: 12%;
+   display: inline-block;
+
+   @media#{$small-only} {
+      margin-right: 15%;
+
+      svg {
+         padding-left: 20px;
+      }
+   }
+
+   @media#{$medium-only} {
+      margin-right: 10%;
+
+      svg {
+         padding-left: 20px;
+      }
+   }
 }
 
 #hover-tooltip, #fixed-tooltip {
