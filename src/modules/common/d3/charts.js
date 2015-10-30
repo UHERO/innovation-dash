@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+module.exports = function (scope, mapSource, dataSource,
+  donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl,
+  mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen, numLegendLines;
@@ -8,7 +10,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     econ: ["#FCDDC0","#FFBB83","#FF9933","#F27D14","#C15606"],
     rnd:  ["#b2e5e6","#7FC4C9","#74B1B2","#5E9999","#497C7B"],
     ent:  ["#D3F4B5","#AADB83","#7FBB57","#537A31","#3E5B23"],
-    edu:  ["#b0e5ed","#69D0E8","#47ABC6","#087F9B","#03627F"] 
+    edu:  ["#b0e5ed","#69D0E8","#47ABC6","#087F9B","#03627F"]
   };
   var measurement_units = {
     percent : '%',
@@ -42,8 +44,8 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   var geoAreaCategory;
   var geoAreaNames;
   var fixedXYs = {
-        Hawaii: {top:'360px', left:'250px' },
-        Honolulu: {top:'25px', left:'340px' }
+        Hawaii: {top:'357px', left:'240px' },
+        Honolulu: {top:'10px', left:'300px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
@@ -55,27 +57,26 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   // Formatting functions:
   var fmtPercent = d3.format('%');  //usage: fmtPercent(number) => 98.5%
 
+  var scaleNumber = function(number, formatter) {
+    if(number > 999999){
+      return formatter(number / Math.pow(10, 6)) +'M'; // 69000000 => 69M
+    }
+    if(number > 9999){
+      return formatter(number / Math.pow(10, 3)) + 'K'; // 69000 => 69K
+    }
+    return formatter(number);
+  };
+
   // brandon's number converter for histogram/graphs
   function numberFormatConverter (num){
     var intInt = d3.format('.0f');
-    var numNum = d3.format('.2f');
     var perPer = d3.format('.1%');
     var extExt = d3.format('.2%');
-    var result = 0;
 
     if ( isNaN(num) || num === null){
       return "N/A";
     }
 
-    if(measurementUnit === 'number' || measurementUnit === 'dollars'){
-      result =  numNum(num); // 69.6969 => 69.70
-      if(num > 9999){
-        result = numNum(num/1000) +'K'; // 69000 => 69K
-      }   
-      if(num > 999999){
-        result = numNum(num/1000000) +'M'; // 69000000 => 69M
-      }
-    }
     if(measurementUnit === 'integer'){
       return intInt(num); // 69
     }
@@ -86,11 +87,16 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       return extExt(num); // 0.00069 => 0.069%
     }
     if(measurementUnit === 'dollars'){
-      return "$" + result;
-    } else {
-      return result;
+      return "$" + scaleNumber(num, d3.format('.2f'));
     }
-  }  
+    if(measurementUnit === 'dollars_mill'){
+      return "$" + scaleNumber(num/1000, d3.format('.2f'));
+    }
+    if (measurementUnit === 'number') {
+      return scaleNumber(num, d3.format('.1f'));
+    }
+    return "N/A";
+  }
 
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
@@ -117,7 +123,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function getDataSets (mapSource, dataSource) {
 
     var q = queue().defer(d3.csv, dataSource);
-    
+
     if (isSVGMap) {
       q.defer(d3.xml, mapSource, 'image/svg+xml').await(function (err, dataSource, mapSource) {
         var hawaiiSvg = document.importNode(mapSource.documentElement, true);
@@ -132,13 +138,16 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
   function ready (err, sourceData, sourceMap, isSVGMap) {
     setupMap(sourceMap, width, height);
-    
-    data = window.transData = transformFIPSData(sourceData); // DEV ONLY
+
+    // DEV ONLY
+    window.transData = transformFIPSData(sourceData);
+    data = window.transData;
     // var data = transformFIPSData(sourceData); // PRODUCTION OK
 
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
-    
-    filteredStates = window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
+
+    window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
+    filteredStates = window.fStates;
 
     if (datasetSummaryRecords.length !== 0) {
       filteredStates.unshift(datasetSummaryRecords[0]);
@@ -176,7 +185,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
       path = d3.geo.path()
         .projection(projection);
-      
+
       svg = d3.select(mapEl).append('svg');
       g = svg.append('g');
     }
@@ -191,7 +200,8 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function drawMap (map, data) {
     // Create object to hold each state and it corresponding value
     // based on a single year {"statename": value, ...}
-    var valuesByArea = window.vbs = {};
+    window.vbs = {};
+    var valuesByArea = window.vbs;
 
     var areaType = isSVGMap ? 'County' : 'State';
 
@@ -199,8 +209,8 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     data.forEach(function (d, i) {
       valuesByArea[d[areaType]] = +d.Years[selectedMaxYear];
     });
-    
-    // Create an array containing the min and max values 
+
+    // Create an array containing the min and max values
     var yearValuesRange = d3.extent(d3.values(valuesByArea));
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
@@ -211,25 +221,31 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     // Draws the histogram for the main graph
     drawHistogram(yearValuesRange, color);
 
+    var passMapClickTargetWithId = function() {
+      passMapClickTarget(this.id);
+    };
+
+    var populateMapToolTipMouseOver = function() {
+      populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
+    };
+
+    var positionMapTooltipHover = function() {
+      positionMapTooltip('hover');
+    };
+
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
           if (key !== 'Honolulu') {
             countySvg
-              .on('click', function () {
-                return passMapClickTarget(this.id);
-              })
-              .on('mouseover', function () {
-                return populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
-              })
-              .on('mousemove', function () {
-                return positionMapTooltip('hover');
-              });
+              .on('click', passMapClickTargetWithId)
+              .on('mouseover', populateMapToolTipMouseOver)
+              .on('mousemove', positionMapTooltipHover);
           }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
-      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true)
+      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true);
       positionMapTooltip('fixed', fixedXYs.Honolulu);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -252,7 +268,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
             return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
         })
-        .on('mousemove', function (d) {  
+        .on('mousemove', function (d) {
           if (d.properties.name !== 'Hawaii') {
             return positionMapTooltip('hover');
           }
@@ -262,8 +278,23 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     }
   }
 
+  // returns a pretty string for secondValue - firstValue.
+  function getChangeString(firstValue, secondValue) {
+    var change = secondValue - firstValue;
+    if (isNaN(change)) {
+      return 'N/A';
+    }
+
+    change = numberFormatConverter(change);
+    if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
+      return change.slice(0,-1);
+    }
+
+    return change;
+  }
+
   function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
-    
+
     var targetType = isHawaii ? 'County' : 'State';
 
     if (isHawaii) {
@@ -273,13 +304,6 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
       lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
     }
-    
-    var percentChange = (lateValue - earlyValue) / earlyValue;
-    if ( isNaN(percentChange) || percentChange === Infinity || percentChange === -Infinity) {
-      percentChange = 'N/A';
-    } else { 
-      percentChange = fmtPercent(percentChange);
-    }
 
     var arrow;
     if (type === 'fixed') {
@@ -287,7 +311,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
     }
-    arrow.html(function () {return null;})
+    arrow.html(function () { return null; })
       .append('h3')
       .classed('tooltip-title', true)
       .text(areaName);
@@ -296,9 +320,9 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .text(numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text( percentChange );
+      .text(getChangeString(earlyValue, lateValue));
   }
-  
+
   function positionMapTooltip (type, fixedXYsObj) {
     if (type === 'fixed') {
       fixedMapTooltip.style({
@@ -348,10 +372,11 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
     d3.select(histogramEl).html("");
 
-    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 194, "height": 207}).append('g');
+    var svgHistogram = d3.select(histogramEl).append('svg').attr({"width": 210, "height": 207}).append('g');
     var histogramKeys = mapRanges.slice(0);
 
-    svgHistogram.append('text')
+    svgHistogram
+      // .append('text')
       .attr({"x": 5,"y": 15, "width":"100%","height":"auto","class":"histogram_text"})
       // below line is hardcoded. need to fix to dynamic with $scope or other
       .text(legendText)
@@ -372,7 +397,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .attr("ry", 2)
       .attr("width", 25)
       .attr("height", 15)
-      .style({     
+      .style({
         "fill": function(d){ return d;},
         "display" : "inline-block",
       });
@@ -396,7 +421,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
         if (i < 4){
           return numberFormatConverter(d[0]) + " - " + numberFormatConverter(d[1]);
         }
-        if (i = 4){
+        if (i == 4) {
           return numberFormatConverter(d[0]) + "+";
         }
       });
@@ -424,7 +449,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
             });
           }
         // });
-          
+
         }
       }
     }
@@ -439,7 +464,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .insert('text')
       .text(selectedMaxYear);
     // percent change
-    d3.select(currentPercentEl).html("")
+    d3.selectAll(currentPercentEl).html("")
       .insert('text')
       .text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
@@ -451,13 +476,24 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     d3.select(valueChangeEl).html("")
       .insert('text')
       .text(function() {
+        var postfix = '',
+            prefix, number;
         var change = lateValue - earlyValue;
         if (change >= 0) {
-          return "an increase of " + numberFormatConverter( change ) + " "; //blamebrandontag
+          prefix = 'an increase of ';
+          number = numberFormatConverter(change);
         } else {
-          return "a decrease of " + numberFormatConverter( Math.abs(change) ) + " ";
+          prefix = 'a decrease of ';
+          number = numberFormatConverter(Math.abs(change));
         }
-      }); 
+
+        if(measurementUnit === 'percent' || measurementUnit === 'extended_percent'){
+          number = number.slice(0, -1);
+          postfix = ' percentage points ';
+        }
+
+        return prefix + number + postfix;
+      });
     // previous year
     d3.select(previousYearEl).html("")
       .insert('text')
@@ -487,8 +523,8 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
         left: 70
       };
 
-    if (extraWideGraphLabels) { 
-      margins.left = 100; 
+    if (extraWideGraphLabels) {
+      margins.left = 100;
     }
 
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
@@ -543,7 +579,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     // .defined insures that only non-negative values are graphed
     lineGen = d3.svg.line()
       .defined(function(d) {
-        return !(d.value === null);
+        return d.value !== null;
       })
       .x(function(d) {
         return xScale(d.year);
@@ -555,15 +591,18 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
-      usAvgData = window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
-    
+      window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
+      usAvgData = window.usData;
+
       drawLine(vis, usAvgData, graphColors.usColor);
     }
 
-    hiStateData = window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
+    hiStateData = window.hiData;
     drawLine(vis, hiStateData, graphColors.hiColor);
 
-    selectedStateData = window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+    window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
+    selectedStateData =  window.selStateData;
 
     if (selectedStateData.length !== 0) {
       drawLine(vis, selectedStateData, graphColors.selectedColor);
@@ -586,9 +625,9 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
         if ((mouseX <= width - margins.right) && mouseX >= margins.left) {
           var yearAtX = Math.round(xScale.invert(mouseX));
-          var hoverData = window.hData = [
-              [knownSummaryRecords[0], usAvgData, graphColors.usColor], 
-              [geoAreaNames[0], hiStateData, graphColors.hiColor], 
+          window.hData = [
+              [knownSummaryRecords[0], usAvgData, graphColors.usColor],
+              [geoAreaNames[0], hiStateData, graphColors.hiColor],
               [geoAreaNames[1], selectedStateData, graphColors.selectedColor]
             ]
             .filter(function (item) {
@@ -601,6 +640,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
             .map(function (item) {
               return [item[0], findGeoValueAtYear(item[1], yearAtX), item[2]];
             });
+          var hoverData = window.hData;
 
           hoverData.unshift(["Year", yearAtX, graphColors.text]);
 
@@ -636,7 +676,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
               return mouseY + 30 + i * 30;
             })
             .text(function(d) {
-              if (d[1] === undefined || d[1] == null) {
+              if (typeof d[1] === 'undefined' || d[1] === null) {
                 d[1] = "N/A"; // may need to remove this
               }
               if (d[0] === "Year") {
@@ -669,7 +709,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
 
     svgKey.insert('g')
-      .append('text')
+      //.append('text')
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
@@ -683,7 +723,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       legendData.unshift(knownSummaryRecords);
     }
 
-    // appends key labels 
+    // appends key labels
     vis.insert('g');
     svgKey.insert('g')
       .selectAll('text')
@@ -699,7 +739,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       .text(function (d){
         return d;
       });
-   
+
    // adds colors to keys
     vis.insert('g');
     svgKey.insert('g')
@@ -759,7 +799,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
   // Draw Slider
   function drawBrush (sourceMap, data, setMinVals, setMaxVals) {
-    
+
     var tickFormat = d3.format('.0f');
 
     var scale = d3.scale.linear()
@@ -798,7 +838,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
 
       drawMap(sourceMap, data);
       drawGraph();
-      renderSummaryText(); 
+      renderSummaryText();
     }
 
     var brushSVG = d3.select("#uh-brush-test");
@@ -848,7 +888,6 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     buildGeoNameList(isSVGMap, targetName);
 
     var selectedGeoAreaObj = filterStateObjects(data, [targetName], geoAreaCategory)[0];
-
     // sometimes there won't be US Average data (datasetSumaryRecords)
     // also we pluck out the US Average data object in the beginning, so geoAreaNames only has States/Counties (minus US average object)
     filteredStates[geoAreaNames.length + datasetSummaryRecords.length - 1] = selectedGeoAreaObj;
@@ -863,20 +902,20 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     .range(rangeArr);
   }
 
-  // This function work takes a FIPS dataset 
+  // This function work takes a FIPS dataset
   function transformFIPSData (data) {
     var yearKey = /^\d\d\d\d$/;
     return _.map(data, function (item) {
       return _.transform(item, function (result, n, key) {
         if (yearKey.test(key)) {
           var transformedVal = +n;
-          result.Years[key] = transformedVal ? transformedVal : null;
+          result.Years[key] = typeof transformedVal === 'number' ? transformedVal : null;
         } else {
           result[key] = n;
         }
       }, {Years: {}});
-    });  
-  } //end transformFIPSData
+    });
+  } //end
 
   // Takes data and an array of state names (strings) to find
   function filterStateObjects (data, geoAreaNamesArr, geoAreaCategory) {
@@ -887,14 +926,14 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   }
 
   function popSummaryData (data, knownSumRecArr) {
-    
+
     var summarizedDataRecords = [];
 
     data.map(function (record, idx, arr) {
       for (var i = knownSumRecArr.length - 1; i >= 0; i--) {
         if (record.State === knownSumRecArr[i]) {
           summarizedDataRecords.push(arr.splice(idx, 1)[0]);
-        }    
+        }
       }
     });
     return summarizedDataRecords;
@@ -903,12 +942,12 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function findMaxFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
       var keysArr = d3.keys(item.Years);
-    
+
       if (keysArr.length > result.numOfYrs) {
         result.numOfYrs = keysArr.length;
         var maxKey = d3.max(keysArr);
         if (maxKey > result.maxYear) {
-          result.maxYear = maxKey;  
+          result.maxYear = maxKey;
         }
       }
       var stateMax = d3.max(d3.values(item.Years));
@@ -922,12 +961,12 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
   function findMinFIPSVals (data) {
     return _.reduce(data, function (result, item, key) {
       var keysArr = d3.keys(item.Years);
-    
+
       if (keysArr.length > result.numOfYrs) {
         result.numOfYrs = keysArr.length;
         var minKey = d3.min(keysArr);
         if (minKey < result.minYear) {
-          result.minYear = minKey;  
+          result.minYear = minKey;
         }
       }
       var stateMin = d3.min(d3.values(item.Years));
@@ -937,7 +976,7 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
       return result;
     }, {numOfYrs: 0, minYear: Infinity, minVal: Infinity});
   } //end findMinFIPSVals
-  
+
   // takes in array of data objects, and outputs array with min value and max value of all values in all data objects.
   function findGraphMinMax (data) {
     var allValuesArr = [];
@@ -950,9 +989,9 @@ module.exports = function (scope, mapSource, dataSource, donutChartEl, currentYe
     var filteredValues = _.remove(allValuesArr, function (value) {
       return value != -1;
     });
-    
-    return { 
-      minVal : _.min(filteredValues), 
+
+    return {
+      minVal : _.min(filteredValues),
       maxVal : _.max(filteredValues)
     };
   } //end findGraphMinMax
