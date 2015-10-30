@@ -475,6 +475,14 @@ section:last-child, section
          padding-left: 20px;
       }
    }
+
+   @media#{$medium-only} {
+      margin-right: 10%;
+
+      svg {
+         padding-left: 20px;
+      }
+   }
 }
 
 #hover-tooltip, #fixed-tooltip {
