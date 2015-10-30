@@ -18,7 +18,7 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
 
   var entDataset = {
     US: [1000 - 212, 212],
-    HI: [1000 - 94, 94]
+    HI: [1000 - 110, 110]
   };
 
   var econDataset = {
@@ -70,7 +70,7 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
         .attr("fill", function(d, i) { return viewColors[i]; })
         .attr("d", arcHI);
     // HI Key
-
+    
     d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_text_hi")

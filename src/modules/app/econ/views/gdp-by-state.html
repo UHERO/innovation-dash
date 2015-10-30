@@ -1,18 +1,16 @@
 <section>
   <div class="info_legend_container clearfix">
-    <div class="graphs_container">
-      <div class="map_info">
-        <!-- <h2><span class="numbers">2</span> In Hawaii...</h2> -->
-        <h3>In <span class="uh-current-year"></span>, gross domestic product was <span class="uh-percent"></span> billion.</h3>
-      </div> <!-- .map_info -->
-
-      <div uh-graphs map-url="assets/maps/USA.json" d3-data-url="http://localhost:4567/economics/eco_gdp_by_state" color-scheme="econ" d3-y-unit-measure="$B of current dollars" legend-text="GDP by State" measurement-unit="dollars_mill"></div>
-      <!-- <div class="map_toggle_container clearfix"> --> <!-- map toggle container -->
-        <!-- <div class="legend" id="uh-histogram"> -->
-      <!-- </div> --> <!-- .map_toggle container-->
-    </div>
-  </div>
+    <div class="map_info">
+      <h2><span class="numbers">2</span> In Hawaii...</h2>  
+      <h3>In <span class="uh-current-year"></span>, the gross domestic product value was worth <span class="uh-percent"></span> million.</h3>
+    </div> <!-- .map_info -->
+    
+    <div class="map_toggle_container clearfix"> <!-- map toggle container -->
+      <div class="legend" id="uh-histogram">
+    </div> <!-- .map_toggle container-->
 </section>
+
+<div uh-graphs map-url="/assets/maps/USA.json" d3-data-url="http://localhost:4567/economics/eco_gdp_by_state" color-scheme="econ" d3-y-unit-measure="$M of current dollars" legend-text="GDP by County" measurement-unit="dollars"></div>
 
 <div class="references">
 <h3>References</h3>

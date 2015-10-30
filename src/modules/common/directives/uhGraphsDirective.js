@@ -16,7 +16,7 @@ module.exports = /*@ngInject*/
       // }],
     
       link: function (scope, element, attrs) {
-        // var mapSource = 'assets/images/USA.json';
+        // var mapSource = '/assets/images/USA.json';
         // scope.yUnitMeasure = "Link Scaled Measueremet";
         // console.log('scope.yUnitMeasure',scope.yUnitMeasure);
         var d3Charts = require('../d3/charts');
