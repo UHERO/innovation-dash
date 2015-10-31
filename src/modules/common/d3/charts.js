@@ -210,8 +210,8 @@ module.exports = function (scope, mapSource, dataSource,
       valuesByArea[d[areaType]] = +d.Years[selectedMaxYear];
     });
 
-    // Create an array containing the min and max values
-    var yearValuesRange = d3.extent(d3.values(valuesByArea));
+    // Create an array containing the values
+    var yearValuesRange = d3.values(valuesByArea);
     var color = setQuantileColorScale(yearValuesRange,viewColors[colorScheme]);
 
     resetMapTooltips(fixedMapTooltip);
