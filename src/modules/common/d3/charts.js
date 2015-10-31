@@ -480,16 +480,37 @@ module.exports = function (scope, mapSource, dataSource,
             prefix, number;
         var change = lateValue - earlyValue;
         if (change >= 0) {
-          prefix = 'an increase of ';
+          prefix = '';
+          postfix = ' more';
+          // prefix = 'an increase of ';
           number = numberFormatConverter(change);
         } else {
-          prefix = 'a decrease of ';
+           prefix = '';
+           postfix = ' fewer';
+          //prefix = 'a decrease of ';
           number = numberFormatConverter(Math.abs(change));
         }
 
         if(measurementUnit === 'percent' || measurementUnit === 'extended_percent'){
+          if (change >= 0) {
+             prefix = 'an increase of ';
+          } else {
+             prefix = 'a decrease of ';
+          }
           number = number.slice(0, -1);
           postfix = ' percentage points ';
+        }
+
+        if(measurementUnit === 'dollars') {
+           if (change >= 0) {
+             prefix = '';
+             postfix = ' more';
+              number = numberFormatConverter(change);
+          } else {
+             prefix = '';
+             postfix = ' less';
+             numberFormatConverter(Math.abs(change));
+          }
         }
 
         return prefix + number + postfix;
