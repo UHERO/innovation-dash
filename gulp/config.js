@@ -23,7 +23,7 @@ global.config = {
     dest: {
       build: {
         styles: BUILD_FOLDER,
-        sass: BUILD_FOLDER + '/bundle.css', 
+        sass: BUILD_FOLDER + '/bundle.css',
         scripts: BUILD_FOLDER,
         images: BUILD_FOLDER + '/assets/images',
         assets: BUILD_FOLDER + '/assets',
@@ -68,7 +68,7 @@ global.config = {
       url: 'localhost:4567'
     },
     release: {
-      url: 'uhero-api.devleague.com'
+      url: 'udaman.uhero.hawaii.edu:4567'
     }
   }
 };
