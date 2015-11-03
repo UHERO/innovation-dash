@@ -40,9 +40,36 @@ h3{
   background-color: $edu_med_dark;
 }
 
+.container {
+
+   .education {
+      border-top: 5px solid;
+      border-color: $edu_med_dark;
+      border-top-left-radius: 5px;
+   }
+
+   .research {
+      border-top: 5px solid;
+      border-color: $rnd_med_light;
+      border-top-left-radius: 5px;
+   }
+
+   .entrepreneurship {
+      border-top: 5px solid;
+      border-color: $ent_medium;
+      border-top-left-radius: 5px;
+   }
+
+   .economic {
+      border-top: 5px solid;
+      border-color: $econ_medium;
+      border-top-left-radius: 5px;
+   }
+}
+
 .education {
     .title, .numbers, aside ul li:hover, .item.active {
-    background-color: $edu_medium;
+    background-color: $edu_med_dark;
   }
   /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $edu_medium;
@@ -137,6 +164,7 @@ h3{
   margin: auto;
   max-width: 1200px;
   width: 98%;
+  margin-top: -4%;
 }
 
 .logo{
@@ -225,9 +253,8 @@ nav{
 
 .title{
   background-color: $econ_medium;
-  height: 43px;
-  text-align: center;
-  padding: 30px 0 10px;
+  height: 15px;
+  //padding: 30px 0 10px;
   border-top-left-radius: 5px;
 }
 
@@ -235,11 +262,10 @@ aside{
   width: 20%;
   background-color: $light_grey;
   float:left;
-  padding: 20px;
+  padding: 10px 20px;
   height: 100%;
 
   ul{
-    margin-top: 20px;
 
     li{
       background-color: $white;
@@ -261,17 +287,18 @@ aside{
   }
 }
 
-.map_toggle{
+.map_toggle {
   padding: 10 5px;
   width: 100%;
   display: inline-block;
   z-index: 4;
   position: relative;
 
-  h3{
+  h3 {
     font-size: 13px;
     margin: 12px;
     text-align: center;
+
   }
 
   ul {
@@ -370,9 +397,14 @@ section:last-child, section
     width: 100%;
     white-space: normal;
     display: block;
-    /* float: left; */
-    padding-bottom: 7%;
+    margin-top: -2%;
+    //float: left;
+    //padding-bottom: 7%;
     text-align: center;
+
+    text {
+      font-size: 1em;
+    }
   }
 
   .map_toggle_container{
@@ -428,10 +460,14 @@ section:last-child, section
 }
 
 .line_graph_container{
+   margin-top: -6%;
+   margin-left: -2%;
+   width: 99%;
+   white-space: nowrap;
 
     .graph{
       float: left;
-      margin-right: 20px;
+      width: 80%;
     }
 
     .key{
@@ -447,13 +483,14 @@ section:last-child, section
 }
 #uh-map {
   position: relative;
-  width: 90%;
+  width: 81%;
   display: inline-block;
-  margin-left: -5%;
+  margin-top: -2%;
 
   svg {
-    margin-top: -160px;
-    height: 565px;
+    margin-top: -5%;
+    height: 410px;
+    width: 650px;
   }
 
   /* @media#{$small-only} {
@@ -462,10 +499,10 @@ section:last-child, section
 }
 
 #uh-histogram {
-   width: 5%;
+   width: 10%;
    float: right;
-   margin-top: -25%;
-   margin-right: 12%;
+   margin-top: -27%;
+   margin-right: 10%;
    display: inline-block;
 
    @media#{$small-only} {
@@ -634,11 +671,12 @@ footer{
 }
 
 #uh-key {
-   margin-top: -20%;
-   margin-left: 72%;
+   width: 20%;
+   margin-top: 30%;
+   float: right;
+   margin-right: -5%;
 
    svg {
-      width: 20%;
       height: 100px;
    }
 }
@@ -646,7 +684,8 @@ footer{
 // the little helper text that show minYear, maxYear
 // FOR DEBUGGING PURPOSES
 #uh-brush {
-   margin-top: -5%;
+   margin-top: 1%;
+   margin-left: -2%;
 
   span {
     font-family: 'Montserrat', sans-serif;

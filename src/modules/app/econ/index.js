@@ -39,11 +39,17 @@ module.exports =
     })
     .state('econ.per-capita-personal-income', {
       url: '/per-capita-personal-income',
-      abstract: true,
-      templateUrl: 'app/econ/views/per-capita-personal-income.html'
-      // controller: 'PerCapitaController'
+      // abstract: true,
+      templateUrl: 'app/econ/views/per-capita-personal-income.html',
+      controller: 'PerCapitaController'
     })
-    .state('econ.per-capita-personal-income.us', {
+    .state('econ.per-capita-personal-income-county', {
+       url: '/per-capita-personal-income-county',
+       templateUrl: 'app/econ/views/per-capita-personal-income-county.html',
+       controller: 'PerCapitaHawaiiController'
+    })
+    
+   /* .state('econ.per-capita-personal-income.us', {
       url: '/us',
       templateUrl: 'app/econ/views/per-capita-personal-income.us.html',
       controller: 'PerCapitaController'
@@ -52,14 +58,21 @@ module.exports =
       url: '/hawaii',
       templateUrl: 'app/econ/views/per-capita-personal-income.hawaii.html',
       controller: 'PerCapitaHawaiiController'
-    })
+    }) */
+       
     .state('econ.non-farm-jobs', {
       url: '/non-farm-jobs',
-      abstract: true,
-      templateUrl: 'app/econ/views/non-farm-jobs.html'
-      // controller: 'NonFarmController'
+      // abstract: true,
+      templateUrl: 'app/econ/views/non-farm-jobs.html',
+      controller: 'NonFarmController'
     })
-    .state('econ.non-farm-jobs.us', {
+    .state('econ.non-farm-jobs-county', {
+       url: '/non-farm-jobs-county',
+       templateUrl: 'app/econ/views/non-farm-jobs-county.html',
+       controller: 'NonFarmHawaiiController'
+    })
+    
+    /* .state('econ.non-farm-jobs.us', {
       url: '/us',
       templateUrl: 'app/econ/views/non-farm-jobs.us.html',
       controller: 'NonFarmController'
@@ -68,14 +81,21 @@ module.exports =
       url: '/hawaii',
       templateUrl: 'app/econ/views/non-farm-jobs.hawaii.html',
       controller: 'NonFarmHawaiiController'
-    })
+    }) */
+    
     .state('econ.unemployment-rate', {
       url: '/unemployment-rate',
-      abstract: true,
-      templateUrl: 'app/econ/views/unemployment-rate.html'
-      // controller: 'UnemploymentRateController'
+      // abstract: true,
+      templateUrl: 'app/econ/views/unemployment-rate.html',
+      controller: 'UnemploymentRateController'
     })
-    .state('econ.unemployment-rate.us', {
+    .state('econ.unemployment-rate-county', {
+       url: '/unemployment-rate-county',
+       templateUrl: 'app/econ/views/unemployment-rate-county.html',
+       controller: 'UnemploymentRateHawaiiController'
+    })
+    
+    /* .state('econ.unemployment-rate.us', {
       url: '/us',
       templateUrl: 'app/econ/views/unemployment-rate.us.html',
       controller: 'UnemploymentRateController'
@@ -84,14 +104,21 @@ module.exports =
       url: '/hawaii',
       templateUrl: 'app/econ/views/unemployment-rate.hawaii.html',
       controller: 'UnemploymentRateHawaiiController'
-    })
+    }) */
+    
     .state('econ.average-earnings-per-job', {
       url: '/average-earnings-per-job',
-      abstract: true,
-      templateUrl: 'app/econ/views/average-earnings-per-job.html'
-      // controller: 'AverageEarningsController'
+      // abstract: true,
+      templateUrl: 'app/econ/views/average-earnings-per-job.html',
+      controller: 'AverageEarningsController'
     })
-    .state('econ.average-earnings-per-job.us', {
+    .state('econ.average-earnings-per-job-county', {
+       url: '/average-earnings-per-job-county',
+       templateUrl: 'app/econ/views/average-earnings-per-job-county.html',
+       controller: 'AverageEarningsHawaiiController'
+    });
+    
+    /* .state('econ.average-earnings-per-job.us', {
       url: '/us',
       templateUrl: 'app/econ/views/average-earnings-per-job.us.html',
       controller: 'AverageEarningsController'
@@ -100,7 +127,7 @@ module.exports =
       url: '/hawaii',
       templateUrl: 'app/econ/views/average-earnings-per-job.hawaii.html',
       controller: 'AverageEarningsHawaiiController'
-    });
+    }); */
   })
 
   .controller('EconController', require('./EconController'))
