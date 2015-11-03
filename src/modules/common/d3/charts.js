@@ -45,7 +45,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaNames;
   var fixedXYs = {
         Hawaii: {top:'365px', left:'190px' },
-        Honolulu: {top:'115px', left:'257px' }
+        Honolulu: {top:'130px', left:'257px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
