@@ -44,8 +44,8 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaCategory;
   var geoAreaNames;
   var fixedXYs = {
-        Hawaii: {top:'357px', left:'240px' },
-        Honolulu: {top:'10px', left:'300px' }
+        Hawaii: {top:'365px', left:'190px' },
+        Honolulu: {top:'115px', left:'257px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
@@ -169,8 +169,8 @@ module.exports = function (scope, mapSource, dataSource,
   // Setup Graph Components
   function setupMap (sourceMap, width, height) {
     projection = d3.geo.albersUsa()
-      .scale(1000)
-      .translate([width / 2, height / 2]);
+      .scale(850)
+      .translate([(width / 2) - 75, (height / 2) - 90]);
 
     if (isSVGMap) {
       var parentNode = document.getElementById(mapEl.slice(1));
@@ -180,8 +180,8 @@ module.exports = function (scope, mapSource, dataSource,
     } else {
       svg = d3.select(mapEl);
       projection = d3.geo.albersUsa()
-        .scale(1000)
-        .translate([width / 2, height / 2]);
+        .scale(850)
+        .translate([(width / 2) - 75, (height / 2) - 90]);
 
       path = d3.geo.path()
         .projection(projection);
@@ -729,14 +729,14 @@ module.exports = function (scope, mapSource, dataSource,
     d3.select(keyEl).html("");
     var svgKey = d3.select(keyEl).append('svg').attr({"width": "100%", "height": 250}).append('g');
 
-    svgKey.insert('g')
+    /* svgKey.insert('g')
       //.append('text')
       .attr('class','key_text')
       .attr("x", 0)
       .attr("y", 10)
       .attr('fill', graphColors.text)
       .text(legendText)
-      .call(wrap,128);
+      .call(wrap,128); */
 
     // deals with not having US average data or not:
     var legendData = geoAreaNames.slice(0); // prevents changes to geoAreaNames when modifying legendData
@@ -882,7 +882,7 @@ module.exports = function (scope, mapSource, dataSource,
 
     var axisG = brushSVG.append("g");
     brushAxis(axisG);
-    axisG.attr("transform", "translate(20, 45)");
+    axisG.attr("transform", "translate(20, 5)");
     axisG.selectAll("path")
       .style({ fill: "none" });
     axisG.selectAll("line")
@@ -891,7 +891,7 @@ module.exports = function (scope, mapSource, dataSource,
     // appending brush after axis so ticks appear before slider
     var brushG = brushSVG.append('g');
     brush(brushG);
-    brushG.attr("transform", "translate(20, 50)")
+    brushG.attr("transform", "translate(20, 10)")
       .selectAll("rect").attr("height", 10);
     brushG.selectAll(".background")
       .style({ fill: "#D3D0C1", visibility: "visible" });
