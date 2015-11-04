@@ -9,8 +9,14 @@
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.patents-per-occupation">Patents per Science &amp; Engineering Occupation</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.utility-patents-by-county">Utility Patents By County</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.sbir">SBIR</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="rnd.academic-rnd">Academic SE R&amp;D</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="rnd.academic-rnd-by-county">Academic SE R&amp;D by County</a></li>
+
+      <input type="checkbox" name="Academic-SE" id="Academic-SE"></input>
+      <label for="Academic-SE">Academic SE R&amp;D</label>
+         <ul id="sub-menu">
+         <li ui-sref-active="active" class="item"><a ui-sref="rnd.academic-rnd">By State</a></li>
+         <li ui-sref-active="active" class="item"><a ui-sref="rnd.academic-rnd-by-county">By County</a></li>
+         </ul>
+
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.federal-rnd">Federal R&amp;D</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.business-rnd">Business R&amp;D</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="rnd.university-startups">University Startups</a></li>

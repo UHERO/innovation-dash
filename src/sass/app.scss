@@ -128,9 +128,10 @@ h3{
 }
 
 .economic{
-  .title, .numbers, aside ul li:hover, .item.active{
+  .title, .numbers, aside ul li:hover, .item.active {
     background-color: $econ_medium;
   }
+
   /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $econ_medium;
     border-radius: 5px;
@@ -264,6 +265,34 @@ aside{
   float:left;
   padding: 10px 20px;
   height: 100%;
+
+  input[type=checkbox] {
+     /* hide checkbox */
+     position: absolute;
+     opacity: 0;
+  }
+
+  label {
+     background-color: $white;
+     border-radius: 3px;
+     font-size: 14px;
+     position: relative;
+     display: block;
+     padding: 15px;
+     margin-bottom: 5px;
+  }
+
+  #sub-menu {
+     display: none;
+
+     li {
+        margin-left: 25px;
+     }
+  }
+
+  input[type=checkbox]:checked + label + #sub-menu, input[type=checkbox]:checked + label:nth-of-type(n) + #sub-menu {
+     display: block;
+  }
 
   ul{
 
