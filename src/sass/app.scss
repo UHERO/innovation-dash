@@ -16,7 +16,7 @@ body{
 header {
   padding-top: 40px;
 
-  @media #{$medium-down}{
+  @media #{$small-only}{
     padding: 0;
   }
 }
@@ -88,9 +88,14 @@ h3{
 }
 
 .research {
-    .title, .numbers, aside ul li:hover, .item.active{
+    .title, .numbers, aside ul li:hover, .item.active, input[type=checkbox]:hover + label, input[type=checkbox]:hover + label:nth-of-type(n) {
     background-color: $rnd_medium;
   }
+
+  input[type=checkbox]:checked + label, input[type=checkbox]:checked + label:nth-of-type(n) {
+     border-left: 5px solid $rnd_medium;
+  }
+
    /* .info_legend_container .legend,.key, .research .map_toggle, .research .key{
     border: 2px solid $rnd_medium;
     border-radius: 5px;
@@ -128,8 +133,12 @@ h3{
 }
 
 .economic{
-  .title, .numbers, aside ul li:hover, .item.active {
+  .title, .numbers, aside ul li:hover, .item.active, input[type=checkbox]:hover + label, input[type=checkbox]:hover + label:nth-of-type(n) {
     background-color: $econ_medium;
+  }
+
+  input[type=checkbox]:checked + label, input[type=checkbox]:checked + label:nth-of-type(n) {
+     border-left: 5px solid $econ_medium;
   }
 
   /* .info_legend_container .legend, .key, .map_toggle, .key{
@@ -161,11 +170,15 @@ h3{
 }
 
 /* Layouts */
-.wrapper{
+.wrapper {
   margin: auto;
   max-width: 1200px;
   width: 98%;
   margin-top: -4%;
+
+  @media #{$small-only} {
+     margin-top: 0%;
+ }
 }
 
 .logo{
@@ -173,7 +186,7 @@ h3{
   display: inline;
   float: left;
 
-  @media #{$medium-down}{
+  @media #{$small-only}{
     display: block;
     width: 100%;
     height: 50px;
@@ -194,7 +207,7 @@ nav{
   text-align: right;
   float: right;
 
-  @media #{$medium-down}{
+  @media #{$small-only}{
     display: block;
     width: 100%;
     text-align: center;
@@ -275,7 +288,7 @@ aside{
   label {
      background-color: $white;
      border-radius: 3px;
-     font-size: 14px;
+     font-size: 0.82em;
      position: relative;
      display: block;
      padding: 15px;
@@ -292,6 +305,11 @@ aside{
 
   input[type=checkbox]:checked + label + #sub-menu, input[type=checkbox]:checked + label:nth-of-type(n) + #sub-menu {
      display: block;
+  }
+
+  input[type=checkbox]:hover + label, input[type=checkbox]:hover + label:nth-of-type(n) {
+     cursor: pointer;
+     color: $white;
   }
 
   ul{
@@ -713,7 +731,7 @@ footer{
 // the little helper text that show minYear, maxYear
 // FOR DEBUGGING PURPOSES
 #uh-brush {
-   margin-top: 1%;
+   margin-top: -2%;
    margin-left: -2%;
 
   span {

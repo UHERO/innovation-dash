@@ -44,7 +44,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaCategory;
   var geoAreaNames;
   var fixedXYs = {
-        Hawaii: {top:'365px', left:'190px' },
+        Hawaii: {top:'345px', left:'195px' },
         Honolulu: {top:'130px', left:'257px' }
       };
 
@@ -169,8 +169,8 @@ module.exports = function (scope, mapSource, dataSource,
   // Setup Graph Components
   function setupMap (sourceMap, width, height) {
     projection = d3.geo.albersUsa()
-      .scale(850)
-      .translate([(width / 2) - 75, (height / 2) - 90]);
+      .scale(800)
+      .translate([(width / 2) - 75, (height / 2) - 100]);
 
     if (isSVGMap) {
       var parentNode = document.getElementById(mapEl.slice(1));
@@ -180,8 +180,8 @@ module.exports = function (scope, mapSource, dataSource,
     } else {
       svg = d3.select(mapEl);
       projection = d3.geo.albersUsa()
-        .scale(850)
-        .translate([(width / 2) - 75, (height / 2) - 90]);
+        .scale(800)
+        .translate([(width / 2) - 75, (height / 2) - 100]);
 
       path = d3.geo.path()
         .projection(projection);
