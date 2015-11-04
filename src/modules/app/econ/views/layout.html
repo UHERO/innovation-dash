@@ -6,15 +6,37 @@
     <!-- <h2><span class="numbers">1</span> Choose an indicator</h2> -->
     <ul>
       <li ui-sref-active="active" class="item"><a ui-sref="econ.gdp-by-state">GDP by State</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.per-capita-personal-income">Per Capita Personal Income</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.per-capita-personal-income-county">Per Capita Personal Income by County</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.average-earnings-per-job">Average Earnings Per Job</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.average-earnings-per-job-county">Average Earnings Per Job by County</a></li>
+
+      <input type="checkbox" name="Per-Capita-Income" id="Per-Capita-Income"></input>
+      <label for="Per-Capita-Income">Per Capita Personal Income</label>
+         <ul id="sub-menu">
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.per-capita-personal-income">By State</a></li>
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.per-capita-personal-income-county">By County</a></li>
+         </ul>
+
+      <input type="checkbox" name="Avg-Earnings" id="Avg-Earnings"></input>
+      <label for="Avg-Earnings">Average Earnings Per Job</label>
+         <ul id="sub-menu">
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.average-earnings-per-job">By State</a></li>
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.average-earnings-per-job-county">By County</a></li>
+         </ul>
+
       <li ui-sref-active="active" class="item"><a ui-sref="econ.regional-price-parities">Regional Price Parities</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.non-farm-jobs">Non-Farm Jobs</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.non-farm-jobs-county">Non-Farm Jobs by County</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.unemployment-rate">Unemployment Rate</a></li>
-      <li ui-sref-active="active" class="item"><a ui-sref="econ.unemployment-rate-county">Unemployment Rate by County</a></li>
+
+      <input type="checkbox" name="Non-Farm-Jobs" id="Non-Farm-Jobs"></input>
+      <label for="Non-Farm-Jobs">Non-Farm Jobs</label>
+         <ul id="sub-menu">
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.non-farm-jobs">By State</a></li>
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.non-farm-jobs-county">By County</a></li>
+         </ul>
+
+      <input type="checkbox" name="Unemployment-Rate" id="Unemployment-Rate"></input>
+      <label for="Unemployment-Rate">Unemployment Rate</label>
+         <ul id="sub-menu">
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.unemployment-rate">By State</a></li>
+         <li ui-sref-active="active" class="item"><a ui-sref="econ.unemployment-rate-county">By County</a></li>
+         </ul>
+
       <li ui-sref-active="active" class="item"><a ui-sref="econ.state-and-local-tax-burden">State and Local Tax Burden</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="econ.lf-part-empl-rate">Labor Force Participation Rate</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="econ.lf-part-empl">Employment Rate</a></li>
