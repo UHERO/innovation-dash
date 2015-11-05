@@ -290,7 +290,7 @@ module.exports = function (scope, mapSource, dataSource,
       prefix = '+';
     } else {
       prefix = '-';
-      change = Math.abs(change)
+      change = Math.abs(change);
     }
 
     change = numberFormatConverter(change);
@@ -618,7 +618,8 @@ module.exports = function (scope, mapSource, dataSource,
     // .defined insures that only non-negative values are graphed
     lineGen = d3.svg.line()
       .defined(function(d) {
-        return d.value !== null;
+        //return d.value !== null;
+        return !isNaN(d.value);
       })
       .x(function(d) {
         return xScale(d.year);
