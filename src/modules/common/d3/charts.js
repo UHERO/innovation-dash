@@ -281,16 +281,26 @@ module.exports = function (scope, mapSource, dataSource,
   // returns a pretty string for secondValue - firstValue.
   function getChangeString(firstValue, secondValue) {
     var change = secondValue - firstValue;
+    var prefix;
     if (isNaN(change)) {
       return 'N/A';
     }
 
-    change = numberFormatConverter(change);
-    if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
-      return change.slice(0,-1);
+    if (change >= 0) {
+      prefix = '+';
+    } else {
+      prefix = '-';
     }
 
-    return change;
+    change = numberFormatConverter(change);
+    if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
+      change = Math.abs(change.slice(0,-1));
+   }
+    /* if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
+      return change.slice(0,-1);
+   } */
+
+    return prefix + change;
   }
 
   function populateMapTooltip (type, areaName, data, minYear, maxYear, isHawaii) {
@@ -317,10 +327,10 @@ module.exports = function (scope, mapSource, dataSource,
       .text(areaName);
     arrow.append('p')
       .classed('tooltip-val', true)
-      .text(numberFormatConverter(lateValue)); // blamebrandontag
+      .text(selectedMaxYear + ': ' + numberFormatConverter(lateValue)); // blamebrandontag
     arrow.append('p')
       .classed('tooltip-diff', true)
-      .text(getChangeString(earlyValue, lateValue));
+      .text(selectedMinYear + '-' + selectedMaxYear + ': ' + getChangeString(earlyValue, lateValue));
   }
 
   function positionMapTooltip (type, fixedXYsObj) {
