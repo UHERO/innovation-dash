@@ -290,12 +290,14 @@ module.exports = function (scope, mapSource, dataSource,
       prefix = '+';
     } else {
       prefix = '-';
+      change = Math.abs(change)
     }
 
     change = numberFormatConverter(change);
     if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
-      change = Math.abs(change.slice(0,-1));
-   }
+      change = change.slice(0,-1);
+    }
+
     /* if(measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
       return change.slice(0,-1);
    } */
@@ -328,9 +330,15 @@ module.exports = function (scope, mapSource, dataSource,
     arrow.append('p')
       .classed('tooltip-val', true)
       .text(selectedMaxYear + ': ' + numberFormatConverter(lateValue)); // blamebrandontag
-    arrow.append('p')
+    arrow.append('span')
       .classed('tooltip-diff', true)
-      .text(selectedMinYear + '-' + selectedMaxYear + ': ' + getChangeString(earlyValue, lateValue));
+      .text(selectedMinYear + '-' + selectedMaxYear + ': ');
+    arrow.append('span')
+      .text(getChangeString(earlyValue, lateValue))
+      .attr('class', function() {
+         if(getChangeString(earlyValue, lateValue).substring(0,1) === '+') { return 'positive'; }
+         else { return 'negative'; }
+      });
   }
 
   function positionMapTooltip (type, fixedXYsObj) {
