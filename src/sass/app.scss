@@ -178,7 +178,11 @@ h3{
 
   @media #{$small-only} {
      margin-top: 0%;
- }
+  }
+
+  @media #{$large-only} {
+    margin-top: -2%;
+  }
 }
 
 .logo{
