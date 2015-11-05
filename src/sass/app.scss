@@ -536,7 +536,7 @@ section:last-child, section
 
   svg {
     margin-top: -5%;
-    height: 410px;
+    height: 400px;
     width: 650px;
   }
 
@@ -571,7 +571,7 @@ section:last-child, section
 
 #hover-tooltip, #fixed-tooltip {
   position: relative;
-  width: 140px;
+  width: 150px;
   height: 100px;
   z-index: 100;
   text-align: center;
@@ -588,6 +588,13 @@ section:last-child, section
 #fixed-tooltip {
   top: 0;
   left: -9999px;
+}
+
+.positive {
+   color: $ent_medium;
+}
+.negative {
+   color: red;
 }
 
 .timeline_info{
@@ -731,7 +738,7 @@ footer{
 // the little helper text that show minYear, maxYear
 // FOR DEBUGGING PURPOSES
 #uh-brush {
-   margin-top: -2%;
+   margin-top: -1%;
    margin-left: -2%;
 
   span {
