@@ -815,11 +815,6 @@ module.exports = function (scope, mapSource, dataSource,
         } else {
           return graphColors.selectedColor;
         }
-      })
-      .style("stroke-dasharray", function(d) {
-         if(d == "United States") {
-            return "(3, 3)";
-         }
       });
     /* END OF GRAPH LEGEND */
   }
