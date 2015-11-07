@@ -629,23 +629,37 @@ module.exports = function (scope, mapSource, dataSource,
       })
       .interpolate("linear");
 
+    // Draw plot points
+    function drawPoints(graphSVG, data, color) {
+      graphSVG.selectAll("dot")
+         .data(data.filter(function(d) { return !isNaN(d.value); }))
+         .enter().append("circle")
+         .attr("r", 2.5)
+         .attr("cx", function(d) { return xScale(d.year); })
+         .attr("cy", function(d) { return yScale(d.value); })
+         .style("fill", color);
+     }
+
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
       window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
       usAvgData = window.usData;
 
-      drawLine(vis, usAvgData, graphColors.usColor);
+      drawDash(vis, usAvgData, graphColors.usColor);
+      drawPoints(vis, usAvgData, graphColors.usColor);
     }
 
     window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
     hiStateData = window.hiData;
     drawLine(vis, hiStateData, graphColors.hiColor);
+    drawPoints(vis, hiStateData, graphColors.hiColor);
 
     window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
     selectedStateData =  window.selStateData;
 
     if (selectedStateData.length !== 0) {
       drawLine(vis, selectedStateData, graphColors.selectedColor);
+      drawPoints(vis, selectedStateData, graphColors.selectedColor);
     }
     /* END OF LINE DRAWINGS */
 
@@ -801,6 +815,11 @@ module.exports = function (scope, mapSource, dataSource,
         } else {
           return graphColors.selectedColor;
         }
+      })
+      .style("stroke-dasharray", function(d) {
+         if(d == "United States") {
+            return "(3, 3)";
+         }
       });
     /* END OF GRAPH LEGEND */
   }
@@ -1042,7 +1061,19 @@ module.exports = function (scope, mapSource, dataSource,
        .attr("stroke", color)
        .attr("stroke-width", 3)
        .attr("fill", "none");
+
   } //end drawLine
+
+  //Draw dashed lines for US Avg in line graphs
+  function drawDash(graphSVG, data, color) {
+     graphSVG.append("svg:path")
+       .attr("d", lineGen(data))
+       .attr("stroke", color)
+       .attr("stroke-width", 3)
+       .attr("fill", "none")
+       .style("stroke-dasharray", ("15, 5"));
+
+  }
 
   function findGeoValueAtYear (lineData, year) {
     return _.result(_.find(lineData, { 'year': year}), 'value');
