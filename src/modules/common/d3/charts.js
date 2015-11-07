@@ -645,7 +645,7 @@ module.exports = function (scope, mapSource, dataSource,
       window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
       usAvgData = window.usData;
 
-      drawLine(vis, usAvgData, graphColors.usColor);
+      drawDash(vis, usAvgData, graphColors.usColor);
       drawPoints(vis, usAvgData, graphColors.usColor);
     }
 
@@ -815,6 +815,11 @@ module.exports = function (scope, mapSource, dataSource,
         } else {
           return graphColors.selectedColor;
         }
+      })
+      .style("stroke-dasharray", function(d) {
+         if(d == "United States") {
+            return "(3, 3)";
+         }
       });
     /* END OF GRAPH LEGEND */
   }
@@ -1058,6 +1063,17 @@ module.exports = function (scope, mapSource, dataSource,
        .attr("fill", "none");
 
   } //end drawLine
+
+  //Draw dashed lines for US Avg in line graphs
+  function drawDash(graphSVG, data, color) {
+     graphSVG.append("svg:path")
+       .attr("d", lineGen(data))
+       .attr("stroke", color)
+       .attr("stroke-width", 3)
+       .attr("fill", "none")
+       .style("stroke-dasharray", ("15, 5"));
+
+  }
 
   function findGeoValueAtYear (lineData, year) {
     return _.result(_.find(lineData, { 'year': year}), 'value');
