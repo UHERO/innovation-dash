@@ -19,8 +19,10 @@ module.exports = function (scope, mapSource, dataSource,
   };
   var graphColors = {
     usColor: "#AAA797",
-    hiColor: "#4F5050",
-    selectedColor: viewColors[colorScheme][2],
+    hiColor: viewColors[colorScheme][2],
+    selectedColor: "#4F5050",
+    /* hiColor: "#4F5050",
+    selectedColor: viewColors[colorScheme][2], */
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
@@ -639,6 +641,16 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("cy", function(d) { return yScale(d.value); })
          .style("fill", color);
      }
+
+     // Draws points with squares rather than circles
+     /* function drawPoints(graphSVG, data, color) {
+      graphSVG.selectAll("dot")
+         .data(data.filter(function(d) { return !isNaN(d.value); }))
+         .enter().append("path")
+         .attr("d", d3.svg.symbol().type("square"))
+         .attr("transform", function(d) { return "translate(" + xScale(d.year) + "," + yScale(d.value) + ")"; })
+         .style("fill", color);
+     } */
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
