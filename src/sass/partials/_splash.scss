@@ -1,10 +1,10 @@
 /* Styles for Splash Page */
- 
+
 .splash{
   // padding-bottom: 10px;
   border-top-left-radius: 5px;
   background-color: $light_grey;
-    
+
   @media #{$medium-down}{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -76,7 +76,7 @@
 
       @media #{$large-only}{
         max-height: 258px;
-      } 
+      }
     }
 
     h2{
@@ -121,12 +121,12 @@
   }
   .edu & {
     p{
-      color: $edu_med_light;
+      color: $edu_dark;
     }
   }
   .ent & {
     p{
-      color: $ent_med_dark;
+      color: $ent_dark;
     }
   }
   .rnd & {
@@ -167,7 +167,7 @@
   border-radius: 5px;
   background-color: $light_grey;
   margin: 6px 0;
-  
+
   svg{
     margin: auto;
     display: block;

@@ -19,8 +19,10 @@ module.exports = function (scope, mapSource, dataSource,
   };
   var graphColors = {
     usColor: "#AAA797",
-    hiColor: "#4F5050",
-    selectedColor: viewColors[colorScheme][2],
+    hiColor: viewColors[colorScheme][2],
+    selectedColor: "#4F5050",
+    /* hiColor: "#4F5050",
+    selectedColor: viewColors[colorScheme][2], */
     text: "#6E7070"
   };
   var oddDataSetWithGaps = (yUnitMeasure === "Scaled Score");
@@ -256,7 +258,11 @@ module.exports = function (scope, mapSource, dataSource,
         .style('stroke', '#FFF')
         .style('stroke-width', 1)
         .style('fill', function (d) {
-          return color(valuesByArea[d.properties.name]);
+           if(isNaN(valuesByArea[d.properties.name])) {
+             return "#EBEDDE";
+          } else {
+           return color(valuesByArea[d.properties.name]);
+          }
         })
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
@@ -336,8 +342,13 @@ module.exports = function (scope, mapSource, dataSource,
     arrow.append('span')
       .text(getChangeString(earlyValue, lateValue))
       .attr('class', function() {
-         if(getChangeString(earlyValue, lateValue).substring(0,1) === '+') { return 'positive'; }
-         else { return 'negative'; }
+         if(getChangeString(earlyValue, lateValue).substring(0,1) === '+') {
+            return 'positive';
+         } else if(getChangeString(earlyValue, lateValue) === 'N/A') {
+            return 'not-available';
+         } else {
+            return 'negative';
+         }
       });
   }
 
@@ -640,6 +651,16 @@ module.exports = function (scope, mapSource, dataSource,
          .style("fill", color);
      }
 
+     // Draws points with squares rather than circles
+     /* function drawPoints(graphSVG, data, color) {
+      graphSVG.selectAll("dot")
+         .data(data.filter(function(d) { return !isNaN(d.value); }))
+         .enter().append("path")
+         .attr("d", d3.svg.symbol().type("square"))
+         .attr("transform", function(d) { return "translate(" + xScale(d.year) + "," + yScale(d.value) + ")"; })
+         .style("fill", color);
+     } */
+
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
       window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
@@ -815,11 +836,6 @@ module.exports = function (scope, mapSource, dataSource,
         } else {
           return graphColors.selectedColor;
         }
-      })
-      .style("stroke-dasharray", function(d) {
-         if(d == "United States") {
-            return "(3, 3)";
-         }
       });
     /* END OF GRAPH LEGEND */
   }
