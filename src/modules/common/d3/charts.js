@@ -258,7 +258,11 @@ module.exports = function (scope, mapSource, dataSource,
         .style('stroke', '#FFF')
         .style('stroke-width', 1)
         .style('fill', function (d) {
+           if(isNaN(valuesByArea[d.properties.name])) {
+             return "#EBEDDE";
+          } else {
            return color(valuesByArea[d.properties.name]);
+          }
         })
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
@@ -338,8 +342,13 @@ module.exports = function (scope, mapSource, dataSource,
     arrow.append('span')
       .text(getChangeString(earlyValue, lateValue))
       .attr('class', function() {
-         if(getChangeString(earlyValue, lateValue).substring(0,1) === '+') { return 'positive'; }
-         else { return 'negative'; }
+         if(getChangeString(earlyValue, lateValue).substring(0,1) === '+') {
+            return 'positive';
+         } else if(getChangeString(earlyValue, lateValue) === 'N/A') {
+            return 'not-available';
+         } else {
+            return 'negative';
+         }
       });
   }
 
