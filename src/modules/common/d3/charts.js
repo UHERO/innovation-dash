@@ -609,6 +609,8 @@ module.exports = function (scope, mapSource, dataSource,
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .tickFormat(numberFormatConverter)
+        // y-axis also duplicating labels when there are 6 or fewer ticks
+        .ticks(5)
         .orient("left");
 
     vis.append("svg:g")
