@@ -37,20 +37,20 @@ h3{
 
 /* Common Color Schemes */
 .nav_edu, .splash .edu .intro{
-  background-color: $edu_med_dark;
+  background-color: $edu_medium;
 }
 
 .container {
 
    .education {
       border-top: 5px solid;
-      border-color: $edu_med_dark;
+      border-color: $edu_medium;
       border-top-left-radius: 5px;
    }
 
    .research {
       border-top: 5px solid;
-      border-color: $rnd_med_light;
+      border-color: $rnd_medium;
       border-top-left-radius: 5px;
    }
 
@@ -69,7 +69,7 @@ h3{
 
 .education {
     .title, .numbers, aside ul li:hover, .item.active {
-    background-color: $edu_med_dark;
+    background-color: $edu_medium;
   }
   /* .info_legend_container .legend, .key, .map_toggle, .key{
     border: 2px solid $edu_medium;
@@ -77,14 +77,14 @@ h3{
 } */
   .references{
     a{
-      color: $edu_med_light;
+      color: $edu_medium;
     }
   }
 }
 
 
 .nav_rnd,.splash .rnd .intro{
-  background-color: $rnd_med_light;
+  background-color: $rnd_medium;
 }
 
 .research {
@@ -103,7 +103,7 @@ h3{
 
   .references{
     a{
-      color: $rnd_med_light;
+      color: $rnd_medium;
     }
   }
 }

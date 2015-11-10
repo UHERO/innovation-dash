@@ -258,7 +258,7 @@ module.exports = function (scope, mapSource, dataSource,
         .style('stroke', '#FFF')
         .style('stroke-width', 1)
         .style('fill', function (d) {
-          return color(valuesByArea[d.properties.name]);
+           return color(valuesByArea[d.properties.name]);
         })
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
