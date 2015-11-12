@@ -513,9 +513,13 @@ module.exports = function (scope, mapSource, dataSource,
           postfix = ' more';
           // prefix = 'an increase of ';
           number = numberFormatConverter(change);
-        } else {
-           prefix = '';
-           postfix = ' fewer';
+         } else if(isNaN(change)) {
+          prefix = 'not available';
+          postfix = ' more';
+          number = '';
+         } else {
+          prefix = '';
+          postfix = ' fewer';
           //prefix = 'a decrease of ';
           number = numberFormatConverter(Math.abs(change));
         }
@@ -523,10 +527,14 @@ module.exports = function (scope, mapSource, dataSource,
         if(measurementUnit === 'percent' || measurementUnit === 'extended_percent'){
           if (change >= 0) {
              prefix = 'an increase of ';
+             number = number.slice(0, -1);
+          } else if(isNaN(change)) {
+             prefix = 'an increase of not available ';
+             number = '';
           } else {
              prefix = 'a decrease of ';
+             number = number.slice(0, -1);
           }
-          number = number.slice(0, -1);
           postfix = ' percentage points ';
         }
 
@@ -535,7 +543,11 @@ module.exports = function (scope, mapSource, dataSource,
              prefix = '';
              postfix = ' more';
               number = numberFormatConverter(change);
-          } else {
+            } else if(isNaN(change)) {
+             prefix = '$not available';
+             postfix = ' more';
+             number = '';
+            } else {
              prefix = '';
              postfix = ' less';
              numberFormatConverter(Math.abs(change));
@@ -597,6 +609,8 @@ module.exports = function (scope, mapSource, dataSource,
     var yAxis = d3.svg.axis()
         .scale(yScale)
         .tickFormat(numberFormatConverter)
+        // y-axis also duplicating labels when there are 6 or fewer ticks
+        .ticks(5)
         .orient("left");
 
     vis.append("svg:g")
