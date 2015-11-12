@@ -495,7 +495,14 @@ module.exports = function (scope, mapSource, dataSource,
     // percent change
     d3.selectAll(currentPercentEl).html("")
       .insert('text')
-      .text( numberFormatConverter(lateValue) ); // blamebrandontag
+      .text(function() {
+         if(isNaN(lateValue)) {
+            return "not available";
+         } else {
+            return numberFormatConverter(lateValue);
+         }
+      });
+      //.text( numberFormatConverter(lateValue) ); // blamebrandontag
     // unit of measure - taken from legendText variable
     d3.select(summaryMeasurementEl).html("")
       .insert('text')
