@@ -232,7 +232,7 @@ nav{
       text-align: center;
 
       a{
-        @include uHero_font( 0.75em, 1.1, $white, 400);
+        @include uHero_font( 0.75em, 1.1, $white, bold);
         box-sizing: border-box;
         height: 70px;
         width: 225px;
