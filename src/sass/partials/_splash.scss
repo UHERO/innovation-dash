@@ -5,50 +5,62 @@
   border-top-left-radius: 5px;
   background-color: $light_grey;
 
-  @media #{$medium-down}{
+  @media #{$medium-down} {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
 
   section:first-child {
-    padding: 30px 30px 25px;
+    //padding: 30px 30px 25px;
     background-color: $light_grey;
+    padding: 8px 30px;
+    width: 17.5%;
+    float: left;
+    border-top-right-radius: none;
     border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    //border-top-right-radius: 5px;
 
-    @media #{$large-only}{
+    /* @media #{$large-only}{
       padding: 30px;
       width: 17.5%;
       float: left;
       border-top-right-radius: none;
-    }
+   } */
 
-    p{
-      font-size: 0.8em;
+    p {
+      font-size: 13px;
+      text-align: left;
+      max-width: 100%;
+      margin: 10px 0 20px;
+      /* font-size: 0.8em;
       line-height: 1.4;
       max-width: 75%;
       margin: 0 auto 10px;
-      text-align: center;
+      text-align: center; */
 
-      @media #{$large-only}{
+      /* @media #{$large-only}{
         font-size: 13px;
         text-align: left;
         max-width: 100%;
         margin: 10px 0 20px;
-      }
+     } */
     }
   }
 
-  section:last-child{
+  section:last-child {
     background-color: $white;
-    padding-bottom: 10px;
+    //padding-bottom: 10px;
     margin-bottom: 0;
+    padding: 0px 0px 20px;
+    overflow: hidden;
 
-    @media #{$large-only}{
-      width: 73%;
-      padding: 30px 27px 20px;
-      float: right;
-    }
+    /* @media #{$large-only}{
+      //width: 73%;
+      //padding: 30px 27px 20px;
+      padding: 0px 0px 20px;
+      overflow: hidden;
+      //float: right;
+   } */
   }
 
   h1{
@@ -68,11 +80,11 @@
 
   .group{
     p{
-      padding: 15px 25px;
+      padding: 5px 15px;
       font-size: 0.8125em;
       line-height: 1.5;
       overflow: hidden;
-      max-height: 162px;
+      //max-height: 162px;
 
       @media #{$large-only}{
         max-height: 258px;
@@ -99,20 +111,21 @@
 .col{
   width: 25%;
   float: left;
-  padding: 0 3px 3px;
+  padding: 0px 0px 0px 6px;
   box-sizing: border-box;
 }
 
 .intro{
-  height: 248px;
+  height: 225px;
   color: $white;
-  border-radius: 5px;
-  padding: 10px 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  //padding: 10px 0;
   box-sizing: border-box;
 
-  @media #{$large-only} {
+  /* @media #{$large-only} {
     height: 306px;
-  }
+} */
 
   .econ & {
     p{
