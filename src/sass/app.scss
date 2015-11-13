@@ -187,7 +187,7 @@ h3{
 
 .logo{
   width: 20%;
-  display: inline;
+  display: inline-block;
   float: left;
 
   @media #{$small-only}{
@@ -203,7 +203,7 @@ h3{
 }
 
 nav{
-  width: 77%;
+  width: 80%;
   display: inline-block;
   height: 50px;
   position: relative;
@@ -219,13 +219,15 @@ nav{
 
   ul{
     list-style-type: none;
-    margin-right: -2px;
-    padding: 0;
+    margin-left: -21px;
+    padding: 0px;
 
     li{
       display: inline-block;
       border-radius: 5px;
-      margin: 0 2px;
+      //margin: 0 2px;
+      margin: 0px 3px 0px 4px;
+      width: 23%;
       vertical-align: top;
       text-align: center;
 
@@ -233,7 +235,7 @@ nav{
         @include uHero_font( 0.75em, 1.1, $white, 400);
         box-sizing: border-box;
         height: 70px;
-        width: 200px;
+        width: 225px;
         padding: 14px 30px 20px;
         letter-spacing: 0.15em;
         text-decoration: none;
@@ -242,6 +244,10 @@ nav{
       }
     }
   }
+}
+
+.nav_econ {
+   margin-right: 0px;
 }
 
 .nav_edu,.nav_ent{
