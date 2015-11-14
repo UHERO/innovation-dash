@@ -11,10 +11,11 @@ large : min-width: 961px
 */
 
 $small-only : "only screen and (max-width:899px)";
-$medium-down : "only screen and (max-width:1321px)";
-$medium-only : "only screen and (min-width:900px) and (max-width:1320px)";
+$medium-down : "only screen and (max-width:1189px)";
+$medium-only : "only screen and (min-width:900px) and (max-width:1189px)";
 $medium-up : "only screen and (min-width:900px)";
-$large-only : "only screen and (min-width:1321px)";
+$large-only : "only screen and (min-width:1190px)";
+$extra-large : "only screen and (min-width:1240px)";
 
 /* Colors */
 $body_color: #6E7070;

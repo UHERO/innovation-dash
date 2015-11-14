@@ -14,11 +14,7 @@ body{
 }
 
 header {
-  padding-top: 40px;
-
-  @media #{$small-only}{
-    padding: 0;
-  }
+  padding-top: 0px;
 }
 
 h1{
@@ -174,22 +170,14 @@ h3{
   margin: auto;
   max-width: 1200px;
   width: 98%;
-  margin-top: -4%;
-
-  @media #{$small-only} {
-     margin-top: 0%;
-  }
-
-  @media #{$large-only} {
-    margin-top: -3%;
-  }
+  margin-top: 0%;
 }
 
 .logo{
-  width: 21%;
+  width: 22%;
   display: inline-block;
   float: left;
-  margin-top: 2%;
+  margin-top: 3%;
 
   /* @media #{$small-only}{
     display: block;
@@ -203,36 +191,27 @@ h3{
   }
 }
 
-nav{
-  width: 79%;
+/* nav{
+  width: 78%;
   display: inline-block;
   height: 50px;
   position: relative;
   z-index: 1;
-  text-align: right;
+  //text-align: right;
   float: right;
 
-  /* @media #{$small-only}{
-    display: block;
-    width: 100%;
-    text-align: center;
-} */
-
-  ul{
+   ul{
     list-style-type: none;
-    margin-left: -34px;
+    margin-left: 11px;
+    margin-right: 0px;
     padding: 0px;
-
-    @media #{$medium-down} {
-      margin-left: -34px;
-   }
 
     li{
       display: inline-block;
       border-radius: 5px;
       //margin: 0 2px;
-      margin: 0px 3px 0px 4px;
-      width: 23%;
+      margin: 0px 3px 0px 3px;
+      width: 24.4%;
       vertical-align: top;
       text-align: center;
 
@@ -246,30 +225,66 @@ nav{
         text-decoration: none;
         text-transform: uppercase;
         display: block;
-
-        @media #{$medium-down} {
-          padding: 14px 25px 20px 20px;
-        }
       }
     }
   }
+} */
+
+nav {
+   width: 78%;
+   margin-right: -3px;
+   margin-top: 1%;
+   height: 50px;
+   display: inline-block;
+   position: relative;
+   z-index: 1;
+   float: right;
+   text-align: right;
+
+   ul {
+      list-style-type: none;
+
+      li {
+         width: 23%;
+         display: inline-block;
+         padding: 10px 5px;
+         margin: 0px 3px;
+         text-align: center;
+         border-radius: 5px;
+         vertical-align: top;
+
+         a {
+            @include uHero_font( 0.75em, 1.1, $white, bold);
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            height: 70px;
+         }
+      }
+   }
 }
 
 .nav_edu {
-   padding-top: 8px;
-   height: 62px;
+   margin-right: 2px;
+}
 
-   @media #{$medium-down} {
-      //width: 22.8%;
-      //margin-right: 4px;
+.nav_econ {
+   a {
+      padding: 5px 30px;
    }
 }
 
 .nav_rnd {
-   @media #{$medium-down} {
-      //margin-right: 4px;
-      //width: 22.9%;
+   a {
+   padding: 5px;
    }
+}
+
+/* .nav_edu {
+   padding-top: 8px;
+   height: 62px;
 }
 
 .nav_ent {
@@ -280,20 +295,7 @@ nav{
      padding: 14px 16px 20px;
    }
 
-   @media #{$medium-down} {
-      //width: 22.7%;
-      //margin-right: 3px;
-
-      a {
-         padding-left: 5px;
-      }
-   }
-
-}
-
-.nav_econ {
-   margin-right: 0px;
-}
+} */
 
 .container{
   background-color: $light_grey;
