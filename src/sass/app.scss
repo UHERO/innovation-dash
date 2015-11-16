@@ -168,9 +168,10 @@ h3{
 /* Layouts */
 .wrapper {
   margin: auto;
-  max-width: 1200px;
-  width: 98%;
-  margin-top: 0%;
+max-width: 1150px;
+  //max-width: 1200px;
+  //width: 98%;
+  margin-top: -1%;
 }
 
 .logo{
@@ -264,10 +265,6 @@ nav {
          }
       }
    }
-}
-
-.nav_edu {
-   margin-right: 2px;
 }
 
 .nav_econ {
@@ -536,9 +533,9 @@ section:last-child, section
    white-space: nowrap;
    margin-left: -3%;
 
-   @media#{$small-only} {
+   /* @media#{$small-only} {
       margin-left: -8%;
-   }
+   } */
 }
 
 .default-map{
@@ -595,10 +592,10 @@ section:last-child, section
    width: 10%;
    float: right;
    margin-top: -27%;
-   margin-right: 10%;
+   margin-right: 7%;
    display: inline-block;
 
-   @media#{$small-only} {
+   /* @media#{$small-only} {
       margin-right: 15%;
 
       svg {
@@ -612,7 +609,7 @@ section:last-child, section
       svg {
          padding-left: 20px;
       }
-   }
+   } */
 }
 
 #hover-tooltip, #fixed-tooltip {
@@ -774,7 +771,7 @@ footer{
    width: 20%;
    margin-top: 30%;
    float: right;
-   margin-right: -5%;
+   margin-right: -6%;
 
    svg {
       height: 100px;
