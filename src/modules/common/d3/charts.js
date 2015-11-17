@@ -218,6 +218,7 @@ module.exports = function (scope, mapSource, dataSource,
 
     resetMapTooltips(fixedMapTooltip);
     resetMapTooltips(hoverMapTooltip);
+    resetMapTooltips(selectedMapTooltip);
     setHoverTooltipColor(colorScheme);
 
     // Draws the histogram for the main graph
@@ -266,10 +267,14 @@ module.exports = function (scope, mapSource, dataSource,
         })
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return passMapClickTarget(d.properties.name);
+            passMapClickTarget(d.properties.name);
+            //keep selected tooltip on state when clicked, need to be able to remove when clicked again
+            populateMapTooltip('selected', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
+            positionMapTooltip('selected');
+            d3.select('#hover-tooltip').classed('hidden', true);
           }
         })
-        .on('mouseover', function (d) {
+         .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
             return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
@@ -277,6 +282,12 @@ module.exports = function (scope, mapSource, dataSource,
         .on('mousemove', function (d) {
           if (d.properties.name !== 'Hawaii') {
             return positionMapTooltip('hover');
+          }
+       })
+       // remove hover tooltip when mouse leaves map
+        .on('mouseleave', function(d) {
+           if (d.properties.name !== 'Hawaii') {
+            return resetMapTooltips(hoverMapTooltip);
           }
         });
         populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
@@ -328,7 +339,9 @@ module.exports = function (scope, mapSource, dataSource,
       arrow = fixedMapTooltip.select('.arrow_box');
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
-    }
+   } else if (type === 'selected') {
+      arrow = selectedMapTooltip.select('.arrow_box');
+   }
     arrow.html(function () { return null; })
       .append('h3')
       .classed('tooltip-title', true)
@@ -363,7 +376,12 @@ module.exports = function (scope, mapSource, dataSource,
         top: function () {return d3.event.pageY +'px';},
         left: function () {return d3.event.pageX +'px';}
       });
-    }
+   } else if (type === 'selected') {
+      selectedMapTooltip.style({
+         top: function() { return d3.event.pageY + 'px'; },
+         left: function() { return d3.event.pageX + 'px';}
+      });
+   }
   }
 
   function resetMapTooltips (tooltipEl) {

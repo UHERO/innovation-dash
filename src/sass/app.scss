@@ -612,7 +612,7 @@ section:last-child, section
    } */
 }
 
-#hover-tooltip, #fixed-tooltip {
+#hover-tooltip, #fixed-tooltip, #selected-tooltip {
   position: relative;
   width: 150px;
   height: 100px;
@@ -623,7 +623,7 @@ section:last-child, section
   pointer-events: none;
   font-size: 12px;
 }
-#hover-tooltip {
+#hover-tooltip, #selected-tooltip {
   top: 0;
   left: -9999px;
 }
