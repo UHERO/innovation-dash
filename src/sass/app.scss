@@ -297,7 +297,7 @@ nav {
 .container{
   background-color: $light_grey;
   margin: auto;
-  margin-top: 5px;
+  margin-top: 3px;
   position: relative;
   z-index: 2;
   border-top-left-radius: 5px;
@@ -468,7 +468,7 @@ section{
   }
 
   &:last-child {
-    padding: 20px 40px 0;
+    padding: 20px 30px 0;
     border: none;
   }
   &.ng-scope {
@@ -551,7 +551,7 @@ section:last-child, section
 
 .line_graph_container{
    margin-top: -6%;
-   margin-left: -2%;
+   //margin-left: -2%;
    width: 99%;
    white-space: nowrap;
 
@@ -592,7 +592,7 @@ section:last-child, section
    width: 10%;
    float: right;
    margin-top: -27%;
-   margin-right: 7%;
+   margin-right: 8%;
    display: inline-block;
 
    /* @media#{$small-only} {
@@ -760,7 +760,7 @@ footer{
 
   text {
     font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
 
     &.label {
       fill: #AAA797;
@@ -772,7 +772,7 @@ footer{
    width: 20%;
    margin-top: 30%;
    float: right;
-   margin-right: -6%;
+   margin-right: -3%;
 
    svg {
       height: 100px;
