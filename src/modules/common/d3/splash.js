@@ -16,6 +16,11 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
     HI: [100 - 4.53, 4.53]
   };
 
+  var rndDataset2 = {
+     US: [20.3],
+     HI: [5.2]
+ };
+
   var entDataset = {
     US: [1000 - 212, 212],
     HI: [1000 - 94, 94]
