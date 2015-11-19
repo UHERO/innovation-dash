@@ -17,6 +17,9 @@ module.exports = /*@ngInject*/
 
         d3.selectAll('#hover-tooltip')
           .classed('hidden', true);
+
+        d3.selectAll('#selected-tooltip')
+          .classed('hidden', true);
       }
     };
   };
