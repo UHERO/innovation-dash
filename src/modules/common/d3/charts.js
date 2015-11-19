@@ -47,7 +47,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaNames;
   var fixedXYs = {
         Hawaii: {top:'345px', left:'195px' },
-        Honolulu: {top:'130px', left:'257px' }
+        Honolulu: {top:'115px', left:'240px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
@@ -224,18 +224,6 @@ module.exports = function (scope, mapSource, dataSource,
     // Draws the histogram for the main graph
     drawHistogram(yearValuesRange, color);
 
-    var passMapClickTargetWithId = function() {
-      passMapClickTarget(this.id);
-    };
-
-    var populateMapToolTipMouseOver = function() {
-      populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
-    };
-
-    var positionMapTooltipHover = function() {
-      positionMapTooltip('hover');
-    };
-
     //use dispatch to create toggle event for tooltips
     var dispatch = d3.dispatch('unselectAll', 'toggleSingle')
       .on('unselectAll', function() {
@@ -247,14 +235,41 @@ module.exports = function (scope, mapSource, dataSource,
          d3.select(n).classed('active', !active);
       });
 
+    var countyClick = function() {
+      passMapClickTarget(this.id);
+      dispatch.toggleSingle(this);
+      if(d3.select(this).classed('active')){
+         populateMapTooltip('selected', this.id, data, selectedMinYear, selectedMaxYear, true);
+         positionMapTooltip('selected');
+         d3.select('#hover-tooltip').classed('hidden', true);
+      } else {
+         resetMapTooltips(selectedMapTooltip);
+         d3.select('#hover-tooltip').classed('hidden', false);
+      }
+    };
+
+    var populateMapToolTipMouseOver = function() {
+      populateMapTooltip('hover', this.id, data, selectedMinYear, selectedMaxYear, true);
+    };
+
+    var positionMapTooltipHover = function() {
+      positionMapTooltip('hover');
+    };
+
+    var resetHoverTooltip = function () {
+      resetMapTooltips(hoverMapTooltip);
+   };
+
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
           if (key !== 'Honolulu') {
             countySvg
-              .on('click', passMapClickTargetWithId)
+              .attr('class', 'selectable')
+              .on('click', countyClick)
               .on('mouseover', populateMapToolTipMouseOver)
-              .on('mousemove', positionMapTooltipHover);
+              .on('mousemove', positionMapTooltipHover)
+              .on('mouseleave', resetHoverTooltip);
           }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
