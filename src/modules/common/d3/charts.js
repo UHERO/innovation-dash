@@ -47,7 +47,7 @@ module.exports = function (scope, mapSource, dataSource,
   var geoAreaNames;
   var fixedXYs = {
         Hawaii: {top:'345px', left:'195px' },
-        Honolulu: {top:'130px', left:'257px' }
+        Honolulu: {top:'115px', left:'240px' }
       };
 
   var fixedMapTooltip = d3.select('#fixed-tooltip');
@@ -218,13 +218,34 @@ module.exports = function (scope, mapSource, dataSource,
 
     resetMapTooltips(fixedMapTooltip);
     resetMapTooltips(hoverMapTooltip);
+    resetMapTooltips(selectedMapTooltip);
     setHoverTooltipColor(colorScheme);
 
     // Draws the histogram for the main graph
     drawHistogram(yearValuesRange, color);
 
-    var passMapClickTargetWithId = function() {
+    //use dispatch to create toggle event for tooltips
+    var dispatch = d3.dispatch('unselectAll', 'toggleSingle')
+      .on('unselectAll', function() {
+         d3.selectAll('.selectable').classed('active', false);
+      })
+      .on('toggleSingle', function(n) {
+         var active = d3.select(n).classed('active');
+         dispatch.unselectAll();
+         d3.select(n).classed('active', !active);
+      });
+
+    var countyClick = function() {
       passMapClickTarget(this.id);
+      dispatch.toggleSingle(this);
+      if(d3.select(this).classed('active')){
+         populateMapTooltip('selected', this.id, data, selectedMinYear, selectedMaxYear, true);
+         positionMapTooltip('selected');
+         d3.select('#hover-tooltip').classed('hidden', true);
+      } else {
+         resetMapTooltips(selectedMapTooltip);
+         d3.select('#hover-tooltip').classed('hidden', false);
+      }
     };
 
     var populateMapToolTipMouseOver = function() {
@@ -235,14 +256,20 @@ module.exports = function (scope, mapSource, dataSource,
       positionMapTooltip('hover');
     };
 
+    var resetHoverTooltip = function () {
+      resetMapTooltips(hoverMapTooltip);
+   };
+
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
           if (key !== 'Honolulu') {
             countySvg
-              .on('click', passMapClickTargetWithId)
+              .attr('class', 'selectable')
+              .on('click', countyClick)
               .on('mouseover', populateMapToolTipMouseOver)
-              .on('mousemove', positionMapTooltipHover);
+              .on('mousemove', positionMapTooltipHover)
+              .on('mouseleave', resetHoverTooltip);
           }
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
@@ -255,6 +282,7 @@ module.exports = function (scope, mapSource, dataSource,
         .data(states)
         .enter().append("path")
         .attr("d", path)
+        .attr('class', 'selectable')
         .style('stroke', '#FFF')
         .style('stroke-width', 1)
         .style('fill', function (d) {
@@ -266,7 +294,22 @@ module.exports = function (scope, mapSource, dataSource,
         })
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return passMapClickTarget(d.properties.name);
+            passMapClickTarget(d.properties.name);
+            //toggle active class of state selected
+            dispatch.toggleSingle(this);
+
+            //if state is active, display selected-tooltip
+            if(d3.select(this).classed('active')) {
+               populateMapTooltip('selected', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
+               positionMapTooltip('selected');
+               //hide hover-tooltip when state is active
+               d3.select('#hover-tooltip').classed('hidden', true);
+            } else {
+               resetMapTooltips(selectedMapTooltip);
+               //show hover-tooltip when no state is active
+               d3.select('#hover-tooltip').classed('hidden', false);
+            }
+
           }
         })
         .on('mouseover', function (d) {
@@ -277,6 +320,12 @@ module.exports = function (scope, mapSource, dataSource,
         .on('mousemove', function (d) {
           if (d.properties.name !== 'Hawaii') {
             return positionMapTooltip('hover');
+          }
+       })
+       // remove hover tooltip when mouse leaves map
+        .on('mouseleave', function(d) {
+           if (d.properties.name !== 'Hawaii') {
+            return resetMapTooltips(hoverMapTooltip);
           }
         });
         populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
@@ -328,7 +377,9 @@ module.exports = function (scope, mapSource, dataSource,
       arrow = fixedMapTooltip.select('.arrow_box');
     } else if (type === 'hover') {
       arrow = hoverMapTooltip.select('.arrow_box');
-    }
+   } else if (type === 'selected') {
+      arrow = selectedMapTooltip.select('.arrow_box');
+   }
     arrow.html(function () { return null; })
       .append('h3')
       .classed('tooltip-title', true)
@@ -363,7 +414,12 @@ module.exports = function (scope, mapSource, dataSource,
         top: function () {return d3.event.pageY +'px';},
         left: function () {return d3.event.pageX +'px';}
       });
-    }
+   } else if (type === 'selected') {
+      selectedMapTooltip.style({
+         top: function() { return d3.event.pageY + 'px'; },
+         left: function() { return d3.event.pageX + 'px';}
+      });
+   }
   }
 
   function resetMapTooltips (tooltipEl) {
