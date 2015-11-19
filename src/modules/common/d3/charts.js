@@ -100,6 +100,36 @@ module.exports = function (scope, mapSource, dataSource,
     return "N/A";
   }
 
+  function axisNumberFormatConverter (num){
+    var intInt = d3.format('.0f');
+    var perPer = d3.format('.1%');
+    var extExt = d3.format('.2%');
+
+    if ( isNaN(num) || num === null){
+      return "N/A";
+    }
+
+    if(measurementUnit === 'integer'){
+      return intInt(num); // 69
+    }
+    if(measurementUnit === 'percent'){
+      return perPer(num); // 0.69 => 69%
+    }
+    if(measurementUnit === 'extended_percent'){
+      return extExt(num); // 0.00069 => 0.069%
+    }
+    if(measurementUnit === 'dollars'){
+      return "$" + scaleNumber(num, d3.format('.0f'));
+    }
+    if(measurementUnit === 'dollars_mill'){
+      return "$" + scaleNumber(num/1000, d3.format('.0f'));
+    }
+    if (measurementUnit === 'number') {
+      return scaleNumber(num, d3.format('.1f'));
+    }
+    return "N/A";
+  }
+
   function buildGeoNameList (isHawaii, selectedGeoArea) {
     geoAreaNames = [];
     if (isHawaii) {
@@ -696,7 +726,7 @@ module.exports = function (scope, mapSource, dataSource,
     vis.append("text")
        .attr("transform", "rotate(-90)")
        .attr("x", 0 - (height) / 2)
-       .attr("y", 0)
+       .attr("y", -10)
        .attr("class", "label")
        .style("text-anchor", "middle")
        .text(yUnitMeasure);
