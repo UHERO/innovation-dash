@@ -236,6 +236,17 @@ module.exports = function (scope, mapSource, dataSource,
       positionMapTooltip('hover');
     };
 
+    //use dispatch to create toggle event for tooltips
+    var dispatch = d3.dispatch('unselectAll', 'toggleSingle')
+      .on('unselectAll', function() {
+         d3.selectAll('.selectable').classed('active', false);
+      })
+      .on('toggleSingle', function(n) {
+         var active = d3.select(n).classed('active');
+         dispatch.unselectAll();
+         d3.select(n).classed('active', !active);
+      });
+
     if (isSVGMap) {
       for (var key in valuesByArea) {
         var countySvg = d3.select('#'+key);
@@ -256,6 +267,7 @@ module.exports = function (scope, mapSource, dataSource,
         .data(states)
         .enter().append("path")
         .attr("d", path)
+        .attr('class', 'selectable')
         .style('stroke', '#FFF')
         .style('stroke-width', 1)
         .style('fill', function (d) {
@@ -268,13 +280,24 @@ module.exports = function (scope, mapSource, dataSource,
         .on('click', function (d) {
           if (d.properties.name !== 'Hawaii') {
             passMapClickTarget(d.properties.name);
-            //keep selected tooltip on state when clicked, need to be able to remove when clicked again
-            populateMapTooltip('selected', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
-            positionMapTooltip('selected');
-            d3.select('#hover-tooltip').classed('hidden', true);
+            //toggle active class of state selected
+            dispatch.toggleSingle(this);
+
+            //if state is active, display selected-tooltip
+            if(d3.select(this).classed('active')) {
+               populateMapTooltip('selected', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
+               positionMapTooltip('selected');
+               //hide hover-tooltip when state is active
+               d3.select('#hover-tooltip').classed('hidden', true);
+            } else {
+               resetMapTooltips(selectedMapTooltip);
+               //show hover-tooltip when no state is active
+               d3.select('#hover-tooltip').classed('hidden', false);
+            }
+
           }
         })
-         .on('mouseover', function (d) {
+        .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
             return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
           }
