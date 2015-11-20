@@ -31,6 +31,10 @@ h3{
   line-height: 1.2;
 }
 
+a {
+   text-decoration: none;
+}
+
 /* Common Color Schemes */
 .nav_edu, .splash .edu .intro{
   background-color: $edu_medium;
@@ -179,6 +183,7 @@ max-width: 1150px;
   display: inline-block;
   float: left;
   margin-top: 3%;
+  margin-left: 3px;
 
   /* @media #{$small-only}{
     display: block;
