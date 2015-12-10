@@ -709,7 +709,11 @@ module.exports = function (scope, mapSource, dataSource,
     vis.append("svg:g")
        .attr("class", "x axis")
        .attr("transform", "translate(0," + (height - margins.bottom) + ")")
-       .call(xAxis);
+       .call(xAxis)
+       .selectAll("text")
+            .attr("dx", "-2em")
+            .attr("dy", "-.05em")
+            .attr("transform", "rotate(-65)");
 
     vis.append("svg:g")
        .attr("class", "y axis")
@@ -718,7 +722,7 @@ module.exports = function (scope, mapSource, dataSource,
 
     vis.append("text")
       .attr("x", width/2)
-      .attr("y", height + margins.bottom)
+      .attr("y", height + margins.bottom + margins.top + 10)
       .attr("class", "label")
       .style("text-anchor", "middle")
       .text("Year");
