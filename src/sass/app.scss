@@ -556,7 +556,7 @@ section:last-child, section
 }
 
 .line_graph_container{
-   margin-top: -6%;
+   // margin-top: -6%;
    margin-left: 2%;
    width: 99%;
    white-space: nowrap;
@@ -645,6 +645,10 @@ section:last-child, section
 }
 .negative {
    color: red;
+}
+
+.time_container {
+   height: 90px;
 }
 
 .timeline_info{
