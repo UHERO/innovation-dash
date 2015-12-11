@@ -557,13 +557,13 @@ section:last-child, section
 
 .line_graph_container{
    margin-top: -6%;
-   //margin-left: -2%;
+   margin-left: 2%;
    width: 99%;
    white-space: nowrap;
 
     .graph{
       float: left;
-      width: 80%;
+      width: 75%;
     }
 
     .key{
@@ -598,7 +598,7 @@ section:last-child, section
    width: 10%;
    float: right;
    margin-top: -27%;
-   margin-right: 8%;
+   margin-right: 9%;
    display: inline-block;
 
    /* @media#{$small-only} {
@@ -760,7 +760,7 @@ footer{
 
   svg {
     overflow: visible;
-    padding-left: 20px;
+    padding-left: 1px;
     padding-bottom: 30px;
   }
 
@@ -778,7 +778,7 @@ footer{
    width: 20%;
    margin-top: 30%;
    float: right;
-   margin-right: -3%;
+   // margin-right: -3%;
 
    svg {
       height: 100px;
