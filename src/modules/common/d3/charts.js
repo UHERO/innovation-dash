@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (scope, mapSource, dataSource,
-  donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl,
+  donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, priceParityChangeEl,
   mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
@@ -32,6 +32,7 @@ module.exports = function (scope, mapSource, dataSource,
     "$ from technology licenses and options executed"
   ];
   var eduText = (yUnitMeasure === "Percentage of the Labor Force") || (yUnitMeasure === "% of Population 16+");
+  var farmJobs = (yUnitMeasure === 'Thousands of Jobs');
   var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
   width = 800;
@@ -66,6 +67,9 @@ module.exports = function (scope, mapSource, dataSource,
     }
     if(number > 9999){
       return formatter(number / Math.pow(10, 3)) + 'K'; // 69000 => 69K
+    }
+    if(farmJobs) {
+      return formatter((number * 1000))/Math.pow(10,3) + 'K';
    }
     return formatter(number);
   };
@@ -101,48 +105,25 @@ module.exports = function (scope, mapSource, dataSource,
     return "N/A";
   }
 
-  function axisNumberFormatConverter (num){
-    var intInt = d3.format('.0f');
-    var perPer = d3.format('.1%');
-    var extExt = d3.format('.2%');
-
-    if ( isNaN(num) || num === null){
-      return "N/A";
-    }
-
-    if(measurementUnit === 'integer'){
-      return intInt(num); // 69
-    }
-    if(measurementUnit === 'percent'){
-      return perPer(num); // 0.69 => 69%
-    }
-    if(measurementUnit === 'extended_percent'){
-      return extExt(num); // 0.00069 => 0.069%
-    }
-    if(measurementUnit === 'dollars'){
-      return "$" + scaleNumber(num, d3.format('.0f'));
-    }
-    if(measurementUnit === 'dollars_mill'){
-      return "$" + scaleNumber(num/1000, d3.format('.0f'));
-    }
-    if (measurementUnit === 'number') {
-      return scaleNumber(num, d3.format('.1f'));
-    }
-    return "N/A";
-  }
-
   function valueChangeFormatConverter (num) {
      var intInt = d3.format('.0f');
      var perPer = d3.format('.1%');
      var extExt = d3.format('.2%');
+     var formatNumber;
      //var dolVal = Math.ceil(num/10) * 10;
-     var milVal = d3.format('.2f');
      var formatVal;
 
      if (num > 999) {
         formatVal = d3.format('$,.0f');
      } else {
         formatVal = d3.format('$,.2f');
+     }
+
+     if (farmJobs) {
+        num = num * 1000;
+        formatNumber = d3.format(',.0f');
+     } else {
+        formatNumber = d3.format('.1f');
      }
 
      if ( isNaN(num) || num === null){
@@ -161,11 +142,9 @@ module.exports = function (scope, mapSource, dataSource,
      if(measurementUnit === 'dollars' || measurementUnit === 'dollars_mill'){
       return formatVal(num);
      }
-     /* if(measurementUnit === 'dollars_mill'){
-      return "$" + milVal(num);
-   } */
-     if (measurementUnit === 'number') {
-      return scaleNumber(num, d3.format('.1f'));
+     if(measurementUnit === 'number') {
+      //return scaleNumber(num, d3.format('.1f'));
+      return formatNumber(num);
      }
      return "N/A";
  }
@@ -641,6 +620,13 @@ module.exports = function (scope, mapSource, dataSource,
       .insert('text')
       .text(legendText);
 
+    // calculate percent change for Regional Price Parity
+    d3.select(priceParityChangeEl).html("")
+      .insert('text')
+      .text(function() {
+         var priceChange = lateValue - 100;
+         return valueChangeFormatConverter(priceChange);
+      });
     // change in value - from previous to current years
     d3.select(valueChangeEl).html("")
       .insert('text')
@@ -652,7 +638,8 @@ module.exports = function (scope, mapSource, dataSource,
           prefix = '';
           postfix = ' more';
           // prefix = 'an increase of ';
-          number = numberFormatConverter(change);
+          //number = numberFormatConverter(change);
+          number = valueChangeFormatConverter(change);
          } else if(isNaN(change)) {
           prefix = 'not available';
           postfix = ' more';
@@ -661,7 +648,8 @@ module.exports = function (scope, mapSource, dataSource,
           prefix = '';
           postfix = ' fewer';
           //prefix = 'a decrease of ';
-          number = numberFormatConverter(Math.abs(change));
+          //number = numberFormatConverter(Math.abs(change));
+          number = valueChangeFormatConverter(Math.abs(change));
         }
 
         if(measurementUnit === 'percent' || measurementUnit === 'extended_percent'){
@@ -711,6 +699,24 @@ module.exports = function (scope, mapSource, dataSource,
              postfix = ' percentage points lower';
           }
        }
+
+         if(yUnitMeasure === 'Index') {
+            if (change >= 0) {
+              prefix = 'an increase of ';
+              postfix = ' percentage points';
+              //number = numberFormatConverter(change);
+              number = valueChangeFormatConverter(change);
+             } else if(isNaN(change)) {
+              prefix = 'an increase of not available percentage points';
+              postfix = '';
+              number = '';
+             } else {
+              prefix = 'a decrease of ';
+              postfix = ' percentage points';
+              //number = numberFormatConverter(Math.abs(change));
+              number = valueChangeFormatConverter(Math.abs(change));
+            }
+         }
 
         return prefix + number + postfix;
       });
