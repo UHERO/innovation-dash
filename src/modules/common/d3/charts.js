@@ -2,7 +2,7 @@
 
 module.exports = function (scope, mapSource, dataSource,
   donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, priceParityChangeEl,
-  mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+  annualKaufmannEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen, numLegendLines;
@@ -32,6 +32,7 @@ module.exports = function (scope, mapSource, dataSource,
     "$ from technology licenses and options executed"
   ];
   var eduText = (yUnitMeasure === "Percentage of the Labor Force") || (yUnitMeasure === "% of Population 16+");
+  var entText = (yUnitMeasure === "% of Startup Establishments") || (yUnitMeasure === "% of All Occupations") || (yUnitMeasure === "% of Adults 20-64 Yrs");
   var farmJobs = (yUnitMeasure === 'Thousands of Jobs');
   var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
@@ -627,12 +628,22 @@ module.exports = function (scope, mapSource, dataSource,
          var priceChange = lateValue - 100;
          return valueChangeFormatConverter(priceChange);
       });
+
+    // calculate annual value for Kaufmann
+    d3.select(annualKaufmannEl).html("")
+      .insert('text')
+      .text(function() {
+         var annualKaufmann = lateValue * 12;
+         return valueChangeFormatConverter(annualKaufmann);
+      });
+
     // change in value - from previous to current years
     d3.select(valueChangeEl).html("")
       .insert('text')
       .text(function() {
         var postfix = '',
-            prefix, number;
+            prefix, number, annual;
+        var annualFormat = d3.format('.2f');
         var change = lateValue - earlyValue;
         if (change >= 0) {
           prefix = '';
@@ -684,6 +695,42 @@ module.exports = function (scope, mapSource, dataSource,
           }
         }
 
+        if(oddDataSetWithGaps) {
+         if (change >= 0) {
+            prefix = '';
+            postfix = ' points higher';
+            // prefix = 'an increase of ';
+            //number = numberFormatConverter(change);
+            number = valueChangeFormatConverter(change);
+         } else if(isNaN(change)) {
+            prefix = 'not available';
+            postfix = ' points higher';
+            number = '';
+         } else {
+            prefix = '';
+            postfix = ' points lower';
+            //prefix = 'a decrease of ';
+            //number = numberFormatConverter(Math.abs(change));
+            number = valueChangeFormatConverter(Math.abs(change));
+         }
+        }
+
+        if(entText && measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
+           if (change >= 0) {
+             prefix = '';
+             //number = number.slice(0, -1);
+             postfix = ' percentage points more';
+          } else if(isNaN(change)) {
+             prefix = '';
+             number = '';
+             postfix = 'not available percentage points more';
+          } else {
+             prefix = '';
+             //number = number.slice(0, -1);
+             postfix = ' percentage points less';
+          }
+       }
+
         if(eduText && measurementUnit === 'percent' || measurementUnit === 'extended_percent') {
            if (change >= 0) {
              prefix = '';
@@ -715,6 +762,25 @@ module.exports = function (scope, mapSource, dataSource,
               postfix = ' percentage points';
               //number = numberFormatConverter(Math.abs(change));
               number = valueChangeFormatConverter(Math.abs(change));
+            }
+         }
+
+         if(yUnitMeasure === '% of Adults 20-64 Yrs') {
+            annual = number * 12;
+            if (change >= 0) {
+              prefix = '';
+              number = valueChangeFormatConverter(change);
+              postfix = 'x12=' + annualFormat(annual) +' percentage points more';
+              //number = numberFormatConverter(change);
+             } else if(isNaN(change)) {
+              prefix = 'not available percentage points more';
+              postfix = '';
+              number = '';
+             } else {
+              prefix = '';
+              //number = numberFormatConverter(Math.abs(change));
+              number = valueChangeFormatConverter(Math.abs(change));
+              postfix = 'x12=' + annualFormat(annual) +' percentage points less';
             }
          }
 
