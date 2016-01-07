@@ -213,7 +213,8 @@ module.exports = function (scope, mapSource, dataSource,
     scope.currentyear = selectedMaxYear;
 
     // TODO: check if Min/Max year data is available rather than explicitly set a year
-    // Set so that on page load, data (value change in map info) is available (Uni.Startups and Tech. Licensing)
+    // Set so that on page load, data (value change in map info) is available (Uni.Startups and Tech. Licensing and Non-Farm Jobs)
+
     if (yUnitMeasure === "Number of Startups" || yUnitMeasure === "# of technology licenses and options executed" || yUnitMeasure === "$ from technology licenses and options executed") {
       selectedMinYear = 1993;
     }
