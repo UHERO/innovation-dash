@@ -32,6 +32,11 @@ module.exports =
       templateUrl: 'app/edu/views/post-sec-degree.html',
       controller: 'PostSecDegreeController'
     })
+    .state('edu.sne-bachelors', {
+      url: '/sne-bachelors',
+      templateUrl: 'app/edu/views/sne-bachelors.html',
+      controller: 'SnEBachelorsController'
+   })
     .state('edu.sne-grad-students', {
       url: '/sne-grad-students',
       templateUrl: 'app/edu/views/sne-grad-students.html',
@@ -119,6 +124,7 @@ module.exports =
   .controller('EduAttainmentHSHawaiiController', require('./EduAttainmentHSHawaiiController'))
   .controller('EduAttainmentHSController', require('./EduAttainmentHSController'))
   .controller('PostSecDegreeController', require('./PostSecDegreeController'))
+  .controller('SnEBachelorsController', require('./SnEBachelorsController'))
   .controller('SnEGradStudentsController', require('./SnEGradStudentsController'))
   .controller('PostDocsController', require('./PostDocsController'))
   .controller('FourthGradeMathController', require('./FourthGradeMathController'))
