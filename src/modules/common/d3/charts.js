@@ -910,26 +910,127 @@ module.exports = function (scope, mapSource, dataSource,
          .style("fill", color);
      } */
 
+     // Draw bar graph for 4th & 8th grade scores
+     function drawUSBar(graphSVG, data, color) {
+        var yearList = data.map(function(d) { return d.year; });
+        var valueList = data.map(function(d) { return d.value; });
+        var seriesName = ['United States'];
+
+        data.forEach(function(d) {
+           d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
+        });
+
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
+
+        var series = graphSVG.selectAll("g.series")
+         .data(data)
+         .enter().append("svg:g")
+         .attr("class", "series")
+         .attr("fill", color)
+         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 15) + ",0)"; });
+
+        var groups = series.selectAll("rect")
+         .data(function(d) { return d.series; })
+         .enter().append("svg:rect")
+         .attr("class", ".usbar")
+         .attr("y", function(d) { return yScale(d.value); })
+         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("width", 15);
+     }
+
+     function drawHIBar(graphSVG, data, color) {
+        var yearList = data.map(function(d) { return d.year; });
+        var valueList = data.map(function(d) { return d.value; });
+        var seriesName = ['Hawaii'];
+
+        data.forEach(function(d) {
+           d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
+        });
+
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
+
+        var series = graphSVG.selectAll("g.series2")
+         .data(data)
+         .enter().append("svg:g")
+         .attr("class", "series2")
+         .attr("fill", color)
+         .attr("transform", function(d, i) { return "translate(" + x0(d.year) + ",0)"; });
+
+        var groups = series.selectAll("rect")
+         .data(function(d) { return d.series; })
+         .enter().append("svg:rect")
+         .attr("class", ".hibar")
+         .attr("y", function(d) { return yScale(d.value); })
+         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("width", 15);
+     }
+
+     function drawStateBar(graphSVG, data, color) {
+        var yearList = data.map(function(d) { return d.year; });
+        var valueList = data.map(function(d) { return d.value; });
+        var seriesName = ['State'];
+
+        data.forEach(function(d) {
+           d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
+        });
+
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
+
+        var series = graphSVG.selectAll("g.series3")
+         .data(data)
+         .enter().append("svg:g")
+         .attr("class", "series3")
+         .attr("fill", color)
+         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 30) + ",0)"; });
+
+        var groups = series.selectAll("rect")
+         .data(function(d) { return d.series; })
+         .enter().append("svg:rect")
+         .attr("class", ".statebar")
+         .attr("y", function(d) { return yScale(d.value); })
+         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("width", 15);
+     }
+
+
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
       window.usData = dataByState(filteredStates, knownSummaryRecords[0], geoAreaCategory);
       usAvgData = window.usData;
 
+      if(oddDataSetWithGaps) {
+        drawUSBar(vis, usAvgData, graphColors.usColor);
+      } else {
       drawDash(vis, usAvgData, graphColors.usColor);
       drawPoints(vis, usAvgData, graphColors.usColor);
+      }
     }
 
     window.hiData = dataByState(filteredStates, geoAreaNames[0], geoAreaCategory);
     hiStateData = window.hiData;
+
+    if(oddDataSetWithGaps) {
+      drawHIBar(vis, hiStateData, graphColors.hiColor);
+   } else {
     drawLine(vis, hiStateData, graphColors.hiColor);
     drawPoints(vis, hiStateData, graphColors.hiColor);
+   }
 
     window.selStateData = dataByState(filteredStates, geoAreaNames[1], geoAreaCategory);
     selectedStateData =  window.selStateData;
 
     if (selectedStateData.length !== 0) {
+
+      if(oddDataSetWithGaps) {
+         drawStateBar(vis, selectedStateData, graphColors.selectedColor);
+      } else {
       drawLine(vis, selectedStateData, graphColors.selectedColor);
       drawPoints(vis, selectedStateData, graphColors.selectedColor);
+      }
+
     }
     /* END OF LINE DRAWINGS */
 
