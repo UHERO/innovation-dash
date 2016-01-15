@@ -920,7 +920,7 @@ module.exports = function (scope, mapSource, dataSource,
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
 
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
         var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
 
         var series = graphSVG.selectAll("g.series")
@@ -930,7 +930,7 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("fill", color)
          .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 15) + ",0)"; });
 
-        var groups = series.selectAll("rect")
+        var us = series.selectAll("rect")
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".usbar")
@@ -948,7 +948,7 @@ module.exports = function (scope, mapSource, dataSource,
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
 
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
         var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
 
         var series = graphSVG.selectAll("g.series2")
@@ -958,7 +958,7 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("fill", color)
          .attr("transform", function(d, i) { return "translate(" + x0(d.year) + ",0)"; });
 
-        var groups = series.selectAll("rect")
+        var hi = series.selectAll("rect")
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".hibar")
@@ -976,7 +976,7 @@ module.exports = function (scope, mapSource, dataSource,
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
 
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 45]);
+        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
         var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
 
         var series = graphSVG.selectAll("g.series3")
@@ -986,7 +986,7 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("fill", color)
          .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 30) + ",0)"; });
 
-        var groups = series.selectAll("rect")
+        var state = series.selectAll("rect")
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".statebar")
