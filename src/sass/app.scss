@@ -172,10 +172,11 @@ a {
 /* Layouts */
 .wrapper {
   margin: auto;
-max-width: 1150px;
+  max-width: 1150px;
   //max-width: 1200px;
   //width: 98%;
   margin-top: -1%;
+  margin-bottom: 1%;
 }
 
 .logo{
