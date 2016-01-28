@@ -912,15 +912,8 @@ module.exports = function (scope, mapSource, dataSource,
          .style("fill", color);
      }
 
-     // Draws points with squares rather than circles
-     /* function drawPoints(graphSVG, data, color) {
-      graphSVG.selectAll("dot")
-         .data(data.filter(function(d) { return !isNaN(d.value); }))
-         .enter().append("path")
-         .attr("d", d3.svg.symbol().type("square"))
-         .attr("transform", function(d) { return "translate(" + xScale(d.year) + "," + yScale(d.value) + ")"; })
-         .style("fill", color);
-     } */
+     // scale for bar charts
+     var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 29]);
 
      // Draw bar graph for 4th & 8th grade scores
      function drawUSBar(graphSVG, data, color) {
@@ -932,15 +925,12 @@ module.exports = function (scope, mapSource, dataSource,
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
 
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
-        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
-
         var series = graphSVG.selectAll("g.series")
          .data(data)
          .enter().append("svg:g")
          .attr("class", "series")
          .attr("fill", color)
-         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 15) + ",0)"; });
+         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 10) + ",0)"; });
 
         var us = series.selectAll("rect")
          .data(function(d) { return d.series; })
@@ -948,7 +938,7 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("class", ".usbar")
          .attr("y", function(d) { return yScale(d.value); })
          .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
-         .attr("width", 15);
+         .attr("width", 10);
      }
 
      function drawHIBar(graphSVG, data, color) {
@@ -959,9 +949,6 @@ module.exports = function (scope, mapSource, dataSource,
         data.forEach(function(d) {
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
-
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
-        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
 
         var series = graphSVG.selectAll("g.series2")
          .data(data)
@@ -976,7 +963,7 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("class", ".hibar")
          .attr("y", function(d) { return yScale(d.value); })
          .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
-         .attr("width", 15);
+         .attr("width", 10);
      }
 
      function drawStateBar(graphSVG, data, color) {
@@ -988,15 +975,12 @@ module.exports = function (scope, mapSource, dataSource,
            d.series = seriesName.map(function(name) { return {name: name, year: d.year, value: d.value}; });
         });
 
-        var x0 = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right - 43]);
-        var y = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, height]);
-
         var series = graphSVG.selectAll("g.series3")
          .data(data)
          .enter().append("svg:g")
          .attr("class", "series3")
          .attr("fill", color)
-         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 30) + ",0)"; });
+         .attr("transform", function(d, i) { return "translate(" + (x0(d.year) + 20) + ",0)"; });
 
         var state = series.selectAll("rect")
          .data(function(d) { return d.series; })
@@ -1004,9 +988,8 @@ module.exports = function (scope, mapSource, dataSource,
          .attr("class", ".statebar")
          .attr("y", function(d) { return yScale(d.value); })
          .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
-         .attr("width", 15);
+         .attr("width", 10);
      }
-
 
     // when there is a US Average data object
     if (datasetSummaryRecords.length !== 0) {
