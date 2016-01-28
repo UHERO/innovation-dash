@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#73B1B2;}
+	.st1{fill:#AAA797;}
+	.st2{fill:none;stroke:#989798;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{font-family:'Montserrat-SemiBold';}
+	.st4{font-size:13px;}
+	.st5{fill:none;}
+	.st6{font-size:14px;}
+</style>
+<g id="Layer_1_1_">
+	<g>
+		<g>
+			<rect id="SVGID_1_" x="73.7" y="80.7" class="st0" width="60.2" height="140.2"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<rect id="SVGID_3_" x="165.6" y="154.2" class="st1" width="60.2" height="66.7"/>
+		</g>
+	</g>
+	<g>
+		<line class="st2" x1="55.6" y1="220.9" x2="55.6" y2="16.8"/>
+	</g>
+	<g>
+		<line class="st2" x1="55.6" y1="220.9" x2="240.8" y2="220.9"/>
+	</g>
+</g>
+<g id="labels">
+	<text transform="matrix(1 0 0 1 191.2949 237.6611)" class="st0 st3 st4">US</text>
+	<text transform="matrix(1 0 0 1 99.4629 237.6611)" class="st0 st3 st4">HI</text>
+	<text transform="matrix(1 0 0 1 23.6016 223.0381)" class="st0 st3 st4">$3.5</text>
+	<text transform="matrix(1 0 0 1 34.2682 155.2051)" class="st0 st3 st4">$4</text>
+	<text transform="matrix(1 0 0 1 23.6016 87.8975)" class="st0 st3 st4">$4.5</text>
+	<text transform="matrix(1 0 0 1 34.2682 19.4111)" class="st0 st3 st4">$5</text>
+	<rect x="2" y="36.7" class="st5" width="10.4" height="150.7"/>
+	<text transform="matrix(4.489660e-11 -1 1 4.489660e-11 14.3883 187.4092)" class="st0 st3 st6">per $1000 of GDP</text>
+</g>
+</svg>

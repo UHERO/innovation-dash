@@ -115,6 +115,10 @@
   float: left;
   padding: 0px 0px 0px 6px;
   box-sizing: border-box;
+
+  a {
+     color: $body_color;
+  }
 }
 
 .intro{
