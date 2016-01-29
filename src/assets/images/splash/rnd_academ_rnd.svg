@@ -3,40 +3,108 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#73B1B2;}
-	.st1{fill:#AAA797;}
-	.st2{fill:none;stroke:#989798;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st3{font-family:'Montserrat-SemiBold';}
-	.st4{font-size:13px;}
+	.st0{opacity:0.4;clip-path:url(#SVGID_2_);fill:#80C4C9;}
+	.st1{fill:#80C4C9;}
+	.st2{fill:#676767;}
+	.st3{font-family:'Montserrat-Regular';}
+	.st4{font-size:14px;}
 	.st5{fill:none;}
-	.st6{font-size:14px;}
+	.st6{fill:#FFFFFF;}
+	.st7{font-family:'Gotham-Bold';}
+	.st8{font-size:12.0903px;}
+	.st9{font-size:16.6261px;}
 </style>
-<g id="Layer_1_1_">
+<g>
 	<g>
 		<g>
-			<rect id="SVGID_1_" x="73.7" y="80.7" class="st0" width="60.2" height="140.2"/>
+			<defs>
+				<rect id="SVGID_1_" x="60.9" y="32.8" width="173.7" height="182.8"/>
+			</defs>
+			<clipPath id="SVGID_2_">
+				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+			</clipPath>
+			<polygon class="st0" points="60.9,116.6 73,111.9 85.9,116.6 97.9,127 110.8,118.5 122.9,119.4 135.7,78.7 147.8,99.5 
+				159.9,99.5 172.7,96.7 184.8,99.5 197.6,77.8 209.7,75.9 221.8,59.8 234.6,83.4 234.6,215.6 60.9,215.6 			"/>
+		</g>
+		<polygon class="st1" points="60.9,165.8 73,165.8 85.9,163.9 97.9,152.6 110.8,140.3 122.9,131.7 135.7,128.9 147.8,129.9 
+			159.9,132.7 172.7,135.5 184.8,129.9 197.6,113.8 209.7,109 221.8,104.3 234.6,111.9 234.6,215.6 60.9,215.6 		"/>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 219.4395)" class="st2 st3 st4">2.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 193.3271)" class="st2 st3 st4">2.50 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 167.2178)" class="st2 st3 st4">3.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 141.1074)" class="st2 st3 st4">3.50 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 114.9956)" class="st2 st3 st4">4.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 88.8862)" class="st2 st3 st4">4.50 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 62.7749)" class="st2 st3 st4">5.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 30.3486 36.6616)" class="st2 st3 st4">5.50 </text>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.6756 -0.599 0.6634 0.7483 52.2039 244.7481)" class="st2 st3 st4">1998 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.6518 -0.6247 0.6919 0.722 75.669 248.0041)" class="st2 st3 st4">2000 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.6057 -0.6696 0.7416 0.6708 101.908 248.2107)" class="st2 st3 st4">2002 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.5949 -0.6792 0.7523 0.6588 127.0223 249.1132)" class="st2 st3 st4">2004 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.5858 -0.6871 0.761 0.6488 151.8562 248.6951)" class="st2 st3 st4">2006 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.5918 -0.6819 0.7553 0.6554 176.5672 248.6205)" class="st2 st3 st4">2008 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.5572 -0.7105 0.7869 0.6171 203.0979 247.9224)" class="st2 st3 st4">2010 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.5661 -0.7034 0.779 0.627 227.9795 247.305)" class="st2 st3 st4">2012 </text>
+			</g>
 		</g>
 	</g>
 	<g>
-		<g>
-			<rect id="SVGID_3_" x="165.6" y="154.2" class="st1" width="60.2" height="66.7"/>
-		</g>
+		<rect x="139.3" y="159.5" class="st5" width="37.2" height="29.5"/>
+		<text transform="matrix(1 0 0 1 139.3213 168.3682)" class="st6 st7 st8">US</text>
 	</g>
 	<g>
-		<line class="st2" x1="55.6" y1="220.9" x2="55.6" y2="16.8"/>
-	</g>
-	<g>
-		<line class="st2" x1="55.6" y1="220.9" x2="240.8" y2="220.9"/>
+		<rect x="139.3" y="106.1" class="st5" width="37.2" height="29.5"/>
+		<text transform="matrix(1 0 0 1 139.3213 114.8936)" class="st6 st7 st8">HI</text>
 	</g>
 </g>
-<g id="labels">
-	<text transform="matrix(1 0 0 1 191.2949 237.6611)" class="st0 st3 st4">US</text>
-	<text transform="matrix(1 0 0 1 99.4629 237.6611)" class="st0 st3 st4">HI</text>
-	<text transform="matrix(1 0 0 1 23.6016 223.0381)" class="st0 st3 st4">$3.5</text>
-	<text transform="matrix(1 0 0 1 34.2682 155.2051)" class="st0 st3 st4">$4</text>
-	<text transform="matrix(1 0 0 1 23.6016 87.8975)" class="st0 st3 st4">$4.5</text>
-	<text transform="matrix(1 0 0 1 34.2682 19.4111)" class="st0 st3 st4">$5</text>
-	<rect x="2" y="36.7" class="st5" width="10.4" height="150.7"/>
-	<text transform="matrix(4.489660e-11 -1 1 4.489660e-11 14.3883 187.4092)" class="st0 st3 st6">per $1000 of GDP</text>
+<g>
+	
+		<rect x="10.4" y="0" transform="matrix(1 -5.799976e-03 5.799976e-03 1 -0.7058 0.1162)" class="st5" width="18.5" height="243.5"/>
+	<text transform="matrix(-7.919911e-03 -1 1 -7.929990e-03 23.2853 243.4476)" class="st2 st7 st9">S&amp;E R&amp;D per $1000 of GDP</text>
 </g>
 </svg>
