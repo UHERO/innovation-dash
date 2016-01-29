@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F89925;}
+	.st1{fill:#676767;}
+	.st2{font-family:'Montserrat-Regular';}
+	.st3{font-size:14px;}
+	.st4{fill:none;}
+	.st5{fill:#FCBA83;}
+	.st6{fill:#FFFFFF;}
+	.st7{font-family:'Gotham-Bold';}
+	.st8{font-size:13.6356px;}
+</style>
+<g>
+	<g>
+		<g>
+			<path class="st0" d="M96.5,69h44.7v163.2H96.5V69z"/>
+		</g>
+		<g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 29.7065 199.2607)" class="st1 st2 st3"> $10K</text>
+			</g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 27.7622 162.0547)" class="st1 st2 st3"> $20K  </text>
+			</g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 27.7622 124.8467)" class="st1 st2 st3"> $30K  </text>
+			</g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 27.7622 87.6396)" class="st1 st2 st3"> $40K  </text>
+			</g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 27.7622 50.4316)" class="st1 st2 st3"> $50K  </text>
+			</g>
+			<g>
+				<text transform="matrix(0.9029 0 0 1 27.7622 13.2246)" class="st1 st2 st3"> $60K  </text>
+			</g>
+			<g>
+				<rect x="51.4" y="226.1" class="st4" width="30.5" height="22.2"/>
+				<text transform="matrix(0.9029 0 0 1 51.4048 236.2959)" class="st1 st2 st3">0</text>
+			</g>
+		</g>
+		<rect x="166.8" y="27" class="st5" width="45.7" height="205.2"/>
+	</g>
+	<g>
+		<rect x="179.2" y="34.7" class="st4" width="43" height="34.1"/>
+		<text transform="matrix(1 0 0 1 179.2119 44.623)" class="st6 st7 st8">US</text>
+	</g>
+	<rect x="110.4" y="75.9" class="st4" width="43" height="34.1"/>
+	<text transform="matrix(1 0 0 1 110.3892 85.875)" class="st6 st7 st8">HI</text>
+</g>
+</svg>
