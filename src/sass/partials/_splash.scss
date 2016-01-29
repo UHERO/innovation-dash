@@ -185,7 +185,7 @@
 }
 
 .splash-graph{
-   min-height: 300px;
+  height: 300px;
   border-radius: 5px;
   background-color: $light_grey;
   margin: 6px 0 0;
@@ -223,7 +223,7 @@
 
     img {
       height: 97px;
-      padding: 10px 5px 0;
+      //padding: 10px 5px 0;
 
       @media #{$large-only} {
         padding: 0 3px 3px 0;
