@@ -17,13 +17,13 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
   };
 
   var entDataset = {
-    US: [1000 - 212, 212],
-    HI: [1000 - 110, 110]
+    US: [1000 - 472, 472],
+    HI: [1000 - 489, 489]
   };
 
   var econDataset = {
-    US: [100000 - 55085, 55085],
-    HI: [100000 - 44518, 44518]
+    US: [100 - 7.40, 7.40],
+    HI: [100 - 4.80, 4.80]
   };
 
 

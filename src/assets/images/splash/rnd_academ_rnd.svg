@@ -12,7 +12,6 @@
 	.st6{fill:#FFFFFF;}
 	.st7{font-family:'Gotham-Bold';}
 	.st8{font-size:12.0903px;}
-	.st9{font-size:16.6261px;}
 </style>
 <g>
 	<g>
@@ -104,7 +103,7 @@
 </g>
 <g>
 	
-		<rect x="10.4" y="0" transform="matrix(1 -5.799976e-03 5.799976e-03 1 -0.7058 0.1162)" class="st5" width="18.5" height="243.5"/>
-	<text transform="matrix(-7.919911e-03 -1 1 -7.929990e-03 23.2853 243.4476)" class="st2 st7 st9">S&amp;E R&amp;D per $1000 of GDP</text>
+		<rect x="9.4" y="20.4" transform="matrix(1 -5.800047e-03 5.800047e-03 1 -0.7004 0.1099)" class="st5" width="18.5" height="200.8"/>
+	<text transform="matrix(-7.919911e-03 -1 1 -7.929990e-03 20.3247 221.1804)" class="st2 st3 st4">S&amp;E R&amp;D per $1000 of GDP</text>
 </g>
 </svg>
