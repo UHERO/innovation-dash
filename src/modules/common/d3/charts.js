@@ -1073,6 +1073,7 @@ module.exports = function (scope, mapSource, dataSource,
             .data(hoverData)
             .enter()
             .append('text')
+            .attr('class', 'line-hover-text')
             .attr('fill', function(d) {
               return d[2];
             })
