@@ -1,48 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
-<style type="text/css">
-	.st0{clip-path:url(#SVGID_2_);fill:#73B1B2;stroke:#73B1B2;stroke-width:1.5;stroke-miterlimit:10;}
-	.st1{fill:#676767;}
-	.st2{font-family:'Montserrat-Regular';}
-	.st3{font-size:14.2914px;}
-	.st4{display:none;fill:#676767;}
-</style>
-<g id="Layer_1">
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="217px" height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
+<g id="Layer_1_1_">
 	<g>
-		<defs>
-			<rect id="SVGID_1_" x="29.7" y="28.2" width="216.3" height="149.2"/>
-		</defs>
-		<clipPath id="SVGID_2_">
-			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-		</clipPath>
-		<path class="st0" d="M229.9,70.2L246,33.5 M212.9,95.2l17-25 M195.9,60.3l17,34.9 M179.8,145.2l16.1-84.9 M162.8,113.1l17,32.2
-			 M146.8,137.2l16.1-24.1 M129.8,117.5l17,19.7 M112.8,172l17-54.5 M96.7,135.4l16.1,36.6 M79.7,127.4l17,8 M63.7,110.4l16.1,17
-			 M46.7,75.5l17,34.9 M29.7,122.9l17-47.4"/>
+		<g>
+			<g>
+				<defs>
+					<rect id="SVGID_1_" x="28.754" y="30.842" width="184.344" height="127.16"/>
+				</defs>
+				<clipPath id="SVGID_2_">
+					<use xlink:href="#SVGID_1_"  overflow="visible"/>
+				</clipPath>
+				<path clip-path="url(#SVGID_2_)" fill="#73B0B1" stroke="#73B0B1" stroke-width="1.5" stroke-miterlimit="10" d="
+					M199.378,66.638l13.721-31.279 M184.892,87.945l14.486-21.307 M170.401,58.201l14.49,29.745 M156.681,130.557l13.721-72.356
+					 M142.191,103.2l14.489,27.444 M128.556,123.741l13.721-20.54 M114.065,106.951l14.49,16.79 M99.578,153.399l14.488-46.448
+					 M85.857,122.206l13.72,31.193 M71.368,115.389l14.489,6.817 M57.731,100.9l13.721,14.489 M43.244,71.155l14.488,29.744
+					 M28.754,111.552l14.489-40.397"/>
+			</g>
+		</g>
 	</g>
 </g>
 <g id="Layer_2">
-	<text transform="matrix(0.6892 -0.7246 0.7246 0.6892 8.7959 216.0173)" class="st1 st2 st3">2000</text>
-	<text transform="matrix(0.6717 -0.7408 0.7408 0.6717 27.5711 216.0167)" class="st4 st2 st3">2001</text>
-	<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 43.9816 216.0154)" class="st1 st2 st3">2002</text>
-	<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 60.5422 216.0141)" class="st4 st2 st3">2003</text>
-	<text transform="matrix(0.6724 -0.7402 0.7402 0.6724 77.8833 216.0152)" class="st1 st2 st3">2004</text>
-	<text transform="matrix(0.6522 -0.758 0.758 0.6522 94.6369 216.0176)" class="st4 st2 st3">2005</text>
-	<text transform="matrix(0.6649 -0.7469 0.7469 0.6649 109.8099 216.017)" class="st1 st2 st3">2006</text>
-	<text transform="matrix(0.6546 -0.756 0.756 0.6546 128.5338 216.0183)" class="st4 st2 st3">2007</text>
-	<text transform="matrix(0.6155 -0.7881 0.7881 0.6155 145.5759 216.0163)" class="st1 st2 st3">2008</text>
-	<text transform="matrix(0.6368 -0.7711 0.7711 0.6368 161.2418 216.0151)" class="st4 st2 st3">2009</text>
-	<text transform="matrix(0.6602 -0.751 0.751 0.6602 178.954 213.3952)" class="st1 st2 st3">2010</text>
-	<text transform="matrix(0.6065 -0.7951 0.7951 0.6065 198.3251 211.8047)" class="st4 st2 st3">2011</text>
-	<text transform="matrix(0.6398 -0.7685 0.7685 0.6398 212.2321 213.5996)" class="st1 st2 st3">2012</text>
-	<text transform="matrix(0.62 -0.7846 0.7846 0.62 229.8035 215.0089)" class="st4 st2 st3">2013</text>
-	<text transform="matrix(1 0 0 1 5.5742 177.4824)" class="st1 st2 st3">30</text>
-	<text transform="matrix(1 0 0 1 5.5742 153.1758)" class="st1 st2 st3">40</text>
-	<text transform="matrix(1 0 0 1 6.5981 128.1738)" class="st1 st2 st3">50</text>
-	<text transform="matrix(1 0 0 1 6.5977 103.2471)" class="st1 st2 st3">60</text>
-	<text transform="matrix(1 0 0 1 5.4985 79.3311)" class="st1 st2 st3">70</text>
-	<text transform="matrix(1 0 0 1 4.3989 55.0371)" class="st1 st2 st3">80</text>
-	<text transform="matrix(1 0 0 1 4.4746 31.29)" class="st1 st2 st3">90</text>
+	
+		<text transform="matrix(0.6892 -0.7246 0.7246 0.6892 10.9385 190.9141)" fill="#676868" font-family="'ArialMT'" font-size="12.1807">2000</text>
+	
+		<text transform="matrix(0.6717 -0.7408 0.7408 0.6717 26.938 190.915)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1798">2001</text>
+	
+		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 40.9229 190.9121)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2002</text>
+	
+		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 55.0396 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1795">2003</text>
+	
+		<text transform="matrix(0.6724 -0.7402 0.7402 0.6724 69.8193 190.9121)" fill="#676868" font-family="'ArialMT'" font-size="12.1804">2004</text>
+	
+		<text transform="matrix(0.6522 -0.758 0.758 0.6522 84.0986 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1793">2005</text>
+	
+		<text transform="matrix(0.6649 -0.7469 0.7469 0.6649 97.0303 190.9141)" fill="#676868" font-family="'ArialMT'" font-size="12.1796">2006</text>
+	
+		<text transform="matrix(0.6546 -0.756 0.756 0.6546 112.9893 190.915)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1807">2007</text>
+	
+		<text transform="matrix(0.6155 -0.7881 0.7881 0.6155 127.5107 190.9131)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2008</text>
+	
+		<text transform="matrix(0.6368 -0.7711 0.7711 0.6368 140.8643 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1815">2009</text>
+	
+		<text transform="matrix(0.6602 -0.7511 0.7511 0.6602 155.959 188.6777)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2010</text>
+	
+		<text transform="matrix(0.6065 -0.7951 0.7951 0.6065 172.4678 187.3223)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1805">2011</text>
+	
+		<text transform="matrix(0.6398 -0.7685 0.7685 0.6398 184.3223 188.8516)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2012</text>
+	
+		<text transform="matrix(0.62 -0.7846 0.7846 0.62 199.2959 190.0557)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1802">2013</text>
+	<text transform="matrix(1 0 0 1 8.1934 158.0723)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">30</text>
+	<text transform="matrix(1 0 0 1 8.1934 137.3574)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">40</text>
+	<text transform="matrix(1 0 0 1 9.0645 116.0469)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">50</text>
+	<text transform="matrix(1 0 0 1 9.0635 94.8047)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">60</text>
+	<text transform="matrix(1 0 0 1 8.127 74.4199)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">70</text>
+	<text transform="matrix(1 0 0 1 7.1904 53.7158)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">80</text>
+	<text transform="matrix(1 0 0 1 7.2559 33.4766)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">90</text>
 </g>
 </svg>

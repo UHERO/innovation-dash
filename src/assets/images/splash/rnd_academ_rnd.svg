@@ -1,109 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
-<style type="text/css">
-	.st0{opacity:0.4;clip-path:url(#SVGID_2_);fill:#80C4C9;}
-	.st1{fill:#80C4C9;}
-	.st2{fill:#676767;}
-	.st3{font-family:'Montserrat-Regular';}
-	.st4{font-size:14px;}
-	.st5{fill:none;}
-	.st6{fill:#FFFFFF;}
-	.st7{font-family:'Gotham-Bold';}
-	.st8{font-size:12.0903px;}
-</style>
+	 width="217px" height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
 <g>
 	<g>
 		<g>
-			<defs>
-				<rect id="SVGID_1_" x="60.9" y="32.8" width="173.7" height="182.8"/>
-			</defs>
-			<clipPath id="SVGID_2_">
-				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-			</clipPath>
-			<polygon class="st0" points="60.9,116.6 73,111.9 85.9,116.6 97.9,127 110.8,118.5 122.9,119.4 135.7,78.7 147.8,99.5 
-				159.9,99.5 172.7,96.7 184.8,99.5 197.6,77.8 209.7,75.9 221.8,59.8 234.6,83.4 234.6,215.6 60.9,215.6 			"/>
+			<g>
+				<defs>
+					<rect id="SVGID_1_" x="49.246" y="20.907" width="148.724" height="156.516"/>
+				</defs>
+				<clipPath id="SVGID_2_">
+					<use xlink:href="#SVGID_1_"  overflow="visible"/>
+				</clipPath>
+				<polygon opacity="0.4" clip-path="url(#SVGID_2_)" fill="#81C5C9" enable-background="new    " points="49.246,92.658 
+					59.605,88.633 70.651,92.658 80.925,101.563 91.971,94.285 102.331,95.055 113.29,60.207 123.65,78.016 134.012,78.016 
+					144.971,75.619 155.33,78.016 166.291,59.436 176.65,57.809 187.011,44.024 197.97,64.231 197.97,177.423 49.246,177.423 				
+					"/>
+			</g>
 		</g>
-		<polygon class="st1" points="60.9,165.8 73,165.8 85.9,163.9 97.9,152.6 110.8,140.3 122.9,131.7 135.7,128.9 147.8,129.9 
-			159.9,132.7 172.7,135.5 184.8,129.9 197.6,113.8 209.7,109 221.8,104.3 234.6,111.9 234.6,215.6 60.9,215.6 		"/>
+		<polygon fill="#81C5C9" points="49.246,134.783 59.605,134.783 70.651,133.156 80.925,123.481 91.971,112.949 102.331,105.586 
+			113.29,103.189 123.65,104.045 134.012,106.442 144.971,108.84 155.33,104.045 166.291,90.26 176.65,86.15 187.011,82.126 
+			197.97,88.633 197.97,177.423 49.246,177.423 		"/>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 219.4395)" class="st2 st3 st4">2.00 </text>
-		</g>
-		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 193.3271)" class="st2 st3 st4">2.50 </text>
-		</g>
-		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 167.2178)" class="st2 st3 st4">3.00 </text>
-		</g>
-		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 141.1074)" class="st2 st3 st4">3.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 180.709)" fill="#676868" font-family="'ArialMT'" font-size="11.987">2.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 114.9956)" class="st2 st3 st4">4.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 158.3525)" fill="#676868" font-family="'ArialMT'" font-size="11.987">2.50 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 88.8862)" class="st2 st3 st4">4.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 135.9971)" fill="#676868" font-family="'ArialMT'" font-size="11.987">3.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 62.7749)" class="st2 st3 st4">5.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 113.6406)" fill="#676868" font-family="'ArialMT'" font-size="11.987">3.50 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 30.3486 36.6616)" class="st2 st3 st4">5.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 91.2832)" fill="#676868" font-family="'ArialMT'" font-size="11.987">4.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 23.0874 68.9277)" fill="#676868" font-family="'ArialMT'" font-size="11.987">4.50 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 23.0874 46.5713)" fill="#676868" font-family="'ArialMT'" font-size="11.987">5.00 </text>
+		</g>
+		<g>
+			<text transform="matrix(0.9029 0 0 1 23.0874 24.2129)" fill="#676868" font-family="'ArialMT'" font-size="11.987">5.50 </text>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.6756 -0.599 0.6634 0.7483 52.2039 244.7481)" class="st2 st3 st4">1998 </text>
+				
+					<text transform="matrix(0.6756 -0.599 0.6634 0.7483 41.8013 202.3809)" fill="#676868" font-family="'ArialMT'" font-size="11.9873">1998 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.6518 -0.6247 0.6919 0.722 75.669 248.0041)" class="st2 st3 st4">2000 </text>
+				
+					<text transform="matrix(0.6518 -0.6247 0.6919 0.722 61.8906 205.167)" fill="#676868" font-family="'ArialMT'" font-size="11.9871">2000 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.6057 -0.6696 0.7416 0.6708 101.908 248.2107)" class="st2 st3 st4">2002 </text>
+				
+					<text transform="matrix(0.6057 -0.6696 0.7416 0.6708 84.3584 205.3447)" fill="#676868" font-family="'ArialMT'" font-size="11.9867">2002 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.5949 -0.6792 0.7523 0.6588 127.0223 249.1132)" class="st2 st3 st4">2004 </text>
+				
+					<text transform="matrix(0.5949 -0.6792 0.7523 0.6588 105.8604 206.1172)" fill="#676868" font-family="'ArialMT'" font-size="11.9868">2004 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.5858 -0.6871 0.761 0.6488 151.8562 248.6951)" class="st2 st3 st4">2006 </text>
+				
+					<text transform="matrix(0.5858 -0.6871 0.761 0.6488 127.124 205.7588)" fill="#676868" font-family="'ArialMT'" font-size="11.9874">2006 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.5918 -0.6819 0.7553 0.6554 176.5672 248.6205)" class="st2 st3 st4">2008 </text>
+				
+					<text transform="matrix(0.5918 -0.6819 0.7553 0.6554 148.2832 205.6973)" fill="#676868" font-family="'ArialMT'" font-size="11.9872">2008 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.5572 -0.7105 0.7869 0.6171 203.0979 247.9224)" class="st2 st3 st4">2010 </text>
+				
+					<text transform="matrix(0.5572 -0.7105 0.7869 0.6171 170.9971 205.0967)" fill="#676868" font-family="'ArialMT'" font-size="11.9872">2010 </text>
 			</g>
 		</g>
 		<g>
 			<g>
-				<text transform="matrix(0.5661 -0.7034 0.779 0.627 227.9795 247.305)" class="st2 st3 st4">2012 </text>
+				
+					<text transform="matrix(0.5661 -0.7034 0.779 0.627 192.3018 204.5693)" fill="#676868" font-family="'ArialMT'" font-size="11.9868">2012 </text>
 			</g>
 		</g>
 	</g>
 	<g>
-		<rect x="139.3" y="159.5" class="st5" width="37.2" height="29.5"/>
-		<text transform="matrix(1 0 0 1 139.3213 168.3682)" class="st6 st7 st8">US</text>
+		<rect x="116.373" y="129.389" fill="none" width="31.851" height="25.259"/>
+		<text transform="matrix(1 0 0 1 116.3906 136.9824)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.3519">US</text>
 	</g>
 	<g>
-		<rect x="139.3" y="106.1" class="st5" width="37.2" height="29.5"/>
-		<text transform="matrix(1 0 0 1 139.3213 114.8936)" class="st6 st7 st8">HI</text>
+		<rect x="116.373" y="83.667" fill="none" width="31.851" height="25.259"/>
+		<text transform="matrix(1 0 0 1 116.3906 91.1963)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.3519">HI</text>
 	</g>
 </g>
 <g>
 	
-		<rect x="9.4" y="20.4" transform="matrix(1 -5.800047e-03 5.800047e-03 1 -0.7004 0.1099)" class="st5" width="18.5" height="200.8"/>
-	<text transform="matrix(-7.919911e-03 -1 1 -7.929990e-03 20.3247 221.1804)" class="st2 st3 st4">S&amp;E R&amp;D per $1000 of GDP</text>
+		<rect x="5.151" y="10.29" transform="matrix(-1 0.0058 -0.0058 -1 26.7017 192.4325)" fill="none" width="15.84" height="171.931"/>
+	<text transform="matrix(-0.0079 -1 1 -0.0079 14.5049 182.2002)" fill="#676868" font-family="'ArialMT'" font-size="11.9874">S&amp;E R&amp;D per $1000 of GDP</text>
 </g>
 </svg>

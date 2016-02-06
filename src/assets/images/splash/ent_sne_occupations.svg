@@ -1,71 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
-<style type="text/css">
-	.st0{display:none;}
-	.st1{display:inline;}
-	.st2{clip-path:url(#SVGID_2_);fill:none;stroke:#989798;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st3{clip-path:url(#SVGID_4_);fill:none;stroke:#989798;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st4{fill:#D4E7B3;}
-	.st5{fill:#7FBB57;}
-	.st6{fill:#676767;}
-	.st7{font-family:'Montserrat-Regular';}
-	.st8{font-size:14px;}
-	.st9{display:none;fill:#676767;enable-background:new    ;}
-	.st10{font-size:14.0007px;}
-	.st11{fill:#FFFFFF;}
-</style>
-<g id="Layer_1_1_" class="st0">
-	<g class="st1">
-		<g>
-			<defs>
-				<rect id="SVGID_1_" x="5.4" y="27.3" width="319.8" height="191.9"/>
-			</defs>
-			<clipPath id="SVGID_2_">
-				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-			</clipPath>
-			<path class="st2" d="M25.8,38.9H243 M25.8,70.8H243 M25.8,101.9H243 M25.8,133.9H243 M25.8,165H243"/>
-		</g>
-	</g>
-	<g class="st1">
-		<g>
-			<defs>
-				<rect id="SVGID_3_" x="5.4" y="27.3" width="319.8" height="191.9"/>
-			</defs>
-			<clipPath id="SVGID_4_">
-				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
-			</clipPath>
-			<line class="st3" x1="26" y1="196.7" x2="26" y2="38.9"/>
-		</g>
-	</g>
-</g>
+	 width="217px" height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
 <g id="Layer_4">
-	<polygon class="st4" points="32.1,77 101.6,72.9 167.5,61.3 191.4,63.6 215,59.6 236.6,57.8 236.6,193.6 32.1,193.6 	"/>
+	<polygon fill="#D5E7B4" points="30.412,53.808 92.902,50.122 152.157,39.692 173.645,41.759 194.867,38.163 214.288,36.544 
+		214.288,158.649 30.412,158.649 	"/>
 </g>
 <g id="Layer_3">
-	<polygon class="st5" points="32.1,107.1 32.1,193.3 237.1,193.3 237.1,87 213.7,89.5 191.1,91.2 145.9,102.1 123.3,102.1 
-		100.7,98.7 54.7,107.9 	"/>
+	<polygon fill="#80BC57" points="30.412,80.873 30.412,158.379 214.737,158.379 214.737,62.799 193.699,65.047 173.377,66.577 
+		132.733,76.377 112.415,76.377 92.095,73.32 50.732,81.591 	"/>
 </g>
 <g id="Layer_2">
-	<text transform="matrix(1 0 0 1 18.959 194.5078)" class="st6 st7 st8">0</text>
-	<text transform="matrix(1 0 0 1 20.1714 165.1299)" class="st6 st7 st8">1</text>
-	<text transform="matrix(1 0 0 1 20.1714 135.4893)" class="st6 st7 st8">2</text>
-	<text transform="matrix(1 0 0 1 21.1816 106.3184)" class="st6 st7 st8">3</text>
-	<text transform="matrix(1 0 0 1 19.7778 75.5986)" class="st6 st7 st8">4</text>
-	<text transform="matrix(1 0 0 1 20.5757 46.7676)" class="st6 st7 st8">5</text>
-	<text transform="matrix(0.6787 -0.7344 0.7344 0.6787 16.461 230.0022)" class="st6 st7 st8">2003</text>
-	<text transform="matrix(0.6949 -0.7191 0.7191 0.6949 38.6559 230.0015)" class="st9 st7 st8">2004</text>
-	<text transform="matrix(0.7349 -0.6782 0.6782 0.7349 62.3085 230.0003)" class="st6 st7 st8">2005</text>
-	<text transform="matrix(0.7166 -0.6975 0.6975 0.7166 87.6445 230.0008)" class="st9 st7 st8">2006</text>
-	<text transform="matrix(0.7153 -0.6988 0.6988 0.7153 112.7251 230.0023)" class="st6 st7 st8">2007</text>
-	<text transform="matrix(0.7387 -0.674 0.674 0.7387 136.2179 230.002)" class="st9 st7 st8">2008</text>
-	<text transform="matrix(0.7454 -0.6666 0.6666 0.7454 157.6119 230.002)" class="st6 st7 st8">2009</text>
-	<text transform="matrix(0.7185 -0.6956 0.6956 0.7185 181.9323 230.0019)" class="st9 st7 st10">2010</text>
-	<text transform="matrix(0.6537 -0.7568 0.7568 0.6537 204.3696 230.1237)" class="st6 st7 st8">2011</text>
-	<text transform="matrix(0.7606 -0.6492 0.6492 0.7606 222.4505 230.0028)" class="st9 st7 st8">2012</text>
-	<text transform="matrix(4.489659e-11 -1 1 4.489659e-11 12.7545 190.7148)" class="st6 st7 st8">% of all occupations</text>
-	<text transform="matrix(1 0 0 1 167.6526 135.489)" class="st11 st7 st8">HI</text>
-	<text transform="matrix(1 0 0 1 159.4979 84.6311)" class="st11 st7 st8">US</text>
+	<text transform="matrix(1 0 0 1 18.5967 159.4648)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">0</text>
+	<text transform="matrix(1 0 0 1 19.6865 133.0498)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">1</text>
+	<text transform="matrix(1 0 0 1 19.6865 106.3975)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">2</text>
+	<text transform="matrix(1 0 0 1 20.5938 80.1689)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">3</text>
+	<text transform="matrix(1 0 0 1 19.333 52.5469)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">4</text>
+	<text transform="matrix(1 0 0 1 20.0508 26.625)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">5</text>
+	
+		<text transform="matrix(0.6787 -0.7344 0.7344 0.6787 16.3516 191.3799)" fill="#676868" font-family="'ArialMT'" font-size="12.5878">2003</text>
+	
+		<text transform="matrix(0.6949 -0.7191 0.7191 0.6949 36.3096 191.376)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.588">2004</text>
+	
+		<text transform="matrix(0.7349 -0.6782 0.6782 0.7349 57.5737 191.377)" fill="#676868" font-family="'ArialMT'" font-size="12.5885">2005</text>
+	
+		<text transform="matrix(0.7166 -0.6975 0.6975 0.7166 80.3545 191.3779)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.5884">2006</text>
+	
+		<text transform="matrix(0.7153 -0.6988 0.6988 0.7153 102.9072 191.3789)" fill="#676868" font-family="'ArialMT'" font-size="12.5878">2007</text>
+	
+		<text transform="matrix(0.7387 -0.674 0.674 0.7387 124.0273 191.3799)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.5875">2008</text>
+	
+		<text transform="matrix(0.7454 -0.6666 0.6666 0.7454 143.2656 191.3779)" fill="#676868" font-family="'ArialMT'" font-size="12.5878">2009</text>
+	
+		<text transform="matrix(0.7185 -0.6956 0.6956 0.7185 165.1357 191.3799)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.59">2010</text>
+	
+		<text transform="matrix(0.6537 -0.7568 0.7568 0.6537 185.3086 191.4883)" fill="#676868" font-family="'ArialMT'" font-size="12.5889">2011</text>
+	
+		<text transform="matrix(0.7606 -0.6492 0.6492 0.7606 201.5654 191.3799)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.5877">2012</text>
+	
+		<text transform="matrix(4.489659e-011 -1 1 4.489659e-011 13.0176 156.0518)" fill="#676868" font-family="'ArialMT'" font-size="12.5881">% of all occupations</text>
+	<text transform="matrix(1 0 0 1 152.2949 106.3975)" fill="#FFFFFF" font-family="'ArialMT'" font-size="12.5881">HI</text>
+	<text transform="matrix(1 0 0 1 144.9629 60.6699)" fill="#FFFFFF" font-family="'ArialMT'" font-size="12.5881">US</text>
 </g>
 </svg>
