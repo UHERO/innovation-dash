@@ -1073,7 +1073,6 @@ module.exports = function (scope, mapSource, dataSource,
             .data(hoverData)
             .enter()
             .append('text')
-            .attr('class', 'line-hover-text')
             .attr('fill', function(d) {
               return d[2];
             })
@@ -1106,6 +1105,23 @@ module.exports = function (scope, mapSource, dataSource,
                 return d[0] + ": " + numberFormatConverter( d[1] ); // blamebrandontag
               }
             });
+
+         tooltipGroup.insert('rect', 'text')
+            .attr('x', function() {
+               if (flipTextOverLine) {
+                  return mouseX - 170;
+               }
+               return mouseX + 15;
+            })
+            .attr('y', function (d, i) {
+               if (flipTextAboveCursor) {
+                  return mouseY - 130 + i * 30;
+               }
+               return mouseY + 0 + i * 30;
+            })
+            .attr('width', '160px')
+            .attr('height', '135px')
+            .attr('class', 'line-hover-text');
 
           vis.select(".verticalLine")
             .attr("visibility", "visible")
