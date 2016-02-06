@@ -3,7 +3,7 @@
 .splash{
   // padding-bottom: 10px;
   border-top-left-radius: 5px;
-  background-color: $light_grey;
+  background-color: $oil;
 
   @media #{$medium-down} {
     border-top-left-radius: 5px;
@@ -16,7 +16,7 @@
     padding: 8px 30px;
     width: 17.5%;
     float: left;
-    border-top-right-radius: none;
+    border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
     //border-top-right-radius: 5px;
 
@@ -51,7 +51,7 @@
     background-color: $oil;
     //padding-bottom: 10px;
     margin-bottom: 0;
-    margin-top: -2px;
+    //margin-top: -2px;
     margin-left: 0;
     padding: 0px 0px 0px;
     overflow: hidden;
@@ -75,7 +75,7 @@
     @media #{$large-only}{
       // font-weight: 700;
       text-align: left;
-      font-size: 1.04em;
+      font-size: 1em;
       line-height: 1.3em;
     }
   }
@@ -122,7 +122,7 @@
 }
 
 .intro{
-  height: 225px;
+  height: 190px;
   color: $white;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -185,18 +185,18 @@
 }
 
 .splash-graph{
-  height: 300px;
+  height: 275px;
   border-radius: 5px;
   background-color: $light_grey;
   margin: 6px 0 0;
 
   svg{
-    margin: auto;
+    margin: -15px auto;
     display: block;
   }
 }
 
-.d3-graph-edu, .d3-graph-ent{
+.d3-graph-edu, .d3-graph-ent, .d3-graph-econ {
   @media #{$large-only}{
     margin-left:  -18px;
   }
@@ -223,10 +223,10 @@
 
     img {
       height: 97px;
-      //padding: 10px 5px 0;
+      padding: 5px 3px 3px 0;
 
       @media #{$large-only} {
-        padding: 0 3px 3px 0;
+        //padding: 5px 3px 3px 0;
       }
     }
   // }
