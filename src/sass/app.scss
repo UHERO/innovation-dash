@@ -18,7 +18,7 @@ header {
 }
 
 h1{
-  @include uHero_font(1.1em, 1, $white, 400);
+  @include uHero_font(1.03em, 1, $white, 400);
 }
 
 h2{
@@ -172,7 +172,7 @@ a {
 /* Layouts */
 .wrapper {
   margin: auto;
-  max-width: 1150px;
+  max-width: 1155px;
   //max-width: 1200px;
   //width: 98%;
   margin-top: -1%;
@@ -183,8 +183,10 @@ a {
   width: 22%;
   display: inline-block;
   float: left;
-  margin-top: 3%;
+  margin-top: 2%;
   margin-left: 3px;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
 
   /* @media #{$small-only}{
     display: block;
@@ -240,7 +242,7 @@ a {
 nav {
    width: 78%;
    margin-right: -3px;
-   margin-top: 1%;
+   //margin-top: 1%;
    height: 50px;
    display: inline-block;
    position: relative;
@@ -303,7 +305,7 @@ nav {
 .container{
   background-color: $light_grey;
   margin: auto;
-  margin-top: 3px;
+  //margin-top: 3px;
   position: relative;
   z-index: 2;
   border-top-left-radius: 5px;
