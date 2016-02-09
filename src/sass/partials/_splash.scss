@@ -197,7 +197,9 @@
 }
 
 .d3-graph-edu, .d3-graph-ent, .d3-graph-econ {
-  @media #{$large-only}{
+   margin-left: -15px;
+
+  @media #{$large-only} {
     margin-left:  -18px;
   }
 }
