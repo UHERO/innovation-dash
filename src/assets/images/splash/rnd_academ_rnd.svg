@@ -7,106 +7,108 @@
 	<g>
 		<g>
 			<g>
-				<defs>
-					<rect id="SVGID_1_" x="49.246" y="20.907" width="148.724" height="156.516"/>
-				</defs>
-				<clipPath id="SVGID_2_">
-					<use xlink:href="#SVGID_1_"  overflow="visible"/>
-				</clipPath>
-				<polygon opacity="0.4" clip-path="url(#SVGID_2_)" fill="#81C5C9" enable-background="new    " points="49.246,92.658 
-					59.605,88.633 70.651,92.658 80.925,101.563 91.971,94.285 102.331,95.055 113.29,60.207 123.65,78.016 134.012,78.016 
-					144.971,75.619 155.33,78.016 166.291,59.436 176.65,57.809 187.011,44.024 197.97,64.231 197.97,177.423 49.246,177.423 				
-					"/>
+				<g>
+					<defs>
+						<rect id="SVGID_1_" x="49.246" y="20.907" width="148.725" height="156.516"/>
+					</defs>
+					<clipPath id="SVGID_2_">
+						<use xlink:href="#SVGID_1_"  overflow="visible"/>
+					</clipPath>
+					<polygon opacity="0.4" clip-path="url(#SVGID_2_)" fill="#81C5C9" enable-background="new    " points="49.246,92.658 
+						59.605,88.633 70.651,92.658 80.925,101.563 91.971,94.285 102.331,95.055 113.29,60.207 123.65,78.016 134.012,78.016 
+						144.971,75.619 155.33,78.016 166.291,59.436 176.65,57.809 187.012,44.024 197.971,64.231 197.971,177.423 49.246,177.423 
+											"/>
+				</g>
 			</g>
 		</g>
-		<polygon fill="#81C5C9" points="49.246,134.783 59.605,134.783 70.651,133.156 80.925,123.481 91.971,112.949 102.331,105.586 
-			113.29,103.189 123.65,104.045 134.012,106.442 144.971,108.84 155.33,104.045 166.291,90.26 176.65,86.15 187.011,82.126 
-			197.97,88.633 197.97,177.423 49.246,177.423 		"/>
+		<polygon fill="#81C5C9" points="49.246,134.783 59.605,134.783 70.651,133.156 80.925,123.48 91.971,112.949 102.331,105.586 
+			113.29,103.189 123.65,104.045 134.012,106.442 144.971,108.84 155.33,104.045 166.291,90.26 176.65,86.15 187.012,82.126 
+			197.971,88.633 197.971,177.423 49.246,177.423 		"/>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 180.709)" fill="#676868" font-family="'ArialMT'" font-size="11.987">2.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 180.709)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 158.3525)" fill="#676868" font-family="'ArialMT'" font-size="11.987">2.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 158.3525)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2.50 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 135.9971)" fill="#676868" font-family="'ArialMT'" font-size="11.987">3.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 135.9971)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">3.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 113.6406)" fill="#676868" font-family="'ArialMT'" font-size="11.987">3.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 113.6406)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">3.50 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 91.2832)" fill="#676868" font-family="'ArialMT'" font-size="11.987">4.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 91.2832)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">4.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 68.9277)" fill="#676868" font-family="'ArialMT'" font-size="11.987">4.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 68.9277)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">4.50 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 46.5713)" fill="#676868" font-family="'ArialMT'" font-size="11.987">5.00 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 46.5713)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">5.00 </text>
 		</g>
 		<g>
-			<text transform="matrix(0.9029 0 0 1 23.0874 24.2129)" fill="#676868" font-family="'ArialMT'" font-size="11.987">5.50 </text>
+			<text transform="matrix(0.9029 0 0 1 23.0874 24.2129)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">5.50 </text>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.6756 -0.599 0.6634 0.7483 41.8013 202.3809)" fill="#676868" font-family="'ArialMT'" font-size="11.9873">1998 </text>
-			</g>
-		</g>
-		<g>
-			<g>
-				
-					<text transform="matrix(0.6518 -0.6247 0.6919 0.722 61.8906 205.167)" fill="#676868" font-family="'ArialMT'" font-size="11.9871">2000 </text>
+					<text transform="matrix(0.6756 -0.599 0.6634 0.7483 41.8027 202.3809)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">1998 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.6057 -0.6696 0.7416 0.6708 84.3584 205.3447)" fill="#676868" font-family="'ArialMT'" font-size="11.9867">2002 </text>
+					<text transform="matrix(0.6518 -0.6247 0.6919 0.722 61.8906 205.167)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2000 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.5949 -0.6792 0.7523 0.6588 105.8604 206.1172)" fill="#676868" font-family="'ArialMT'" font-size="11.9868">2004 </text>
+					<text transform="matrix(0.6057 -0.6696 0.7416 0.6708 84.3594 205.3457)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2002 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.5858 -0.6871 0.761 0.6488 127.124 205.7588)" fill="#676868" font-family="'ArialMT'" font-size="11.9874">2006 </text>
+					<text transform="matrix(0.5949 -0.6792 0.7523 0.6588 105.8604 206.1172)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2004 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.5918 -0.6819 0.7553 0.6554 148.2832 205.6973)" fill="#676868" font-family="'ArialMT'" font-size="11.9872">2008 </text>
+					<text transform="matrix(0.5858 -0.6871 0.761 0.6488 127.123 205.7588)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2006 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.5572 -0.7105 0.7869 0.6171 170.9971 205.0967)" fill="#676868" font-family="'ArialMT'" font-size="11.9872">2010 </text>
+					<text transform="matrix(0.5918 -0.6819 0.7553 0.6554 148.2832 205.6973)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2008 </text>
 			</g>
 		</g>
 		<g>
 			<g>
 				
-					<text transform="matrix(0.5661 -0.7034 0.779 0.627 192.3018 204.5693)" fill="#676868" font-family="'ArialMT'" font-size="11.9868">2012 </text>
+					<text transform="matrix(0.5572 -0.7105 0.7869 0.6171 170.998 205.0967)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2010 </text>
+			</g>
+		</g>
+		<g>
+			<g>
+				
+					<text transform="matrix(0.5661 -0.7034 0.779 0.627 192.3018 204.5684)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10">2012 </text>
 			</g>
 		</g>
 	</g>
 	<g>
-		<rect x="116.373" y="129.389" fill="none" width="31.851" height="25.259"/>
+		<rect x="116.373" y="129.389" fill="none" width="31.852" height="25.26"/>
 		<text transform="matrix(1 0 0 1 116.3906 136.9824)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.3519">US</text>
 	</g>
 	<g>
-		<rect x="116.373" y="83.667" fill="none" width="31.851" height="25.259"/>
+		<rect x="116.373" y="83.667" fill="none" width="31.852" height="25.259"/>
 		<text transform="matrix(1 0 0 1 116.3906 91.1963)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.3519">HI</text>
 	</g>
 </g>
 <g>
+	<rect x="5.152" y="10.286" transform="matrix(1 -0.0058 0.0058 1 -0.5576 0.0774)" fill="none" width="15.841" height="171.934"/>
 	
-		<rect x="5.151" y="10.29" transform="matrix(-1 0.0058 -0.0058 -1 26.7017 192.4325)" fill="none" width="15.84" height="171.931"/>
-	<text transform="matrix(-0.0079 -1 1 -0.0079 14.5049 182.2002)" fill="#676868" font-family="'ArialMT'" font-size="11.9874">S&amp;E R&amp;D per $1000 of GDP</text>
+		<text transform="matrix(-0.0079 -1 1 -0.0079 14.5044 182.1992)" fill="#676868" font-family="'Montserrat-Regular'" font-size="11">S&amp;E R&amp;D per $1000 of GDP</text>
 </g>
 </svg>

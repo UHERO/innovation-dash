@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="217px" height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
-<g id="Layer_1_1_">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="217px"
+	 height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
+<g id="Layer_1">
 	<g>
 		<g>
-			<rect id="SVGID_1_" x="60.593" y="122.705" fill="#17809B" width="53.907" height="72.442"/>
+			<path fill="#1A809B" d="M61.494,163.13h45.511v27.908H61.494V163.13L61.494,163.13z M134.245,74.896h45.514v116.142h-45.514
+				V74.896L134.245,74.896z"/>
 		</g>
-	</g>
-	<g>
 		<g>
-			<rect id="SVGID_3_" x="142.395" y="50.26" fill="#17809B" width="53.906" height="144.888"/>
+			<text transform="matrix(1 0 0 1 33.1943 191.752)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">14</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 33.1943 145.3271)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">15</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 33.1943 98.8896)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">16</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 33.1943 52.4668)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">17</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 70.6504 214.4287)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">2000</text>
+		</g>
+		<g>
+			<text transform="matrix(1 0 0 1 145.6201 214.4287)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.9683">2013</text>
 		</g>
 	</g>
 </g>
-<g id="labels">
-	<text transform="matrix(1 0 0 1 73.1699 213.1963)" fill="#676868" font-family="'ArialMT'" font-size="12.599">1990</text>
-	<text transform="matrix(1 0 0 1 155.8164 213.1963)" fill="#676868" font-family="'ArialMT'" font-size="12.599">2011</text>
-	<text transform="matrix(1 0 0 1 35.8965 201.2891)" fill="#676868" font-family="'ArialMT'" font-size="12.599">0</text>
-	<text transform="matrix(1 0 0 1 34.3857 164.6514)" fill="#676868" font-family="'ArialMT'" font-size="12.599">5</text>
-	<text transform="matrix(1 0 0 1 29.9541 127.041)" fill="#676868" font-family="'ArialMT'" font-size="12.599">10</text>
-	<text transform="matrix(1 0 0 1 30.8525 89.1055)" fill="#676868" font-family="'ArialMT'" font-size="12.599">15</text>
-	<text transform="matrix(1 0 0 1 28.9053 55.3916)" fill="#676868" font-family="'ArialMT'" font-size="12.599">20</text>
-	<text transform="matrix(1 0 0 1 29.4492 17.0166)" fill="#676868" font-family="'ArialMT'" font-size="12.599">25</text>
+<g id="label">
 	
-		<text transform="matrix(4.489658e-011 -1 1 4.489658e-011 20.6987 203.8447)" fill="#676868" font-family="'ArialMT'" font-size="12.599">per 1000 college aged residents</text>
+		<text transform="matrix(-4.371139e-008 -1 1 -4.371139e-008 20.1177 198.6699)" fill="#676868" font-family="'Montserrat-Regular'" font-size="12.0651">per 1000 college aged residents</text>
 </g>
 </svg>

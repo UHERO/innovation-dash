@@ -5,40 +5,33 @@
 	 width="217px" height="217px" viewBox="0 0 217 217" enable-background="new 0 0 217 217" xml:space="preserve">
 <g>
 	<g>
-		<g>
-			<path fill="#F89927" d="M72.729,66.214h35.121v128.229H72.729V66.214z"/>
-		</g>
-		<g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 20.248 168.5615)" fill="#676868" font-family="'ArialMT'" font-size="11"> $10K</text>
-			</g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 18.7207 139.3271)" fill="#676868" font-family="'ArialMT'" font-size="11"> $20K  </text>
-			</g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 18.7207 110.0928)" fill="#676868" font-family="'ArialMT'" font-size="11"> $30K  </text>
-			</g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 18.7207 80.8589)" fill="#676868" font-family="'ArialMT'" font-size="11"> $40K  </text>
-			</g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 18.7207 51.624)" fill="#676868" font-family="'ArialMT'" font-size="11"> $50K  </text>
-			</g>
-			<g>
-				<text transform="matrix(0.9029 0 0 1 18.7207 22.3901)" fill="#676868" font-family="'ArialMT'" font-size="11"> $60K  </text>
-			</g>
-			<g>
-				<rect x="37.293" y="189.649" fill="none" width="23.964" height="17.442"/>
-				<text transform="matrix(0.9029 0 0 1 37.2969 197.6592)" fill="#676868" font-family="'ArialMT'" font-size="11">0</text>
-			</g>
-		</g>
-		<rect x="127.964" y="33.214" fill="#FCBA82" width="35.907" height="161.229"/>
+		<path fill="#F89928" d="M50.591,51.875h55.686V200.72H50.591V51.875L50.591,51.875z M228,200.72"/>
 	</g>
 	<g>
-		<rect x="137.706" y="39.264" fill="none" width="33.786" height="26.793"/>
-		<text transform="matrix(1 0 0 1 137.7168 47.061)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.7136">US</text>
+		<text transform="matrix(1 0 0 1 19.2373 203.4502)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$0K</text>
 	</g>
-	<rect x="83.65" y="71.635" fill="none" width="33.786" height="26.792"/>
-	<text transform="matrix(1 0 0 1 83.6421 79.4727)" fill="#FFFFFF" font-family="'GothamBook'" font-size="10.7136">HI</text>
+	<g>
+		<text transform="matrix(1 0 0 1 14.2559 175.1221)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$10K</text>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 10.5615 146.7842)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$20K</text>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 10.5615 118.4463)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$30K</text>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 10.5615 90.1016)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$40K</text>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 10.5615 61.7715)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$50K</text>
+	</g>
+	<g>
+		<text transform="matrix(1 0 0 1 10.5615 33.4326)" fill="#5A5A5A" font-family="'Montserrat-Regular'" font-size="10">$60K</text>
+	</g>
 </g>
+<g id="Layer_2">
+	<rect x="135.642" y="38.975" fill="#FCBA81" width="55.695" height="162.631"/>
+</g>
+<text transform="matrix(1 0 0 1 67.3691 75.7363)" fill="#FFFFFF" font-family="'Montserrat-Bold'" font-size="18.4698">HI</text>
+<text transform="matrix(1 0 0 1 150.4561 63.4492)" fill="#FFFFFF" font-family="'Montserrat-Bold'" font-size="18.4698">US</text>
 </svg>

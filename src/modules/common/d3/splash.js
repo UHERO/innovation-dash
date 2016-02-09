@@ -7,8 +7,8 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
   radius = Math.min(width, height)/2;
 
   var eduDataset = {
-    US: [1000 - 404, 404],
-    HI: [1000 - 412, 412]
+    US: [1000 - 418, 418],
+    HI: [1000 - 449, 449]
   };
 
   var rndDataset = {
@@ -17,13 +17,13 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
   };
 
   var entDataset = {
-    US: [1000 - 472, 472],
-    HI: [1000 - 489, 489]
+    US: [1000 - 458, 458],
+    HI: [1000 - 476, 476]
   };
 
   var econDataset = {
-    US: [100 - 7.40, 7.40],
-    HI: [100 - 4.80, 4.80]
+    US: [100 - 6.20, 6.20],
+    HI: [100 - 4.40, 4.40]
   };
 
 

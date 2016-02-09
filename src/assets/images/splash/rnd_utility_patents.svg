@@ -7,56 +7,59 @@
 	<g>
 		<g>
 			<g>
-				<defs>
-					<rect id="SVGID_1_" x="28.754" y="30.842" width="184.344" height="127.16"/>
-				</defs>
-				<clipPath id="SVGID_2_">
-					<use xlink:href="#SVGID_1_"  overflow="visible"/>
-				</clipPath>
-				<path clip-path="url(#SVGID_2_)" fill="#73B0B1" stroke="#73B0B1" stroke-width="1.5" stroke-miterlimit="10" d="
-					M199.378,66.638l13.721-31.279 M184.892,87.945l14.486-21.307 M170.401,58.201l14.49,29.745 M156.681,130.557l13.721-72.356
-					 M142.191,103.2l14.489,27.444 M128.556,123.741l13.721-20.54 M114.065,106.951l14.49,16.79 M99.578,153.399l14.488-46.448
-					 M85.857,122.206l13.72,31.193 M71.368,115.389l14.489,6.817 M57.731,100.9l13.721,14.489 M43.244,71.155l14.488,29.744
-					 M28.754,111.552l14.489-40.397"/>
+				<g>
+					<defs>
+						<rect id="SVGID_1_" x="42.958" y="29.305" width="171.937" height="118.603"/>
+					</defs>
+					<clipPath id="SVGID_2_">
+						<use xlink:href="#SVGID_1_"  overflow="visible"/>
+					</clipPath>
+					<path clip-path="url(#SVGID_2_)" fill="#73B0B1" stroke="#73B0B1" stroke-width="1.5" stroke-miterlimit="10" d="
+						M202.099,62.691l12.798-29.174 M188.589,82.564l13.51-19.873 M175.071,54.823l13.516,27.742 M162.276,122.308l12.797-67.485
+						 M148.761,96.793l13.514,25.597 M136.044,115.952l12.796-19.158 M122.527,100.292l13.515,15.661 M109.016,143.613
+						l13.514-43.322 M96.218,114.52l12.796,29.094 M82.705,108.161l13.514,6.358 M69.985,94.647l12.798,13.514 M56.473,66.904
+						l13.513,27.742 M42.958,104.583l13.514-37.678"/>
+				</g>
 			</g>
 		</g>
 	</g>
 </g>
 <g id="Layer_2">
 	
-		<text transform="matrix(0.6892 -0.7246 0.7246 0.6892 10.9385 190.9141)" fill="#676868" font-family="'ArialMT'" font-size="12.1807">2000</text>
+		<text transform="matrix(0.6892 -0.7246 0.7246 0.6892 29.3682 178.6035)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2000</text>
 	
-		<text transform="matrix(0.6717 -0.7408 0.7408 0.6717 26.938 190.915)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1798">2001</text>
+		<text transform="matrix(0.6717 -0.7408 0.7408 0.6717 41.2661 178.6045)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3599">2001</text>
 	
-		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 40.9229 190.9121)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2002</text>
+		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 54.3086 178.6035)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2002</text>
 	
-		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 55.0396 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1795">2003</text>
+		<text transform="matrix(0.6906 -0.7232 0.7232 0.6906 67.4741 178.6025)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3595">2003</text>
 	
-		<text transform="matrix(0.6724 -0.7402 0.7402 0.6724 69.8193 190.9121)" fill="#676868" font-family="'ArialMT'" font-size="12.1804">2004</text>
+		<text transform="matrix(0.6724 -0.7402 0.7402 0.6724 81.2588 178.6025)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2004</text>
 	
-		<text transform="matrix(0.6522 -0.758 0.758 0.6522 84.0986 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1793">2005</text>
+		<text transform="matrix(0.6522 -0.758 0.758 0.6522 94.5771 178.6025)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3592">2005</text>
 	
-		<text transform="matrix(0.6649 -0.7469 0.7469 0.6649 97.0303 190.9141)" fill="#676868" font-family="'ArialMT'" font-size="12.1796">2006</text>
+		<text transform="matrix(0.6649 -0.7469 0.7469 0.6649 106.6396 178.6055)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2006</text>
 	
-		<text transform="matrix(0.6546 -0.756 0.756 0.6546 112.9893 190.915)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1807">2007</text>
+		<text transform="matrix(0.6546 -0.756 0.756 0.6546 121.5234 178.6055)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3611">2007</text>
 	
-		<text transform="matrix(0.6155 -0.7881 0.7881 0.6155 127.5107 190.9131)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2008</text>
+		<text transform="matrix(0.6155 -0.7881 0.7881 0.6155 135.0684 178.6035)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2008</text>
 	
-		<text transform="matrix(0.6368 -0.7711 0.7711 0.6368 140.8643 190.9131)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1815">2009</text>
+		<text transform="matrix(0.6368 -0.7711 0.7711 0.6368 147.5225 178.6035)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3623">2009</text>
 	
-		<text transform="matrix(0.6602 -0.7511 0.7511 0.6602 155.959 188.6777)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2010</text>
+		<text transform="matrix(0.6602 -0.7511 0.7511 0.6602 161.6025 176.5166)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2010</text>
 	
-		<text transform="matrix(0.6065 -0.7951 0.7951 0.6065 172.4678 187.3223)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1805">2011</text>
+		<text transform="matrix(0.6065 -0.7951 0.7951 0.6065 176.999 175.2539)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3609">2011</text>
 	
-		<text transform="matrix(0.6398 -0.7685 0.7685 0.6398 184.3223 188.8516)" fill="#676868" font-family="'ArialMT'" font-size="12.1795">2012</text>
+		<text transform="matrix(0.6398 -0.7685 0.7685 0.6398 188.0557 176.6807)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">2012</text>
 	
-		<text transform="matrix(0.62 -0.7846 0.7846 0.62 199.2959 190.0557)" display="none" fill="#676868" enable-background="new    " font-family="'ArialMT'" font-size="12.1802">2013</text>
-	<text transform="matrix(1 0 0 1 8.1934 158.0723)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">30</text>
-	<text transform="matrix(1 0 0 1 8.1934 137.3574)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">40</text>
-	<text transform="matrix(1 0 0 1 9.0645 116.0469)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">50</text>
-	<text transform="matrix(1 0 0 1 9.0635 94.8047)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">60</text>
-	<text transform="matrix(1 0 0 1 8.127 74.4199)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">70</text>
-	<text transform="matrix(1 0 0 1 7.1904 53.7158)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">80</text>
-	<text transform="matrix(1 0 0 1 7.2559 33.4766)" fill="#676868" font-family="'ArialMT'" font-size="12.1802">90</text>
+		<text transform="matrix(0.62 -0.7846 0.7846 0.62 202.0215 177.8037)" display="none" fill="#676868" enable-background="new    " font-family="'Montserrat-Regular'" font-size="11.3604">2013</text>
+	<text transform="matrix(1 0 0 1 23.7803 147.9717)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">30</text>
+	<text transform="matrix(1 0 0 1 23.7803 128.6514)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">40</text>
+	<text transform="matrix(1 0 0 1 24.5933 108.7754)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">50</text>
+	<text transform="matrix(1 0 0 1 24.5928 88.9629)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">60</text>
+	<text transform="matrix(1 0 0 1 23.7188 69.9492)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">70</text>
+	<text transform="matrix(1 0 0 1 22.8452 50.6382)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">80</text>
+	<text transform="matrix(1 0 0 1 22.9067 31.7617)" fill="#676868" font-family="'Montserrat-Regular'" font-size="10.0962">90</text>
 </g>
+<text transform="matrix(-4.371139e-008 -1 1 -4.371139e-008 12.0781 154.335)" fill="#676868" font-family="'Montserrat-Regular'" font-size="11.1059">Number of Patents</text>
 </svg>
