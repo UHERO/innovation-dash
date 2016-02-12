@@ -13,7 +13,7 @@
   section:first-child {
     //padding: 30px 30px 25px;
     background-color: $light_grey;
-    padding: 8px 30px;
+    padding: 20px 30px;
     width: 17.5%;
     float: left;
     border-bottom-left-radius: 5px;
@@ -32,6 +32,7 @@
       text-align: left;
       max-width: 100%;
       margin: 10px 0 20px;
+      line-height: 1.5;
       /* font-size: 0.8em;
       line-height: 1.4;
       max-width: 75%;
@@ -185,7 +186,7 @@
 }
 
 .splash-graph {
-  height: 275px;
+  height: 273px;
   border-radius: 5px;
   background-color: $light_grey;
   margin: 6px 0 0;
@@ -208,6 +209,7 @@
   width: 100%;
   display: block;
   text-align: center;
+  padding-top: 20px;
 
   @media #{$large-only} {
     text-align: left;
@@ -225,7 +227,7 @@
 
     img {
       height: 97px;
-      padding: 5px 3px 3px 0;
+      padding: 10px 3px 10px 0;
 
       @media #{$large-only} {
         //padding: 5px 3px 3px 0;
