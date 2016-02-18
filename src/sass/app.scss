@@ -200,45 +200,6 @@ a {
   }
 }
 
-/* nav{
-  width: 78%;
-  display: inline-block;
-  height: 50px;
-  position: relative;
-  z-index: 1;
-  //text-align: right;
-  float: right;
-
-   ul{
-    list-style-type: none;
-    margin-left: 11px;
-    margin-right: 0px;
-    padding: 0px;
-
-    li{
-      display: inline-block;
-      border-radius: 5px;
-      //margin: 0 2px;
-      margin: 0px 3px 0px 3px;
-      width: 24.4%;
-      vertical-align: top;
-      text-align: center;
-
-      a{
-        @include uHero_font( 0.75em, 1.1, $white, bold);
-        box-sizing: border-box;
-        height: 70px;
-        width: 225px;
-        padding: 14px 30px 20px;
-        letter-spacing: 0.15em;
-        text-decoration: none;
-        text-transform: uppercase;
-        display: block;
-      }
-    }
-  }
-} */
-
 nav {
    width: 78%;
    margin-right: -3px;

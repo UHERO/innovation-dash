@@ -194,7 +194,7 @@ module.exports = function (scope, mapSource, dataSource,
     // DEV ONLY
     window.transData = transformFIPSData(sourceData);
     data = window.transData;
-    // var data = transformFIPSData(sourceData); // PRODUCTION OK
+    //var data = transformFIPSData(sourceData); // PRODUCTION OK
     datasetSummaryRecords = popSummaryData(data, knownSummaryRecords);
 
     window.fStates = filterStateObjects(data, geoAreaNames, geoAreaCategory);
