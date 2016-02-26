@@ -834,6 +834,7 @@ module.exports = function (scope, mapSource, dataSource,
 
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
     var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
+    var yBar = d3.scale.linear().domain([0, yMaxVal]).range([height-margins.top, margins.bottom]);
 
     /* START OF LINE GRAPH AXES */
     var formatXAxis = d3.format('.0f');
@@ -849,12 +850,22 @@ module.exports = function (scope, mapSource, dataSource,
       xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
     }
 
-    var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .tickFormat(numberFormatConverter)
-        // y-axis also duplicating labels when there are 6 or fewer ticks
-        .ticks(5)
-        .orient("left");
+    var yAxis;
+
+    if (oddDataSetWithGaps) {
+      yAxis = d3.svg.axis()
+         .scale(yBar)
+         .tickFormat(numberFormatConverter)
+         .ticks(4)
+         .orient("left");
+    } else {
+      yAxis = d3.svg.axis()
+          .scale(yScale)
+          .tickFormat(numberFormatConverter)
+          // y-axis also duplicating labels when there are 6 or fewer ticks
+          .ticks(5)
+          .orient("left");
+    }
 
     vis.append("svg:g")
        .attr("class", "x axis")
@@ -936,8 +947,8 @@ module.exports = function (scope, mapSource, dataSource,
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".usbar")
-         .attr("y", function(d) { return yScale(d.value); })
-         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("y", function(d) { return yBar(d.value); })
+         .attr("height", function(d) { return height - yBar(d.value) - margins.bottom; })
          .attr("width", 10);
      }
 
@@ -961,8 +972,8 @@ module.exports = function (scope, mapSource, dataSource,
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".hibar")
-         .attr("y", function(d) { return yScale(d.value); })
-         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("y", function(d) { return yBar(d.value); })
+         .attr("height", function(d) { return height - yBar(d.value) - margins.bottom; })
          .attr("width", 10);
      }
 
@@ -986,8 +997,8 @@ module.exports = function (scope, mapSource, dataSource,
          .data(function(d) { return d.series; })
          .enter().append("svg:rect")
          .attr("class", ".statebar")
-         .attr("y", function(d) { return yScale(d.value); })
-         .attr("height", function(d) { return height - yScale(d.value) - margins.bottom; })
+         .attr("y", function(d) { return yBar(d.value); })
+         .attr("height", function(d) { return height - yBar(d.value) - margins.bottom; })
          .attr("width", 10);
      }
 
