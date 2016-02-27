@@ -1258,7 +1258,11 @@ module.exports = function (scope, mapSource, dataSource,
     var brush = d3.svg.brush();
     brush.x(scale)
          .extent([selectedMinYear, selectedMaxYear]);
-    brush.on("brushend", brushed);
+    //brush.on("brushend", brushed);
+    brush.on("brushend", function() {
+      brushG.selectAll(".resize.w")
+      .style("display", "inline");
+   });
 
     var savedExtent = brush.extent(); // FOR PREVENTING BRUSH EMPTYING
 
