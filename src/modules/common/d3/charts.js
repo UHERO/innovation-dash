@@ -1284,6 +1284,12 @@ module.exports = function (scope, mapSource, dataSource,
       selectedMinYear = savedExtent[0];
       selectedMaxYear = savedExtent[1];
 
+      brushG.selectAll(".resize.w")
+        .style("display", "inline");
+
+      brushG.selectAll(".resize.e")
+        .style("display", "inline");
+
       drawMap(sourceMap, data);
       drawGraph();
       renderSummaryText();
