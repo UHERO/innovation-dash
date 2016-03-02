@@ -69,9 +69,6 @@ module.exports = function (scope, mapSource, dataSource,
     if(number > 9999){
       return formatter(number / Math.pow(10, 3)) + 'K'; // 69000 => 69K
     }
-    if(farmJobs) {
-      return formatter((number * 1000))/Math.pow(10,3) + 'K';
-   }
     return formatter(number);
   };
 
@@ -84,7 +81,6 @@ module.exports = function (scope, mapSource, dataSource,
     if ( isNaN(num) || num === null){
       return "N/A";
     }
-
     if(measurementUnit === 'integer'){
       return intInt(num); // 69
     }
@@ -95,13 +91,22 @@ module.exports = function (scope, mapSource, dataSource,
       return extExt(num); // 0.00069 => 0.069%
     }
     if(measurementUnit === 'dollars'){
-      return "$" + scaleNumber(num, d3.format('.2f'));
+      if(num > 99 & num < 1000000) {
+         return "$" + scaleNumber(num, d3.format(',.0f'));
+      } else {
+         return "$" + scaleNumber(num, d3.format(',.2f'));
+      }
     }
     if(measurementUnit === 'dollars_mill'){
       return "$" + scaleNumber(num/1000, d3.format('.2f'));
     }
     if (measurementUnit === 'number') {
+      if(farmJobs) {
+        var scale = d3.format(',.0f');
+        return scale(((num * 100000))/Math.pow(10,5)) + 'K';
+      } else {
       return scaleNumber(num, d3.format('.1f'));
+      }
     }
     return "N/A";
   }
