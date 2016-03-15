@@ -34,6 +34,7 @@ module.exports = function (scope, mapSource, dataSource,
   var eduText = (yUnitMeasure === "Percentage of the Labor Force") || (yUnitMeasure === "% of Population 16+");
   var entText = (yUnitMeasure === "% of Startup Establishments") || (yUnitMeasure === "% of All Occupations") || (yUnitMeasure === "% of Adults 20-64 Yrs");
   var farmJobs = (yUnitMeasure === 'Thousands of Jobs');
+  var gini = (yUnitMeasure === 'Gini Index');
   var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
   width = 800;
@@ -104,7 +105,9 @@ module.exports = function (scope, mapSource, dataSource,
       if(farmJobs) {
         var scale = d3.format(',.0f');
         return scale(((num * 100000))/Math.pow(10,5)) + 'K';
-      } else {
+     } else if(gini) {
+        return scaleNumber(num, d3.format('.2f'));
+     } else {
       return scaleNumber(num, d3.format('.1f'));
       }
     }
@@ -150,7 +153,12 @@ module.exports = function (scope, mapSource, dataSource,
      }
      if(measurementUnit === 'number') {
       //return scaleNumber(num, d3.format('.1f'));
+      if (gini) {
+         formatNumber = d3.format('.2f');
+         return formatNumber(num);
+      } else {
       return formatNumber(num);
+      }
      }
      return "N/A";
  }
@@ -799,6 +807,22 @@ module.exports = function (scope, mapSource, dataSource,
               //number = numberFormatConverter(Math.abs(change));
               number = valueChangeFormatConverter(Math.abs(change));
               postfix = 'x12=' + annualFormat(annual) +' percentage points less';
+            }
+         }
+
+         if(gini) {
+            if(change >= 0) {
+               prefix = '';
+               number = valueChangeFormatConverter(change);
+               postfix = ' higher';
+            } else if(isNaN(change)) {
+               prefix = 'not available higher';
+               postfix = '';
+               number = '';
+            } else {
+               prefix = '';
+               number = valueChangeFormatConverter(Math.abs(change));
+               postfix = ' lower';
             }
          }
 

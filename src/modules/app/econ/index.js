@@ -48,7 +48,11 @@ module.exports =
        templateUrl: 'app/econ/views/per-capita-personal-income-county.html',
        controller: 'PerCapitaHawaiiController'
     })
-    
+    .state('econ.gini', {
+      url: '/gini',
+      templateUrl: 'app/econ/views/gini.html',
+      controller: 'GiniController'
+   })
    /* .state('econ.per-capita-personal-income.us', {
       url: '/us',
       templateUrl: 'app/econ/views/per-capita-personal-income.us.html',
@@ -59,7 +63,7 @@ module.exports =
       templateUrl: 'app/econ/views/per-capita-personal-income.hawaii.html',
       controller: 'PerCapitaHawaiiController'
     }) */
-       
+
     .state('econ.non-farm-jobs', {
       url: '/non-farm-jobs',
       // abstract: true,
@@ -71,7 +75,7 @@ module.exports =
        templateUrl: 'app/econ/views/non-farm-jobs-county.html',
        controller: 'NonFarmHawaiiController'
     })
-    
+
     /* .state('econ.non-farm-jobs.us', {
       url: '/us',
       templateUrl: 'app/econ/views/non-farm-jobs.us.html',
@@ -82,7 +86,7 @@ module.exports =
       templateUrl: 'app/econ/views/non-farm-jobs.hawaii.html',
       controller: 'NonFarmHawaiiController'
     }) */
-    
+
     .state('econ.unemployment-rate', {
       url: '/unemployment-rate',
       // abstract: true,
@@ -94,7 +98,7 @@ module.exports =
        templateUrl: 'app/econ/views/unemployment-rate-county.html',
        controller: 'UnemploymentRateHawaiiController'
     })
-    
+
     /* .state('econ.unemployment-rate.us', {
       url: '/us',
       templateUrl: 'app/econ/views/unemployment-rate.us.html',
@@ -105,7 +109,7 @@ module.exports =
       templateUrl: 'app/econ/views/unemployment-rate.hawaii.html',
       controller: 'UnemploymentRateHawaiiController'
     }) */
-    
+
     .state('econ.average-earnings-per-job', {
       url: '/average-earnings-per-job',
       // abstract: true,
@@ -117,7 +121,7 @@ module.exports =
        templateUrl: 'app/econ/views/average-earnings-per-job-county.html',
        controller: 'AverageEarningsHawaiiController'
     });
-    
+
     /* .state('econ.average-earnings-per-job.us', {
       url: '/us',
       templateUrl: 'app/econ/views/average-earnings-per-job.us.html',
@@ -143,4 +147,5 @@ module.exports =
   .controller('AverageEarningsHawaiiController', require('./AverageEarningsHawaiiController'))
   .controller('NonFarmHawaiiController', require('./NonFarmHawaiiController'))
   .controller('UnemploymentRateHawaiiController', require('./UnemploymentRateHawaiiController'))
-  .controller('PerCapitaHawaiiController', require('./PerCapitaHawaiiController'));
+  .controller('PerCapitaHawaiiController', require('./PerCapitaHawaiiController'))
+  .controller('GiniController', require('./GiniController'));
