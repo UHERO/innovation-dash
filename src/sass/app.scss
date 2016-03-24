@@ -17,6 +17,137 @@ header {
   padding-top: 0px;
 }
 
+#dash-header {
+  background: url(assets/images/bg_header.png) repeat-x 0 0;
+  letter-spacing: 0em;
+  font-size: 12px;
+
+  ul, li {
+     display: inline;
+     margin: 0;
+  }
+
+  a {
+     font-size: 12px;
+  }
+
+  h1 a {
+     position: relative;
+     top: 45px;
+     left: 5px;
+     display: block;
+     width: 680px;
+     height: 36px;
+     text-indent: -8000px;
+     overflow: hidden;
+     position: relative;
+  }
+
+  form.mailing-list {
+     float: right;
+     padding: 0 4px 0 0;
+
+     fieldset label {
+       display: block;
+       float: left;
+       color: #94d3e6;
+       padding: 6px 8px 0 0;
+     }
+
+     ul.topmenu {
+        display: block;
+        float: left;
+
+        .facebook {
+          position: relative;
+          left: -3px;
+          top: 3px;
+        }
+
+        li {
+           color: #1893b8;
+           font-size: 12px;
+           padding: 0px 22px 0 0;
+           list-style: none;
+           float: left;
+
+           a {
+              color: #fff;
+           }
+        }
+     }
+  }
+}
+
+.dash-wrapper {
+  background: url(assets/images/bg_header_bottom.png) no-repeat 0 33px;
+  position: relative;
+  height: 120px;
+  padding: 4px 0 0 0;
+  width: 1003px;
+  margin: 0 auto;
+
+  ul li {
+    position: relative;
+    left: 20px;
+  }
+
+  form {
+    float: right;
+    font-family: Georgia, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    height: auto;
+    color: #1893b8;
+  }
+
+  form.search {
+      fieldset input[type="text"] {
+      width: 195px;
+      height: 29px;
+      padding: 3px 0 0 13px;
+      color: #fff;
+      background: url(assets/images/bg_search_text.png) no-repeat 0 0;
+      border: none 0;
+      margin: 0 4px 0 0;
+     }
+
+     fieldset input[type="submit"] {
+       width: 31px;
+       height: 29px;
+       background: url(assets/images/button_search.png) no-repeat 0 0;
+       border: none 0;
+       cursor: pointer;
+       text-indent: -8000px;
+       overflow: hidden;
+       line-height: 100%;
+       position: relative;
+       top: -3px;
+     }
+ }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #1756a9;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  label a {
+    color: #d67d1a;
+    font-weight: normal;
+
+    a:hover {
+      color: #d67d1a;
+   }
+  }
+}
+
 h1{
   @include uHero_font(1.03em, 1, $white, 400);
 }
