@@ -79,10 +79,35 @@ header {
   }
 }
 
+#breadcrumb-wrapper {
+  height: 26px;
+  background: url(assets/images/bg_localizer.png) repeat-x;
+  padding: 5px 0 0 0;
+  width: 100%;
+  margin: 0;
+}
+
+#breadcrumb {
+  text-transform: uppercase;
+  color: #bcbcbc;
+  font-size: 11px;
+  font-family: "Trebuchet MS", "Lucida Grande", Arial, sans-serif;
+  margin: 0px 28%;
+  padding: 0 0 0 10px;
+}
+
+#breadcrumb a, #breadcrumb a:hover {
+  color: #BCBCBC;
+  font-size: 11px; }
+
+#dash-header ul, #dash-header li, #breadcrumb ol, #breadcrumb li {
+  display: inline;
+  margin: 0; }
+
 .dash-wrapper {
   background: url(assets/images/bg_header_bottom.png) no-repeat 0 33px;
   position: relative;
-  height: 120px;
+  height: 115px;
   padding: 4px 0 0 0;
   width: 1003px;
   margin: 0 auto;
@@ -147,6 +172,56 @@ header {
    }
   }
 }
+
+footer {
+  background: url(assets/images/bg_footer.jpg) repeat-x 0 0;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  color: #fff;
+  letter-spacing: 0em;
+}
+
+
+#dash-footer .wrap-inner {
+  height: 260px;
+  padding: 9px 0 0 0;
+  background: url(assets/images/bg_footer2.png) no-repeat 50% 0;
+  width: 1003px;
+  margin: 0 auto;
+
+  p {
+     a{
+        color: #66d3d5;
+     }
+
+     a:hover, a:focus {
+        color: #2a6496;
+        text-decoration: underline;
+     }
+  }
+
+  p.left {
+    float: left;
+    padding: 0 0 0 148px;
+    background: url(assets/images/logo01.png) no-repeat 2px -4px;
+  }
+
+  p.right {
+    float: right;
+    text-align: right;
+    padding: 1px 5px 0 0;
+  }
+}
+
+/* #dash-footer .wrap-inner p.left {
+  float: left;
+  padding: 0 0 0 148px;
+  background: url(assets/images/logo01.png) no-repeat 2px -4px; }
+
+#dash-footer .wrap-inner p.right {
+  float: right;
+  text-align: right;
+  padding: 1px 5px 0 0; } */
 
 h1{
   @include uHero_font(1.03em, 1, $white, 400);
@@ -306,7 +381,7 @@ a {
   max-width: 1155px;
   //max-width: 1200px;
   //width: 98%;
-  margin-top: -1%;
+  //margin-top: -1%;
   margin-bottom: 1%;
 }
 
@@ -776,14 +851,14 @@ section:last-child, section
 
 /* Footer */
 footer{
-  text-align: center;
-  padding: 20px 0 15px;
+  //text-align: center;
+  //padding: 20px 0 15px;
 
-  p{
+  /* p{
     font-size: 10px;
     float: left;
     padding-top: 0;
-  }
+} */
 
   h5{
     font-size: 12px;
