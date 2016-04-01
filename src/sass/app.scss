@@ -789,7 +789,7 @@ section:last-child, section
 }
 
 #hover-tooltip, #fixed-tooltip, #selected-tooltip {
-  position: relative;
+  position: absolute;
   width: 155px;
   height: 100px;
   z-index: 100;
@@ -799,6 +799,12 @@ section:last-child, section
   pointer-events: none;
   font-size: 12px;
 }
+
+#hover-tooltip, #selected-tooltip {
+  margin-left: -80px;
+  margin-top: -80px;
+}
+
 
 #hover-tooltip, #selected-tooltip {
   top: 0;
