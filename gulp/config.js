@@ -68,7 +68,7 @@ global.config = {
       url: 'localhost:4567'
     },
     release: {
-      url: 'udaman.uhero.hawaii.edu:4567'
+      url: 'innovation-api-dev.us-west-2.elasticbeanstalk.com'
     }
   }
 };
