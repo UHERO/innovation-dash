@@ -3,19 +3,58 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Hawaii Innovation Matters</title>
     <link href='http://fonts.googleapis.com/css?family=Bitter:400italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://www.google-analytics.com/ga.js" async="" type="text/javascript"></script>
     <link href="bundle.css" rel="stylesheet">
   </head>
   <body ng-cloak>
+
+    <!-- UHERO header -->
+    <div id="dash-header">
+	 <div class="dash-wrapper">
+		<form action="" class="mailing-list">
+			<fieldset>
+				<ul class="topmenu">
+					<li><a href="http://www.facebook.com/pages/uhero-The-Economic-Research-Organization-at-the-University-of-Hawaii/144885908919188?sk=wall" target="_blank"><img src = "assets/images/btn-facebook.png" class ="facebook"> Like Us on Facebook</a> | <a href="http://uhero.hawaii.edu/4/become-a-sponsor">Become a Sponsor</a> | </li>
+				</ul>
+				<label for="email"><a href="http://uhero.hawaii.edu/31/contact">Join Mailing List</a></label>
+			</fieldset>
+		</form>
+		<h1><a href="http://uhero.hawaii.edu/">UHERO the economic research organization at the university of hawai�i</a></h1>
+		<form accept-charset="utf-8" class="search" method="get" action="/search">
+			<fieldset>
+				<input name="q" type="text" class="text" value="Search" title="Search" id="SearchQ" >
+            <input type="submit" value="search" />
+			</fieldset>
+		</form>
+	 </div>
+
+    <div id="breadcrumb-wrapper">
+		<div id="breadcrumb">
+			<ol>
+				<li class="first"><a href="http://uhero.hawaii.edu/"><span></span>Home</a></li>
+				<li> > </li>
+				<li><a href="http://uhero.hawaii.edu/134/uhero-dashboard" class="currentPage currentSection navButton" id="occupations-explorer-with-tableButton"><span></span>UHERO Dashboard Project</a></li>
+				<li> > </li>
+				<li><a href="http://uhero.hawaii.edu/static/dashboard/innovation/index.html#/">Innovation Dashboard</a></li>
+			</ol>
+		</div>
+	 </div>
+    </div>
+    <!-- end UHERO header -->
+
     <div id="hover-tooltip">
       <div class="arrow_box"></div>
     </div>
+    <div id="selected-tooltip">
+      <div class="arrow_box"></div>
+   </div>
     <div class="wrapper">
       <header class="clearfix">
         <div class="logo">
           <a ui-sref="splash">
-            <h1>Hawaii Innovation Matters</h1>
+            <h1><center>Hawaii Innovation Matters</center></h1>
           </a>
         </div>
         <nav>
@@ -30,22 +69,51 @@
 
       <div class="container clearfix">
         <div ui-view></div>
-      </div>
-
-      <footer class="clearfix">
-        <div class="footer_links logos dl clearfix">
-          <p>application built by</p>
-        </div>
-        <div class="footer_links logos uhero clearfix">
-          <p>data provided by</p>
-        </div>
-      </footer>
+     </div>
 
     </div><!--end of wrapper-->
+    <!-- UHERO footer -->
+    <footer>
+	 <div id="dash-footer">
+
+		<div class="wrap-inner">
+
+			<p class="left">
+				2424 Maile Way, Saunders Hall 540 | Honolulu, Hawaii 96822<br />
+				(808) 956-2325 | <a href="mailto:uhero@hawaii.edu"><strong>uhero@hawaii.edu</strong></a>
+			</p>
+
+			<p class="right">
+				<strong>External Links</strong> <a href="http://www.economics.hawaii.edu/" target="_blank">Department of Economics</a> | <a href="http://www.ssri.hawaii.edu/" target="_blank">Social Science Research Institute</a> | <a href="http://www.socialsciences.hawaii.edu/" target="_blank">College of Social Sciences</a><br />
+				<strong>Website Design &amp; Development</strong> <a href="http://walltowall.com" target="_blank">Wall-to-Wall Studios</a>
+			</p>
+
+		</div>
+		<!-- / wrap-inner -->
+
+	 </div>
+    </footer>
+
+    <!-- end UHERO footer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+
+    <script type="text/javascript">
+     var _gaq = _gaq || [];
+     _gaq.push(['_setAccount', 'UA-18074519-1']);
+     _gaq.push(['_trackPageview']);
+
+     (function() {
+       var ga = document.createElement('script'); ga.type =
+       'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+       'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0];
+       s.parentNode.insertBefore(ga, s);
+     })();
+    </script>
     <script src="bundle.js"></script>
   </body>
 </html>
