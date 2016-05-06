@@ -38,14 +38,23 @@
       <li ui-sref-active="active" class="item"><a ui-sref="econ.lf-part-empl-rate">Labor Force Participation Rate</a></li>
       <li ui-sref-active="active" class="item"><a ui-sref="econ.lf-part-empl">Employment Rate</a></li>
     </ul>
+
+    <div class = "instructions">
+      <ul>
+            <li><b>Select</b> a data series from the list above to display at right.</li>
+            <li><b>Click</b> states to compare. </li>
+            <li><b>Drag</b> slider to change timeseries.</li>
+            <li><b>Select</b> a new tab at the top to switch indicators.</li>
+      </ul>
+   </div>
   </aside>
   <div class="graphs clearfix">
     <div ui-view>
       <section>
         <div class="info_legend_container clearfix">
-          <div class="map_info">
-            <p>Choose an indicator and a diagram will generate...</p>
-          </div>
+         <div class="map_info">
+            <!-- <p>Choose an indicator and a diagram will generate...</p> -->
+         </div>
         </div><!--end of info section-->
         <div class="default-map"></div>
 
