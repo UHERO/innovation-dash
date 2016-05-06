@@ -13,7 +13,7 @@
   section:first-child {
     //padding: 30px 30px 25px;
     background-color: $light_grey;
-    height: 717px;
+    height: 692px;
     padding: 15px 30px;
     width: 17.5%;
     float: left;
@@ -34,19 +34,15 @@
       max-width: 100%;
       margin: 10px 0 20px;
       line-height: 1.5;
-      /* font-size: 0.8em;
-      line-height: 1.4;
-      max-width: 75%;
-      margin: 0 auto 10px;
-      text-align: center; */
-
-      /* @media #{$large-only}{
-        font-size: 13px;
-        text-align: left;
-        max-width: 100%;
-        margin: 10px 0 20px;
-     } */
     }
+
+    .instructions {
+      color: #000;
+    }
+
+    b {
+      font-weight: bold;
+   }
   }
 
   section:last-child {
@@ -187,19 +183,38 @@
 }
 
 .splash-graph {
-  height: 273px;
+  height: 260px;
   border-radius: 5px;
   background-color: $light_grey;
   margin: 6px 0 0;
 
   svg {
-    margin: -15px auto;
+    margin: -22px auto;
     display: block;
   }
+
+  .d3-graph-ent {
+     svg {
+        margin-top: -4px;
+     }
+  }
+
+}
+
+.rnd-svg1 {
+   margin: 0% 2% 0% 2%;
+}
+
+.rnd-svg2 {
+   margin: 10% 2% 0% 2%;
 }
 
 .ent-svg {
-   margin-top: -12%;
+   margin: 9% 2% 0% 2%;
+}
+
+.edu-svg2, .econ-svg2 {
+   margin: -2% 2% 0% 2%;
 }
 
 .d3-graph-edu, .d3-graph-ent, .d3-graph-econ {
@@ -232,7 +247,7 @@
 
     img {
       height: 97px;
-      padding: 10px 3px 10px 0;
+      padding: 5px 3px 0px 0px;
 
       @media #{$large-only} {
         //padding: 5px 3px 3px 0;
