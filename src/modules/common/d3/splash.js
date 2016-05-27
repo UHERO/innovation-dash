@@ -34,9 +34,9 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
   var rndColors = ["#AAA797","#5E9999"];
 
   drawDonut(eduDiagram, eduDataset, eduColors);
-  drawDonut(rndDiagram, rndDataset, rndColors);
+  //drawDonut(rndDiagram, rndDataset, rndColors);
   drawDonut(entDiagram, entDataset, entColors);
-  drawDonut(econDiagram, econDataset, econColors);
+  //drawDonut(econDiagram, econDataset, econColors);
 
   var percent = d3.format("%");
 
@@ -62,13 +62,20 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
         .data(pie(dataset.US))
         .enter().append("path")
         .attr("fill", function(d, i) { return viewColors[i]; })
-        .attr("d", arcUS);
+        .attr("d", arcUS)
+        .append("title")
+        .attr("transform", function(d) { return "translate(" + arcUS.centroid(d) + ")"; })
+        .text(function(d, i) { return "US: " + ((dataset.US[i]/(dataset.US[0] + dataset.US[1])) * 100).toFixed(1) + "%"; });
 
     svg.selectAll("g")
         .data(pie(dataset.HI))
         .enter().append("path")
         .attr("fill", function(d, i) { return viewColors[i]; })
-        .attr("d", arcHI);
+        .attr("d", arcHI)
+        .append("title")
+        .attr("transform", function(d) { return "translate(" + arcHI.centroid(d) + ")"; })
+        .text(function(d, i) { return "HI: " + ((dataset.HI[i]/(dataset.HI[0] + dataset.HI[1])) * 100).toFixed(1) + "%"; });
+
     // HI Key
 
     d3.selectAll(diagramContainer).select('g')
@@ -81,7 +88,7 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
     d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_text_us")
-        .attr("x", 10)
+        .attr("x", -30)
         .attr("y", 20)
         .text("US");
     // HI Value
@@ -95,8 +102,8 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
     d3.selectAll(diagramContainer).select('g')
         .insert("text")
         .attr("class", "splash_value_us")
-        .attr("x", -14)
-        .attr("y", 4)
+        .attr("x", -30)
+        .attr("y", 5)
         .text((dataset.US[1]/(dataset.US[0] + dataset.US[1]) * 100).toFixed(1) + "%");
   }
 
