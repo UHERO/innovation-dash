@@ -28,19 +28,29 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
 
 
   // var color = d3.scale.category20();
-  var eduColors = ["#AAA797","#087F9B"];
+  var eduColors = ["#DEDCD1","#087F9B"];
   var econColors = ["#AAA797","#F27D14"];
-  var entColors = ["#AAA797","#7FBB57"];
+  var entColors = ["#DEDCD1","#7FBB57"];
   var rndColors = ["#AAA797","#5E9999"];
 
-  drawDonut(eduDiagram, eduDataset, eduColors);
+  var eduLabels = {
+     US: ["without a post-secondary degree", "with a post-secondary degree"],
+     HI: ["without a post-secondary degree", "with a post-secondary degree"]
+  };
+
+  var entLabels = {
+     US: ["did not survive", "survived"],
+     HI: ["did not survive", "survived"]
+  };
+
+  drawDonut(eduDiagram, eduDataset, eduColors, eduLabels);
   //drawDonut(rndDiagram, rndDataset, rndColors);
-  drawDonut(entDiagram, entDataset, entColors);
+  drawDonut(entDiagram, entDataset, entColors, entLabels);
   //drawDonut(econDiagram, econDataset, econColors);
 
   var percent = d3.format("%");
 
-  function drawDonut (diagramContainer, dataset, viewColors){
+  function drawDonut (diagramContainer, dataset, viewColors, labels){
     var pie = d3.layout.pie()
         .sort(null);
 
@@ -65,7 +75,7 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
         .attr("d", arcUS)
         .append("title")
         .attr("transform", function(d) { return "translate(" + arcUS.centroid(d) + ")"; })
-        .text(function(d, i) { return "US: " + ((dataset.US[i]/(dataset.US[0] + dataset.US[1])) * 100).toFixed(1) + "%"; });
+        .text(function(d, i) { return "US: " + ((dataset.US[i]/(dataset.US[0] + dataset.US[1])) * 100).toFixed(1) + "% " + labels.US[i]; });
 
     svg.selectAll("g")
         .data(pie(dataset.HI))
@@ -74,7 +84,7 @@ module.exports = function (eduDiagram,rndDiagram, entDiagram, econDiagram) {
         .attr("d", arcHI)
         .append("title")
         .attr("transform", function(d) { return "translate(" + arcHI.centroid(d) + ")"; })
-        .text(function(d, i) { return "HI: " + ((dataset.HI[i]/(dataset.HI[0] + dataset.HI[1])) * 100).toFixed(1) + "%"; });
+        .text(function(d, i) { return "HI: " + ((dataset.HI[i]/(dataset.HI[0] + dataset.HI[1])) * 100).toFixed(1) + "% " + labels.HI[i]; });
 
     // HI Key
 
