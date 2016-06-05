@@ -249,7 +249,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
 
     var setMaxVals = findMaxFIPSVals(data);
     var setMinVals = findMinFIPSVals(data);
-
+    
     drawMap(sourceMap, data, dataRaw);
     drawGraph();
     drawBrush(sourceMap, data, setMinVals, setMaxVals);
