@@ -778,14 +778,10 @@ section:last-child, section
 }
 
 #hover-tooltip, #selected-tooltip {
-  margin-left: -80px;
-  margin-top: -80px;
-}
-
-
-#hover-tooltip, #selected-tooltip {
   top: 0;
   left: -9999px;
+  margin-left: -80px;
+  margin-top: -80px;
 }
 
 #fixed-tooltip {

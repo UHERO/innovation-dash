@@ -6,7 +6,6 @@ var sass = require('gulp-sass');
 
 module.exports = gulp.task('browser-sync', function() {
    browserSync.init({
-      injectChanges: true,
       server: {
          baseDir: "../build"
       }

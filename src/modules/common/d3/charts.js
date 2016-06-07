@@ -249,10 +249,10 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
 
     var setMaxVals = findMaxFIPSVals(data);
     var setMinVals = findMinFIPSVals(data);
-    
+
     drawMap(sourceMap, data, dataRaw);
     drawGraph();
-    drawBrush(sourceMap, data, setMinVals, setMaxVals);
+    drawBrush(sourceMap, data, dataRaw, setMinVals, setMaxVals);
     renderSummaryText();
   }
 
@@ -327,7 +327,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
       passMapClickTarget(this.id);
       dispatch.toggleSingle(this);
       if(d3.select(this).classed('active')){
-         populateMapTooltip('selected', this.id, data, selectedMinYear, selectedMaxYear, true);
+         populateMapTooltip('selected', this.id, data, dataRaw, selectedMinYear, selectedMaxYear, true);
          positionMapTooltip('selected');
          d3.select('#hover-tooltip').classed('hidden', true);
       } else {
@@ -362,7 +362,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
           countySvg.selectAll('path')
             .style('fill', color(valuesByArea[key]));
       }
-      populateMapTooltip('fixed', 'Honolulu', data, selectedMinYear, selectedMaxYear, true);
+      populateMapTooltip('fixed', 'Honolulu', data, dataRaw, selectedMinYear, selectedMaxYear, true);
       positionMapTooltip('fixed', fixedXYs.Honolulu);
     } else {
       var states = topojson.feature(map, map.objects.units).features;
@@ -388,7 +388,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
 
             //if state is active, display selected-tooltip
             if(d3.select(this).classed('active')) {
-               populateMapTooltip('selected', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
+               populateMapTooltip('selected', d.properties.name, data, dataRaw, selectedMinYear, selectedMaxYear, false);
                positionMapTooltip('selected');
                //hide hover-tooltip when state is active
                d3.select('#hover-tooltip').classed('hidden', true);
@@ -402,7 +402,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
         })
         .on('mouseover', function (d) {
           if (d.properties.name !== 'Hawaii') {
-            return populateMapTooltip('hover', d.properties.name, data, selectedMinYear, selectedMaxYear, false);
+            return populateMapTooltip('hover', d.properties.name, data, dataRaw, selectedMinYear, selectedMaxYear, false);
           }
         })
         .on('mousemove', function (d) {
@@ -416,7 +416,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
             return resetMapTooltips(hoverMapTooltip);
           }
         });
-        populateMapTooltip('fixed', 'Hawaii', data, selectedMinYear, selectedMaxYear, false);
+        populateMapTooltip('fixed', 'Hawaii', data, dataRaw, selectedMinYear, selectedMaxYear, false);
         positionMapTooltip('fixed', fixedXYs.Hawaii);
     }
   }
@@ -460,8 +460,8 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     } else {
       earlyValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
       lateValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
-      earlyRawValue = _.result(_.find(data, { 'State': areaName}), 'Years')[minYear];
-      lateRawValue = _.result(_.find(data, { 'State': areaName}), 'Years')[maxYear];
+      earlyRawValue = _.result(_.find(dataRaw, { 'State': areaName}), 'Years')[minYear];
+      lateRawValue = _.result(_.find(dataRaw, { 'State': areaName}), 'Years')[maxYear];
     }
 
     var arrow;
@@ -513,7 +513,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
           } else {
             return 'negative';
           }
-        });
+       });
     }
   }
 
@@ -872,7 +872,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     var hiStateData;
     var selectedStateData;
 
-    var minMax = findGraphMinMax(filteredStates).maxVal;
+    var minMax = findGraphMinMax(filteredStates);
     var yMaxVal = minMax.maxVal;
     var yMinVal = minMax.minVal;
 
@@ -1308,7 +1308,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
   }
 
   // Draw Slider
-  function drawBrush (sourceMap, data, setMinVals, setMaxVals) {
+  function drawBrush (sourceMap, data, dataRaw, setMinVals, setMaxVals) {
 
     var tickFormat = d3.format('.0f');
 
@@ -1352,7 +1352,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
       brushG.selectAll(".resize.e")
         .style("display", "inline");
 
-      drawMap(sourceMap, data);
+      drawMap(sourceMap, data, dataRaw);
       drawGraph();
       renderSummaryText();
     }

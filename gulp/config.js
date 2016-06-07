@@ -17,8 +17,8 @@ global.config = {
       templates: SRC_FOLDER + '/modules/**/*.html',
       templatesHTML: SRC_FOLDER + '/modules/**/*.html',
       templatesCompiled: TMP_FOLDER,
-      //livereload: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
-      browserSync: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
+      livereload: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
+      //browserSync: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
       modules: './' + SRC_FOLDER + '/modules/index.js'
     },
     dest: {
@@ -62,7 +62,7 @@ global.config = {
   },
   ports: {
     staticServer: 8080,
-    //livereloadServer: 35729
+    livereloadServer: 35729
   },
   apiEndpoint: {
     build: {
