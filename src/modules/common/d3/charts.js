@@ -494,6 +494,9 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
          }
       });
     if (earlyRawValue !== earlyValue || lateRawValue !== lateValue) {
+      d3.select('#hover-tooltip')
+         .classed('raw-val', true);
+      updateFixed(type, true);
       arrow.append('h3')
         .classed('tooltip-title', true)
         .text('Raw Values');
@@ -514,7 +517,20 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
             return 'negative';
           }
        });
-    }
+    } else {
+      d3.select('#hover-tooltip')
+          .classed('raw-val', false);
+      updateFixed(type, false);
+
+   }
+  }
+
+  function updateFixed(type, hasRawValue){
+     if(type !== 'fixed') {
+        return;
+     }
+     d3.select('#fixed-tooltip')
+        .classed('raw-val', hasRawValue);
   }
 
   function positionMapTooltip (type, fixedXYsObj) {
