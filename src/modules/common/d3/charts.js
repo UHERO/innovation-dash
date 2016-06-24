@@ -2,7 +2,7 @@
 
 module.exports = function (scope, mapSource, dataSource, dataSource2,
   donutChartEl, currentYearEl, previousYearEl, currentPercentEl, summaryMeasurementEl, valueChangeEl, priceParityChangeEl,
-  annualKaufmannEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit) {
+  annualKaufmannEl, mapEl, graphEl, keyEl, histogramEl, brushEl, colorScheme, yUnitMeasure, legendText, measurementUnit, rawUnit) {
   //Default configs
   var width, height, projection, path, svg, g, mapLegend;
   var lineGen, numLegendLines;
@@ -114,6 +114,14 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
       }
     }
     return "N/A";
+  }
+
+  function rawNumberConverter(num) {
+    var value = scaleNumber(num, d3.format(',.0f'));
+    if (measurementUnit === 'dollars') {
+      return "$" + value;
+    }
+    return value;
   }
 
   function valueChangeFormatConverter (num) {
@@ -448,6 +456,25 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     return prefix + change;
   }
 
+  function getRawChange(firstValue, secondValue) {
+    var change = secondValue - firstValue;
+    var prefix;
+    if (isNaN(change)) {
+      return 'N/A';
+    }
+
+    if (change >= 0) {
+      prefix = '+';
+    } else {
+      prefix = '-';
+      change = Math.abs(change);
+    }
+
+    change = rawNumberConverter(change);
+
+    return prefix + change;
+  }
+
   function populateMapTooltip (type, areaName, data, dataRaw, minYear, maxYear, isHawaii) {
 
     var targetType = isHawaii ? 'County' : 'State';
@@ -496,22 +523,24 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     if (earlyRawValue !== earlyValue || lateRawValue !== lateValue) {
       d3.select('#hover-tooltip')
          .classed('raw-val', true);
+      d3.select('#selected-tooltip')
+         .classed('raw-val-selected', true);
       updateFixed(type, true);
       arrow.append('h3')
         .classed('tooltip-title', true)
         .text('Raw Values');
       arrow.append('p')
         .classed('tooltip-val', true)
-        .text(selectedMaxYear + ': ' + numberFormatConverter(lateRawValue)); // blamebrandontag
+        .text(selectedMaxYear + ': ' + rawNumberConverter(lateRawValue)); // blamebrandontag
       arrow.append('span')
         .classed('tooltip-diff', true)
         .text(selectedMinYear + '-' + selectedMaxYear + ': ');
       arrow.append('span')
-        .text(getChangeString(earlyRawValue, lateRawValue))
+        .text(getRawChange(earlyRawValue, lateRawValue))
         .attr('class', function() {
-          if(getChangeString(earlyRawValue, lateRawValue).substring(0,1) === '+') {
+          if(getRawChange(earlyRawValue, lateRawValue).substring(0,1) === '+') {
             return 'positive';
-          } else if(getChangeString(earlyRawValue, lateRawValue) === 'N/A') {
+         } else if(getRawChange(earlyRawValue, lateRawValue) === 'N/A') {
             return 'not-available';
           } else {
             return 'negative';
@@ -520,6 +549,8 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     } else {
       d3.select('#hover-tooltip')
           .classed('raw-val', false);
+      d3.select('#selected-tooltip')
+          .classed('raw-val-selected', false);
       updateFixed(type, false);
 
    }
