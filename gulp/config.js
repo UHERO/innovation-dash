@@ -7,8 +7,9 @@ global.config = {
   paths: {
     src: {
       index: SRC_FOLDER + '/index.html',
-      assets: [SRC_FOLDER + '/assets/**/*', '!' + SRC_FOLDER + '/assets/images/**/*'],
+      assets: [SRC_FOLDER + '/assets/**/*', '!' + SRC_FOLDER + '/assets/images/**/*', + SRC_FOLDER + '/assets/data_sets/**/*'],
       images: SRC_FOLDER + '/assets/images/**/*',
+      data: SRC_FOLDER + '/assets/data_sets/**/*.csv',
       scripts: SRC_FOLDER + '/modules/**/*.js',
       sass: SRC_FOLDER + '/sass/app.scss',
       sassGlob: SRC_FOLDER + '/sass/**/*.scss',
@@ -17,7 +18,8 @@ global.config = {
       templates: SRC_FOLDER + '/modules/**/*.html',
       templatesHTML: SRC_FOLDER + '/modules/**/*.html',
       templatesCompiled: TMP_FOLDER,
-      livereload: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
+      //livereload: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
+      browserSync: [BUILD_FOLDER + '/**/*', '!' + BUILD_FOLDER + '/assets/**/*'],
       modules: './' + SRC_FOLDER + '/modules/index.js'
     },
     dest: {
@@ -26,6 +28,7 @@ global.config = {
         sass: BUILD_FOLDER + '/bundle.css',
         scripts: BUILD_FOLDER,
         images: BUILD_FOLDER + '/assets/images',
+        data: BUILD_FOLDER + '/assets/data_sets/**/*.csv',
         assets: BUILD_FOLDER + '/assets',
         index: BUILD_FOLDER,
         server: BUILD_FOLDER
@@ -35,6 +38,7 @@ global.config = {
         sass: RELEASE_FOLDER,
         scripts: RELEASE_FOLDER,
         images: RELEASE_FOLDER + '/assets/images',
+        data: RELEASE_FOLDER + '/assets/data_sets/**/*.csv',
         assets: RELEASE_FOLDER + '/assets',
         index: RELEASE_FOLDER,
         server: RELEASE_FOLDER
@@ -61,7 +65,7 @@ global.config = {
   },
   ports: {
     staticServer: 8080,
-    livereloadServer: 35729
+    //livereloadServer: 35729
   },
   apiEndpoint: {
     build: {
