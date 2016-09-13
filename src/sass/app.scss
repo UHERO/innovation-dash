@@ -798,6 +798,11 @@ section:last-child, section
    margin-top: -115px !important;
 }
 
+// Move line graph key down for Non-Farm Jobs State Comparisons to make room for right axis
+.farmJobs {
+   margin-top: 44%;
+}
+
 .positive {
    color: $ent_medium;
 }
