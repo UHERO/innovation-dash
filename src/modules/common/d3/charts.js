@@ -1075,13 +1075,6 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
         .attr("class", "y axis")
         .attr("transform", "translate(" + (width - margins.right) + ",0)")
         .call(y2Axis);
-      vis.append("text")
-        .attr("transform", "rotate(-270)")
-        .attr("x", height / 2)
-        .attr("y", -(width + 55))
-        .attr("class", "label")
-        .style("text-anchor", "middle")
-        .text(yUnitMeasure);
     } else {
       vis.append("svg:g")
         .attr("class", "y axis")
@@ -1097,9 +1090,8 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       .text("Year");
 
     vis.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", 0 - (height) / 2)
-      .attr("y", -10)
+      .attr("x", width / 2)
+      .attr("y", 0)
       .attr("class", "label")
       .style("text-anchor", "middle")
       .text(yUnitMeasure);
