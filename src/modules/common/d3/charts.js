@@ -971,8 +971,8 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
     var yMaxVal = minMax.maxVal;
     var yMinVal = minMax.minVal;
 
-    // Find Min and Max values of Hawaii and Selected State for second y-axis (Non-Farm Jobs State Comparison only)
-    var stateData, hawaiiData, hawaiiMin, hawaiiMax, stateMin, stateMax, y2MinVal, y2MaxVal, y2range;
+    // Find Min and Max values of Hawaii and Selected State for second y-axis (Non-Farm Jobs State & County Comparisond)
+    var stateData, hawaiiData, hawaiiMin, hawaiiMax, countyData, countyMin, countyMax, stateMin, stateMax, y2MinVal, y2MaxVal, y2range;
 
     if (!isSVGMap && filteredStates.length == 2) {
       stateData = filteredStates[1];
@@ -987,7 +987,13 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       stateMax = d3.max(d3.values(stateData.Years));
     }
 
-    y2range = [hawaiiMin, hawaiiMax, stateMin, stateMax];
+    if (isSVGMap && filteredStates.length == 2) {
+      countyData = filteredStates[1];
+      countyMin = d3.min(d3.values(countyData.Years));
+      countyMax = d3.max(d3.values(countyData.Years));
+    }
+
+    y2range = [hawaiiMin, hawaiiMax, stateMin, stateMax, countyMin, countyMax];
     y2MinVal = d3.min(y2range);
     y2MaxVal = d3.max(y2range);
 
@@ -1037,7 +1043,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
         .ticks(4)
         .orient("left");
     }
-    if (!isSVGMap && farmJobs) {
+    if (farmJobs) {
       y1Axis = d3.svg.axis()
         .scale(yScale)
         .tickFormat(numberFormatConverter)
@@ -1066,7 +1072,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       .attr("dy", "-.05em")
       .attr("transform", "rotate(-65)");
 
-    if (!isSVGMap && farmJobs) {
+    if (farmJobs) {
       vis.append("svg:g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + (margins.left) + ",0)")
@@ -1306,7 +1312,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
       if (oddDataSetWithGaps) {
         drawStateBar(vis, selectedStateData, graphColors.selectedColor);
-      } else if (!isSVGMap && farmJobs) {
+      } else if (farmJobs) {
         drawLineY2(vis, selectedStateData, graphColors.selectedColor);
       } else {
         drawLine(vis, selectedStateData, graphColors.selectedColor);
@@ -1438,7 +1444,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
     var svgKey = d3.select(keyEl)
       .append('svg')
       .classed('farmJobs', function() {
-        if (!isSVGMap && farmJobs) {
+        if (farmJobs) {
           return true;
         } else {
           return false;
