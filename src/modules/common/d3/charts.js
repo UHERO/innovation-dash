@@ -923,6 +923,31 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
     var yMaxVal = minMax.maxVal;
     var yMinVal = minMax.minVal;
 
+    // Find Min and Max values of Hawaii and Selected State for second y-axis (Non-Farm Jobs State Comparison only)
+    var stateData, hawaiiMin, hawaiiMax, stateMin, stateMax, y2MinVal, y2MaxVal;
+
+    if (!isSVGMap && filteredStates.length == 2) {
+      stateData = filteredStates[1];
+      hawaiiMin = d3.min(d3.values(stateData.Years));
+      hawaiiMax = d3.max(d3.values(stateData.Years));
+   } else if (!isSVGMap && filteredStates.length == 3) {
+      stateData = filteredStates[2];
+      stateMin = d3.min(d3.values(stateData.Years));
+      stateMax = d3.max(d3.values(stateData.Years));
+    }
+
+    if (hawaiiMin < stateMin || isNaN(stateMin)) {
+      y2MinVal = hawaiiMin;
+    } else {
+      y2MinVal = stateMin;
+    }
+
+    if (hawaiiMax > stateMax || isNaN(stateMax)) {
+      y2MaxVal = hawaiiMax;
+    } else {
+      y2MaxVal = stateMax;
+    }
+
     var width = 592;
     var height = 370;
 
@@ -943,6 +968,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
 
     var xScale = d3.scale.linear().domain([selectedMinYear, selectedMaxYear]).range([margins.left, width - margins.right]);
     var yScale = d3.scale.linear().domain([yMinVal,yMaxVal]).range([height - margins.top, margins.bottom]);
+    var y2Scale = d3.scale.linear().domain([y2MinVal, y2MaxVal]).range([height - margins.top, margins.bottom]);
     var yBar = d3.scale.linear().domain([0, yMaxVal]).range([height-margins.top, margins.bottom]);
 
     /* START OF LINE GRAPH AXES */
@@ -959,7 +985,7 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
       xAxis.tickValues(d3.range(xAxis.scale().domain()[0], xAxis.scale().domain()[1] + 1));
     }
 
-    var yAxis;
+    var yAxis, y1Axis, y2Axis;
 
     if (oddDataSetWithGaps) {
       yAxis = d3.svg.axis()
@@ -967,6 +993,17 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
          .tickFormat(numberFormatConverter)
          .ticks(4)
          .orient("left");
+    } if(!isSVGMap && farmJobs) {
+      y1Axis = d3.svg.axis()
+          .scale(yScale)
+          .tickFormat(numberFormatConverter)
+          .ticks(5)
+          .orient("left");
+      y2Axis = d3.svg.axis()
+          .scale(y2Scale)
+          .tickFormat(numberFormatConverter)
+          .ticks(5)
+          .orient("right");
     } else {
       yAxis = d3.svg.axis()
           .scale(yScale)
@@ -985,10 +1022,21 @@ module.exports = function (scope, mapSource, dataSource, dataSource2,
             .attr("dy", "-.05em")
             .attr("transform", "rotate(-65)");
 
-    vis.append("svg:g")
-       .attr("class", "y axis")
-       .attr("transform", "translate(" + (margins.left) + ",0)")
-       .call(yAxis);
+    if (!isSVGMap && farmJobs) {
+      vis.append("svg:g")
+         .attr("class", "y axis")
+         .attr("transform", "translate(" + (margins.left) + ",0)")
+         .call(y1Axis);
+      vis.append("svg:g")
+         .attr("class", "y axis")
+         .attr("transform", "translate(" + (width - margins.right) + ",0)")
+         .call(y2Axis);
+    } else {
+      vis.append("svg:g")
+         .attr("class", "y axis")
+         .attr("transform", "translate(" + (margins.left) + ",0)")
+         .call(yAxis);
+    }
 
     vis.append("text")
       .attr("x", width/2)
