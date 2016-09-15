@@ -34,6 +34,8 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
   var eduText = (yUnitMeasure === "Percentage of the Labor Force") || (yUnitMeasure === "% of Population 16+");
   var entText = (yUnitMeasure === "% of Startup Establishments") || (yUnitMeasure === "% of All Occupations") || (yUnitMeasure === "% of Adults 20-64 Yrs");
   var farmJobs = (yUnitMeasure === 'Thousands of Jobs');
+  var rpp = (yUnitMeasure === "Index");
+  var techDollars = (yUnitMeasure === "$ from technology licenses and options executed");
   var gini = (yUnitMeasure === 'Gini Index');
   var extraWideGraphLabels = wideYLabels.indexOf(yUnitMeasure) !== -1;
 
@@ -336,6 +338,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       })
       .on('toggleSingle', function(n) {
         var active = d3.select(n).classed('active');
+        d3.selectAll('#usLine').classed('usAvgOn', false);
         dispatch.unselectAll();
         d3.select(n).classed('active', !active);
       });
@@ -971,31 +974,47 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
     var yMaxVal = minMax.maxVal;
     var yMinVal = minMax.minVal;
 
-    // Find Min and Max values of Hawaii and Selected State for second y-axis (Non-Farm Jobs State & County Comparisond)
+    // Use two y-axes for Non-Farm Jobs; RPP; Tech. Licensing in Dollars
     var stateData, hawaiiData, hawaiiMin, hawaiiMax, countyData, countyMin, countyMax, stateMin, stateMax, y2MinVal, y2MaxVal, y2range;
 
-    if (!isSVGMap && filteredStates.length == 2) {
-      stateData = filteredStates[1];
-      hawaiiMin = d3.min(d3.values(stateData.Years));
-      hawaiiMax = d3.max(d3.values(stateData.Years));
-    } else if (!isSVGMap && filteredStates.length == 3) {
+    // Find Min & Max values for Hawaii and selected state; Non-Farm Jobs
+    // Use Hawaii values to scale left axis; State values (and US. avg when available) for right axis
+    if (!isSVGMap && farmJobs && filteredStates.length === 2) {
+      stateData = filteredStates[0];
+      hawaiiData = filteredStates[1];
+      y2MinVal = d3.min(d3.values(stateData.Years));
+      y2MaxVal = d3.max(d3.values(stateData.Years));
+      yMinVal = d3.min(d3.values(hawaiiData.Years));
+      yMaxVal = d3.max(d3.values(hawaiiData.Years));
+    } else if (!isSVGMap && farmJobs && filteredStates.length === 3) {
       stateData = filteredStates[2];
       hawaiiData = filteredStates[1];
-      hawaiiMin = d3.min(d3.values(hawaiiData.Years));
-      hawaiiMax = d3.max(d3.values(hawaiiData.Years));
-      stateMin = d3.min(d3.values(stateData.Years));
-      stateMax = d3.max(d3.values(stateData.Years));
+      y2MinVal = d3.min(d3.values(stateData.Years));
+      y2MaxVal = d3.max(d3.values(stateData.Years));
+      yMinVal = d3.min(d3.values(hawaiiData.Years));
+      yMaxVal = d3.max(d3.values(hawaiiData.Years));
     }
 
-    if (isSVGMap && filteredStates.length == 2) {
+    // Find Min & Max values for Hawaii and selected state; Regional Price Parities & Tech. Licenses in Dollars
+    if ((rpp || techDollars) && filteredStates.length === 1) {
+      hawaiiData = filteredStates[0];
+      yMinVal = d3.min(d3.values(hawaiiData.Years));
+      yMaxVal = d3.max(d3.values(hawaiiData.Years));
+    } else if ((rpp || techDollars) && filteredStates.length === 2) {
+      stateData = filteredStates[1];
+      hawaiiData = filteredStates[0];
+      yMinVal = d3.min(d3.values(hawaiiData.Years));
+      yMaxVal = d3.max(d3.values(hawaiiData.Years));
+      y2MinVal = d3.min(d3.values(stateData.Years));
+      y2MaxVal = d3.max(d3.values(stateData.Years));
+    }
+
+    // Find Min & Max values for selected county; Non-Farm Jobs County Comparison
+    if (isSVGMap && filteredStates.length === 2) {
       countyData = filteredStates[1];
       countyMin = d3.min(d3.values(countyData.Years));
       countyMax = d3.max(d3.values(countyData.Years));
     }
-
-    y2range = [hawaiiMin, hawaiiMax, stateMin, stateMax, countyMin, countyMax];
-    y2MinVal = d3.min(y2range);
-    y2MaxVal = d3.max(y2range);
 
     var width = 592;
     var height = 370;
@@ -1043,7 +1062,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
         .ticks(4)
         .orient("left");
     }
-    if (farmJobs) {
+    if (farmJobs || rpp || techDollars) {
       y1Axis = d3.svg.axis()
         .scale(yScale)
         .tickFormat(numberFormatConverter)
@@ -1072,7 +1091,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       .attr("dy", "-.05em")
       .attr("transform", "rotate(-65)");
 
-    if (farmJobs) {
+    if (farmJobs || rpp || techDollars) {
       vis.append("svg:g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + (margins.left) + ",0)")
@@ -1144,7 +1163,25 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
         .attr("cy", function(d) {
           return yScale(d.value);
         })
+        .attr('id', 'usPoints')
         .style("fill", color);
+    }
+
+    function drawPointsY2(graphSVG, data, color) {
+      graphSVG.selectAll("dot")
+         .data(data.filter(function(d) {
+          return !isNaN(d.value);
+         }))
+         .enter().append("circle")
+         .attr("r", 2.5)
+         .attr("cx", function(d) {
+          return xScale(d.year);
+         })
+         .attr("cy", function(d) {
+          return y2Scale(d.value);
+         })
+         .attr('id', 'usPoints')
+         .style("fill", color);
     }
 
     // scale for bar charts
@@ -1287,6 +1324,9 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
       if (oddDataSetWithGaps) {
         drawUSBar(vis, usAvgData, graphColors.usColor);
+      } else if(!isSVGMap && farmJobs) {
+        drawDashY2(vis, usAvgData, graphColors.usColor);
+        drawPointsY2(vis, usAvgData, graphColors.usColor);
       } else {
         drawDash(vis, usAvgData, graphColors.usColor);
         drawPoints(vis, usAvgData, graphColors.usColor);
@@ -1298,8 +1338,6 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
     if (oddDataSetWithGaps) {
       drawHIBar(vis, hiStateData, graphColors.hiColor);
-    } else if (!isSVGMap && farmJobs) {
-      drawLineY2(vis, hiStateData, graphColors.hiColor);
     } else {
       drawLine(vis, hiStateData, graphColors.hiColor);
       drawPoints(vis, hiStateData, graphColors.hiColor);
@@ -1312,8 +1350,9 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
       if (oddDataSetWithGaps) {
         drawStateBar(vis, selectedStateData, graphColors.selectedColor);
-      } else if (farmJobs) {
+      } else if (farmJobs || rpp || techDollars) {
         drawLineY2(vis, selectedStateData, graphColors.selectedColor);
+        drawPointsY2(vis, selectedStateData, graphColors.selectedColor);
       } else {
         drawLine(vis, selectedStateData, graphColors.selectedColor);
         drawPoints(vis, selectedStateData, graphColors.selectedColor);
@@ -1443,8 +1482,8 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
     d3.select(keyEl).html("");
     var svgKey = d3.select(keyEl)
       .append('svg')
-      .classed('farmJobs', function() {
-        if (farmJobs) {
+      .classed('dualaxes', function() {
+        if (farmJobs || rpp || techDollars) {
           return true;
         } else {
           return false;
@@ -1779,7 +1818,6 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       .attr("stroke", color)
       .attr("stroke-width", 3)
       .attr("fill", "none");
-
   } //end drawLine
 
   // Draw Hawaii & Selected State Lines scaled to right axis (Non-Farm Jobs State Comparison)
@@ -1798,8 +1836,20 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
       .attr("stroke", color)
       .attr("stroke-width", 3)
       .attr("fill", "none")
+      .attr("id", "usLine")
+      .classed("usAvgOn", true)
       .style("stroke-dasharray", ("15, 5"));
+  }
 
+  function drawDashY2(graphSVG, data, color) {
+     graphSVG.append("svg:path")
+      .attr("d", lineGen2(data))
+      .attr("stroke", color)
+      .attr("stroke-width", 3)
+      .attr("fill", "none")
+      .attr("id", "usLine")
+      .classed("usAvgOn", true)
+      .style("stroke-dasharray", ("15, 5"));
   }
 
   function findGeoValueAtYear(lineData, year) {
