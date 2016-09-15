@@ -1012,8 +1012,8 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
     // Find Min & Max values for selected county; Non-Farm Jobs County Comparison
     if (isSVGMap && filteredStates.length === 2) {
       countyData = filteredStates[1];
-      countyMin = d3.min(d3.values(countyData.Years));
-      countyMax = d3.max(d3.values(countyData.Years));
+      y2MinVal = d3.min(d3.values(countyData.Years));
+      y2MaxVal = d3.max(d3.values(countyData.Years));
     }
 
     var width = 592;
@@ -1169,19 +1169,19 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
     function drawPointsY2(graphSVG, data, color) {
       graphSVG.selectAll("dot")
-         .data(data.filter(function(d) {
+        .data(data.filter(function(d) {
           return !isNaN(d.value);
-         }))
-         .enter().append("circle")
-         .attr("r", 2.5)
-         .attr("cx", function(d) {
+        }))
+        .enter().append("circle")
+        .attr("r", 2.5)
+        .attr("cx", function(d) {
           return xScale(d.year);
-         })
-         .attr("cy", function(d) {
+        })
+        .attr("cy", function(d) {
           return y2Scale(d.value);
-         })
-         .attr('id', 'usPoints')
-         .style("fill", color);
+        })
+        .attr('id', 'usPoints')
+        .style("fill", color);
     }
 
     // scale for bar charts
@@ -1324,7 +1324,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
 
       if (oddDataSetWithGaps) {
         drawUSBar(vis, usAvgData, graphColors.usColor);
-      } else if(!isSVGMap && farmJobs) {
+      } else if (!isSVGMap && farmJobs) {
         drawDashY2(vis, usAvgData, graphColors.usColor);
         drawPointsY2(vis, usAvgData, graphColors.usColor);
       } else {
@@ -1842,7 +1842,7 @@ module.exports = function(scope, mapSource, dataSource, dataSource2,
   }
 
   function drawDashY2(graphSVG, data, color) {
-     graphSVG.append("svg:path")
+    graphSVG.append("svg:path")
       .attr("d", lineGen2(data))
       .attr("stroke", color)
       .attr("stroke-width", 3)
